@@ -42,8 +42,8 @@ const TrustSection = dynamic(
   { ssr: true }
 )
 
-// ISR: page is statically rendered and revalidated every 60 seconds.
-export const revalidate = 60
+// ISR: page is statically rendered and revalidated every 24 hours (86400 seconds).
+export const revalidate = 86400
 
 const BASE_URL = 'https://www.pakbizbranhces.online'
 
