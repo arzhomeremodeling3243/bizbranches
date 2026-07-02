@@ -8,7 +8,7 @@ import { BLOG_POSTS } from '@/lib/blog-data'
 
 const BASE_URL = 'https://www.pakbizbranhces.online'
 
-export const revalidate = 86400 // revalidate once per day
+// Blog posts are statically generated at build time using local blog-data file.
 
 export async function generateStaticParams() {
   // Only build static pages for non-hidden posts
