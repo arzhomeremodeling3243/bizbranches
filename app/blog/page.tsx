@@ -4,6 +4,7 @@ import Footer from '@/components/footer'
 import Link from 'next/link'
 import { Calendar, ArrowRight, Building2, Clock, User, Star } from 'lucide-react'
 import { BLOG_POSTS, FEATURED_POSTS, RECENT_POSTS } from '@/lib/blog-data'
+import { BannerAdLoader, NativeAdLoader } from '@/components/ads/ads-loader'
 
 export const metadata: Metadata = {
   title: 'Pakistan Business Blog: Marketing and Growth Guides',
@@ -27,6 +28,9 @@ export default function BlogPage() {
     <>
       <Navbar />
       <main className="bg-gray-50">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 -mb-6">
+          <BannerAdLoader variant="inline" />
+        </div>
         {/* Hero Section */}
         <section className="bg-gradient-to-br from-[#0f2b3d] to-[#1a3f57] py-16 md:py-20">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -121,6 +125,10 @@ export default function BlogPage() {
               ))}
             </div>
 
+            <div className="mt-12">
+              <NativeAdLoader />
+            </div>
+
             {/* Call to Action */}
             <div className="mt-16 bg-gradient-to-r from-[#0f2b3d] to-[#1a3f57] rounded-2xl p-8 md:p-12 text-center text-white">
               <h2 className="text-2xl md:text-3xl font-bold mb-4">
@@ -139,6 +147,9 @@ export default function BlogPage() {
             </div>
           </div>
         </section>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <BannerAdLoader variant="inline" />
+        </div>
       </main>
       <Footer />
     </>

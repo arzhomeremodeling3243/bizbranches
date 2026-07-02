@@ -2,6 +2,8 @@ import { Metadata } from 'next'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import FeaturedBusinessesClient from '@/components/featured-businesses-client'
+import { BannerAdLoader, NativeAdLoader } from '@/components/ads/ads-loader'
+import React from 'react'
 
 export const metadata: Metadata = {
   title: 'Featured Businesses: Verified Pakistan Companies',
@@ -17,6 +19,9 @@ export default function FeaturedBusinessesPage() {
     <>
       <Navbar />
       <main id="main-content" className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+          <BannerAdLoader variant="inline" />
+        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           {/* Header */}
           <div className="text-center mb-12">
@@ -33,9 +38,17 @@ export default function FeaturedBusinessesPage() {
 
           {/* Filters and Content */}
           <FeaturedBusinessesClient />
+
+          <div className="mt-8">
+            <NativeAdLoader />
+          </div>
+        </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <BannerAdLoader variant="inline" />
         </div>
       </main>
       <Footer />
     </>
   )
 }
+

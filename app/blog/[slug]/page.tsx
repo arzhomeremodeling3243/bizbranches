@@ -5,6 +5,7 @@ import { ArrowLeft, Calendar, User, Clock, ChevronRight } from 'lucide-react'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import { BLOG_POSTS } from '@/lib/blog-data'
+import { BannerAdLoader, NativeAdLoader } from '@/components/ads/ads-loader'
 
 const BASE_URL = 'https://www.pakbizbranhces.online'
 
@@ -109,6 +110,9 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <main className="bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 -mb-6">
+          <BannerAdLoader variant="inline" />
+        </div>
         <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           {/* Breadcrumb */}
           <nav aria-label="Breadcrumb" className="mb-8">
@@ -135,6 +139,10 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
                   <span className="flex items-center gap-1.5"><User className="w-4 h-4" />{post.author}</span>
                 </div>
               </div>
+            </div>
+
+            <div className="px-8 md:px-12 pt-6">
+              <NativeAdLoader />
             </div>
 
             {/* Article Body */}
@@ -245,6 +253,9 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
             </Link>
           </div>
         </article>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <BannerAdLoader variant="inline" />
+        </div>
       </main>
       <Footer />
     </>

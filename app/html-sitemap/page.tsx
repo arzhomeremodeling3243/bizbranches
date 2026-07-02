@@ -3,6 +3,8 @@ import Link from 'next/link'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import { CATEGORIES, CITIES } from '@/lib/data'
+import { BannerAdLoader, NativeAdLoader } from '@/components/ads/ads-loader'
+import React from 'react'
 
 export const metadata: Metadata = {
   title: 'Sitemap: Find Businesses in All Cities of Pakistan',
@@ -31,6 +33,9 @@ export default function HtmlSitemapPage() {
     <>
       <Navbar />
       <main className="bg-[#f8fafc] min-h-screen py-12">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 -mt-6">
+          <BannerAdLoader variant="inline" />
+        </div>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-3xl font-bold text-[#0f2b3d] mb-2">HTML Sitemap</h1>
           <p className="text-gray-500 mb-10">Complete directory of all pages on PakBizBranches.</p>
@@ -90,6 +95,10 @@ export default function HtmlSitemapPage() {
               </div>
             </section>
 
+            <div className="md:col-span-2 lg:col-span-3">
+              <NativeAdLoader />
+            </div>
+
             {/* All Cities */}
             <section className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 md:col-span-2 lg:col-span-3">
               <h2 className="text-lg font-bold text-[#0f2b3d] mb-4 pb-2 border-b border-gray-100">All Cities in Pakistan</h2>
@@ -106,6 +115,9 @@ export default function HtmlSitemapPage() {
               </div>
             </section>
           </div>
+        </div>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <BannerAdLoader variant="inline" />
         </div>
       </main>
       <Footer />

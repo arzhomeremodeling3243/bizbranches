@@ -1,6 +1,8 @@
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import { Metadata } from 'next'
+import { BannerAdLoader, NativeAdLoader } from '@/components/ads/ads-loader'
+import React from 'react'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy: PakBizBranches Business Directory',
@@ -16,6 +18,9 @@ export default function PrivacyPage() {
     <>
       <Navbar />
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="mb-8 -mt-6">
+          <BannerAdLoader variant="inline" />
+        </div>
         <h1 className="text-3xl font-bold text-[#0f2b3d] mb-8">Privacy Policy</h1>
         <div className="prose prose-blue max-w-none text-gray-600">
           <p className="mb-4">Last Updated: May 9, 2026</p>
@@ -56,6 +61,10 @@ export default function PrivacyPage() {
             <li><strong>Third-Party Service Providers:</strong> We may share your information with third parties that perform services for us or on our behalf, such as data analysis, email delivery, hosting services, and customer service.</li>
           </ul>
 
+          <div className="my-8">
+            <NativeAdLoader />
+          </div>
+
           <h2 className="text-xl font-bold text-[#0f2b3d] mt-8 mb-4">4. Security of Your Information</h2>
           <p className="mb-4">
             We use administrative, technical, and physical security measures to help protect your personal information. While we have taken reasonable steps to secure the personal information you provide to us, please be aware that despite our efforts, no security measures are perfect or impenetrable, and no method of data transmission can be guaranteed against any interception or other type of misuse.
@@ -75,6 +84,9 @@ export default function PrivacyPage() {
             Email: support@pakbizbranhces.online<br />
             Address: Gulghast Colony, Urdu Bazar, Multan, Pakistan
           </p>
+          <div className="mt-8">
+            <BannerAdLoader variant="inline" />
+          </div>
         </div>
       </main>
       <Footer />

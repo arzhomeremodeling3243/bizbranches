@@ -1,6 +1,8 @@
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import { Metadata } from 'next'
+import { BannerAdLoader, NativeAdLoader } from '@/components/ads/ads-loader'
+import React from 'react'
 
 export const metadata: Metadata = {
   title: 'Terms of Service: PakBizBranches Business Directory',
@@ -16,6 +18,9 @@ export default function TermsPage() {
     <>
       <Navbar />
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="mb-8 -mt-6">
+          <BannerAdLoader variant="inline" />
+        </div>
         <h1 className="text-3xl font-bold text-[#0f2b3d] mb-8">Terms of Service</h1>
         <div className="prose prose-blue max-w-none text-gray-600 leading-relaxed">
           <p className="mb-4">Last Updated: May 9, 2026</p>
@@ -44,6 +49,10 @@ export default function TermsPage() {
             <li>You will not access the Site through automated or non-human means, whether through a bot, script, or otherwise.</li>
             <li>You will not use the Site for any illegal or unauthorized purpose.</li>
           </ul>
+
+          <div className="my-8">
+            <NativeAdLoader />
+          </div>
 
           <h2 className="text-xl font-bold text-[#0f2b3d] mt-8 mb-4">4. Business Listings & Submissions</h2>
           <p className="mb-4">
@@ -74,6 +83,9 @@ export default function TermsPage() {
             Email: support@pakbizbranhces.online<br />
             Address: Gulghast Colony, Urdu Bazar, Multan, Pakistan
           </p>
+          <div className="mt-8">
+            <BannerAdLoader variant="inline" />
+          </div>
         </div>
       </main>
       <Footer />

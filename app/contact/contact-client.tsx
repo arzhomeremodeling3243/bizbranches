@@ -5,6 +5,7 @@ import { Mail, Phone, MapPin, MessageCircle, Send, Building2 } from 'lucide-reac
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import { sendContactEmail } from '@/lib/email-service'
+import { BannerAdLoader, NativeAdLoader } from '@/components/ads/ads-loader'
 
 export default function ContactClient() {
   const [formData, setFormData] = useState({
@@ -124,6 +125,9 @@ export default function ContactClient() {
     <>
       <Navbar />
       <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
+        <div className="max-w-6xl mx-auto px-4 pt-6">
+          <BannerAdLoader variant="inline" />
+        </div>
         <div className="max-w-6xl mx-auto px-4 py-12">
           {/* Header */}
           <div className="text-center mb-12">
@@ -336,6 +340,14 @@ export default function ContactClient() {
               </form>
             </div>
           </div>
+          
+          <div className="mt-8">
+            <NativeAdLoader />
+          </div>
+        </div>
+        
+        <div className="max-w-6xl mx-auto px-4 py-6">
+          <BannerAdLoader variant="inline" />
         </div>
       </main>
       <Footer />

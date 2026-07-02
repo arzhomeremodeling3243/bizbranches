@@ -9,6 +9,7 @@ import Footer from '@/components/footer'
 import CitySearchDropdown from '@/components/ui/city-search-dropdown'
 import { CATEGORIES } from '@/lib/data'
 import { CITIES } from '@/lib/data'
+import { BannerAdLoader, NativeAdLoader } from '@/components/ads/ads-loader'
 
 function CitiesContent() {
   const searchParams = useSearchParams()
@@ -38,6 +39,9 @@ function CitiesContent() {
     <>
       <Navbar />
       <main className="min-h-screen bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 -mb-6">
+          <BannerAdLoader variant="inline" />
+        </div>
         <section className="bg-gradient-to-br from-[#0f2b3d] to-[#1a3f57] py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="inline-flex items-center gap-3 bg-[#60a5fa]/10 text-[#60a5fa] px-4 py-2 rounded-full text-sm font-semibold mb-6">
@@ -139,8 +143,14 @@ function CitiesContent() {
                 </div>
               ))}
             </div>
+            <div className="mt-8">
+              <NativeAdLoader />
+            </div>
           </div>
         </section>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <BannerAdLoader variant="inline" />
+        </div>
       </main>
       <Footer />
     </>

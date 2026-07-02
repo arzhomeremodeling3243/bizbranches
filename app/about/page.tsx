@@ -3,6 +3,7 @@ import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import Link from 'next/link'
 import { Target, Users, Globe, Award } from 'lucide-react'
+import { BannerAdLoader, NativeAdLoader } from '@/components/ads/ads-loader'
 
 export const metadata: Metadata = {
   title: 'About PakBizBranches: Local Business Directory',
@@ -45,6 +46,9 @@ export default function AboutPage() {
     <>
       <Navbar />
       <main>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 -mb-6">
+          <BannerAdLoader variant="inline" />
+        </div>
         {/* Hero */}
         <section className="bg-[#0f2b3d] py-20" aria-labelledby="about-heading">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -164,7 +168,11 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* CTA */}
+        {/* Ads and CTA */}
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <NativeAdLoader />
+        </div>
+
         <section className="py-14 bg-[#0f2b3d] text-center">
           <div className="max-w-xl mx-auto px-4">
             <h2 className="text-2xl font-bold text-white">Ready to list your business?</h2>
@@ -177,6 +185,10 @@ export default function AboutPage() {
             </Link>
           </div>
         </section>
+        
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <BannerAdLoader variant="inline" />
+        </div>
       </main>
       <Footer />
     </>

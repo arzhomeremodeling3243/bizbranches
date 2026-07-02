@@ -13,6 +13,7 @@ import { getCategoryIdFromName, isBusinessInCategory } from '@/lib/category-mapp
 import { db } from '@/lib/firebase'
 import { collection, query, where, getDocs, orderBy, limit } from 'firebase/firestore'
 import { generateCategoryContent, generateCityCategoryContent } from '@/lib/seo-content'
+import { BannerAdLoader, NativeAdLoader } from '@/components/ads/ads-loader'
 
 interface Business {
   id: string
@@ -337,6 +338,11 @@ function CategoriesContent() {
         </div>
       </section>
 
+      {/* Ads loader */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-gray-50">
+        <NativeAdLoader />
+      </div>
+
       {/* CTA */}
       <section className="bg-white py-12 border-t border-gray-100">
         <div className="max-w-3xl mx-auto px-4 text-center">
@@ -353,6 +359,9 @@ function CategoriesContent() {
           </Link>
         </div>
       </section>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 bg-gray-50">
+        <BannerAdLoader variant="inline" />
+      </div>
     </main>
   )
 }
@@ -361,6 +370,9 @@ export default function CategoriesClient() {
   return (
     <>
       <Navbar />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 -mb-6 bg-gray-50">
+        <BannerAdLoader variant="inline" />
+      </div>
       <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
         <CategoriesContent />
       </Suspense>

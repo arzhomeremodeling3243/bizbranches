@@ -12,6 +12,7 @@ import { db } from '@/lib/firebase'
 import { collection, addDoc, query, where, getDocs, serverTimestamp, limit, doc, updateDoc } from 'firebase/firestore'
 import { sendBusinessSubmissionEmail } from '@/lib/email-service'
 import { normalizeCategoryForStorage } from '@/lib/category-mappings'
+import { BannerAdLoader, NativeAdLoader } from '@/components/ads/ads-loader'
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
 
@@ -565,6 +566,9 @@ export default function AddBussinessClient() {
     <>
       <Navbar />
       <main className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+        <div className="max-w-7xl mx-auto px-4 pt-6 sm:px-6 lg:px-8">
+          <BannerAdLoader variant="inline" />
+        </div>
         <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-8">
@@ -1447,16 +1451,17 @@ export default function AddBussinessClient() {
               <div className="sticky top-8 space-y-4">
                 <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
                   <p className="text-xs text-slate-500 font-semibold uppercase mb-4">Sponsored</p>
-                  <div id="ad-container">
-                    {/* Ads will load here */}
-                    <div className="bg-slate-100 rounded-lg h-[600px] flex items-center justify-center">
-                      <p className="text-slate-500 text-sm">Loading advertisements...</p>
-                    </div>
+                  <div id="ad-container" className="space-y-4">
+                    <NativeAdLoader />
+                    <BannerAdLoader variant="sidebar" />
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+        <div className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
+          <BannerAdLoader variant="inline" />
         </div>
       </main>
       <Footer />
