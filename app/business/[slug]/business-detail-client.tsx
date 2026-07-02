@@ -274,6 +274,9 @@ export default function BusinessDetailClient({ slug }: { slug: string }) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <main className="bg-[#f8fafc] min-h-screen">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 -mb-4">
+          <BannerAdLoader variant="inline" />
+        </div>
         {/* Header */}
         <section className="bg-white border-b border-gray-100">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -588,6 +591,9 @@ export default function BusinessDetailClient({ slug }: { slug: string }) {
             )}
           </div>
         </section>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <BannerAdLoader variant="inline" />
+        </div>
       </main>
       <Footer />
     </>

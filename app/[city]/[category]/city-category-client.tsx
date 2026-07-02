@@ -10,6 +10,7 @@ import { generateCityCategoryContent } from '@/lib/seo-content'
 import { db } from '@/lib/firebase'
 import { collection, query, where, getDocs, limit } from 'firebase/firestore'
 import { LIVE_STATUSES } from '@/lib/category-mappings'
+import { BannerAdLoader, NativeAdLoader } from '@/components/ads/ads-loader'
 import React from 'react'
 
 const BASE_URL = 'https://www.pakbizbranhces.online'
@@ -175,6 +176,9 @@ export default function CityCategoryClient({ citySlug, categorySlug }: { citySlu
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       
       <main className="bg-[#f8fafc] min-h-screen">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 -mb-4">
+          <BannerAdLoader variant="inline" />
+        </div>
         {/* Hero */}
         <section className="bg-gradient-to-br from-[#0f2b3d] to-[#1a3f57] py-16">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -258,6 +262,9 @@ export default function CityCategoryClient({ citySlug, categorySlug }: { citySlu
                 ))}
               </div>
             )}
+            <div className="mt-8">
+              <NativeAdLoader />
+            </div>
           </section>
 
           {/* SEO Content Block */}
@@ -285,6 +292,9 @@ export default function CityCategoryClient({ citySlug, categorySlug }: { citySlu
               </div>
             </div>
           </section>
+        </div>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <BannerAdLoader variant="inline" />
         </div>
       </main>
       <Footer />

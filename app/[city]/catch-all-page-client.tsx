@@ -16,6 +16,7 @@ import { LIVE_STATUSES, getPossibleCategoryValues } from '@/lib/category-mapping
 import { generateCategoryContent, generateCityContent, CITY_INFO } from '@/lib/seo-content'
 import { getCategoryKeywordCluster, getCityKeywordCluster } from '@/lib/organic-keywords'
 import { findStaticBusinessBySlug, getStaticSimilar, getStaticBranches } from '@/lib/static-db'
+import { BannerAdLoader, NativeAdLoader } from '@/components/ads/ads-loader'
 import React from 'react'
 
 const BASE_URL = 'https://www.pakbizbranhces.online'
@@ -367,6 +368,9 @@ export default function CatchAllPageClient({ slug }: { slug: string }) {
         <Navbar />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
         <main className="bg-[#f8fafc] min-h-screen">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 -mb-4">
+            <BannerAdLoader variant="inline" />
+          </div>
           <section className="bg-gradient-to-br from-[#0f2b3d] to-[#1a3f57] py-16">
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
               <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-white/60 mb-6">
@@ -397,9 +401,15 @@ export default function CatchAllPageClient({ slug }: { slug: string }) {
                 ))}
               </div>
             )}
+            <div className="mt-8">
+              <NativeAdLoader />
+            </div>
             <div className="mt-12 prose prose-blue max-w-none bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
                {content.split('\n').map((line, i) => <p key={i}>{line}</p>)}
             </div>
+          </div>
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <BannerAdLoader variant="inline" />
           </div>
         </main>
         <Footer />
@@ -424,6 +434,9 @@ export default function CatchAllPageClient({ slug }: { slug: string }) {
         <Navbar />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
         <main className="bg-[#f8fafc] min-h-screen">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 -mb-4">
+            <BannerAdLoader variant="inline" />
+          </div>
           <section className="bg-gradient-to-br from-[#0f2b3d] to-[#1a3f57] py-16">
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
               <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-white/60 mb-6">
@@ -451,9 +464,15 @@ export default function CatchAllPageClient({ slug }: { slug: string }) {
                 ))}
               </div>
             )}
+            <div className="mt-8">
+              <NativeAdLoader />
+            </div>
             <div className="mt-12 prose prose-blue max-w-none bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
                {content.split('\n').map((line, i) => <p key={i}>{line}</p>)}
             </div>
+          </div>
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <BannerAdLoader variant="inline" />
           </div>
         </main>
         <Footer />
@@ -565,6 +584,9 @@ export default function CatchAllPageClient({ slug }: { slug: string }) {
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
         
         <main className="bg-[#f8fafc] min-h-screen">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 -mb-4">
+            <BannerAdLoader variant="inline" />
+          </div>
           <section className="bg-white border-b border-gray-100">
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
               <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-gray-500 mb-6">
@@ -606,6 +628,9 @@ export default function CatchAllPageClient({ slug }: { slug: string }) {
                         <MessageCircle className="w-4 h-4" /> WhatsApp
                       </a>
                     )}
+                  </div>
+                  <div className="mt-8 border-t border-gray-100 pt-6">
+                    <BannerAdLoader variant="inline" />
                   </div>
                 </div>
               </div>
@@ -725,6 +750,8 @@ export default function CatchAllPageClient({ slug }: { slug: string }) {
                     <p className="text-sm text-gray-600">{business.address}, {business.city}, Pakistan</p>
                   </div>
 
+                  <NativeAdLoader />
+
                   <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
                     <h3 className="font-bold text-[#0f2b3d] mb-4 flex items-center gap-2">
                       <span className="w-5 h-5 text-[#60a5fa] flex items-center justify-center">🕒</span> Business Hours
@@ -757,6 +784,9 @@ export default function CatchAllPageClient({ slug }: { slug: string }) {
               </div>
             </div>
           </section>
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <BannerAdLoader variant="inline" />
+          </div>
         </main>
         <Footer />
       </>
