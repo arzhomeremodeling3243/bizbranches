@@ -14532,5 +14532,31 @@
     "email": "",
     "youtubeChannel": "",
     "subCategory": ""
+  },
+  {
+    "id": "serani-chemical-waterproofing-company-karachi",
+    "businessName": "Serani Chemical Waterproofing Company Karachi",
+    "slug": "serani-chemical-waterproofing-company-karachi",
+    "city": "Karachi",
+    "category": "construction",
+    "categoryId": "construction",
+    "categorySlug": "construction",
+    "description": "Serani Chemical Waterproofing Company Karachi is a leading waterproofing and roof leakage chemical treatment service in Clifton Karachi, Pakistan.",
+    "phone": "03332235677",
+    "logoUrl": "",
+    "status": "approved",
+    "isFeatured": true,
+    "featured": false,
+    "createdAt": "2024-10-22T14:20:36.631Z",
+    "updatedAt": "2024-10-22T14:20:36.631Z",
+    "rating": 5,
+    "reviewCount": 1,
+    "websiteUrl": "https://www.pakbizbranhces.online/serani-chemical-waterproofing-company-karachi/",
+    "facebookPage": "https://www.facebook.com/seranichemicalwaterproofing",
+    "address": "Office No. 4, Plot 10-C, Zamzama Commercial Lane 3, Phase 5, DHA, Karachi, Pakistan",
+    "whatsapp": "03332235677",
+    "email": "seranichemical@gmail.com",
+    "youtubeChannel": "",
+    "subCategory": "Waterproofing Service"
   }
 ]

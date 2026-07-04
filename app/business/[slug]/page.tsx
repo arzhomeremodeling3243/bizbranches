@@ -81,7 +81,7 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
   let description = baseDesc
   for (const suffix of descSuffixes) {
     const candidate = baseDesc + suffix
-    if (candidate.length >= 120 && candidate.length <= 145) {
+    if (candidate.length >= 125 && candidate.length <= 145) {
       description = candidate
       break
     }
@@ -89,10 +89,10 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
   if (description.length > 145) {
     description = description.substring(0, 142) + '...'
   }
-  if (description.length < 120) {
+  if (description.length < 125) {
     const padding = ' Discover verified listings, ratings, reviews, and maps for local Pakistani businesses.'
     const candidate = description + padding
-    if (candidate.length >= 120 && candidate.length <= 145) {
+    if (candidate.length >= 125 && candidate.length <= 145) {
       description = candidate
     } else {
       description = (description + padding).substring(0, 142) + '...'
@@ -101,8 +101,8 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
   if (description.length > 145) {
     description = description.substring(0, 145)
   }
-  if (description.length < 120) {
-    description = description.padEnd(120, '.')
+  if (description.length < 125) {
+    description = description.padEnd(125, '.')
   }
 
   const url = `${BASE_URL}/business/${slug}/`

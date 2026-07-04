@@ -95,6 +95,7 @@ export async function generateMetadata(props: { params: Promise<{ city: string }
   let businessName = ''
   let businessCity = 'Pakistan'
   let businessCategory = 'Business'
+  let businessPhone = 'Contact'
   let businessDescription = 'Verified local business listing on PakBizBranches.'
 
   const staticBiz = findStaticBusinessBySlug(slug)
@@ -102,6 +103,7 @@ export async function generateMetadata(props: { params: Promise<{ city: string }
     businessName = staticBiz.businessName
     businessCity = staticBiz.city
     businessCategory = staticBiz.category
+    businessPhone = staticBiz.phone
     businessDescription = staticBiz.description || `Verified ${staticBiz.category} company in ${staticBiz.city}, Pakistan.`
   } else {
     // Dynamic fallback: extract details purely from the slug string for zero-execution compilation
@@ -111,12 +113,76 @@ export async function generateMetadata(props: { params: Promise<{ city: string }
       .join(' ')
   }
 
-  const title = `${businessName} in ${businessCity} – Phone, Address & Contact | PakBizBranches`
-  let description = `Find verified phone number, address, and contact for ${businessName} in ${businessCity}. ${businessDescription}`
-  if (description.length > 156) {
-    description = description.substring(0, 153) + '...'
-  } else if (description.length < 130) {
-    description = `Find verified phone number, address, and contact for ${businessName} in ${businessCity}, Pakistan. Get verified details and connect today.`
+  const bizCategoryObj = CATEGORIES.find(c => c.id === businessCategory)
+  const categoryName = bizCategoryObj?.name ?? businessCategory
+
+  // Dynamically build a title strictly between 52 and 58 characters for SEO
+  const baseTitle = `${businessName} - ${businessCity}`
+  const suffixes = [
+    ' | Phone & Address',
+    ' | Contact Details',
+    ' | Phone Number',
+    ' | Info'
+  ]
+  let title = baseTitle
+  for (const suffix of suffixes) {
+    const candidate = baseTitle + suffix
+    if (candidate.length >= 52 && candidate.length <= 58) {
+      title = candidate
+      break
+    }
+  }
+  if (title.length > 58) {
+    title = title.substring(0, 55) + '...'
+  }
+  if (title.length < 52) {
+    const padding = ' | Verified Details'
+    const candidate = title + padding
+    if (candidate.length <= 58) {
+      title = candidate
+    } else {
+      title = (title + padding).substring(0, 57)
+    }
+  }
+  if (title.length > 58) {
+    title = title.substring(0, 58)
+  }
+
+  // Dynamically build a description strictly between 125 and 145 characters for SEO
+  const baseDesc = `Verified details for ${businessName} in ${businessCity}, Pakistan. Find phone number ${businessPhone}, location address`
+  const descSuffixes = [
+    ', operating hours, and customer reviews on PakBizBranches.',
+    ', and contact information on PakBizBranches directory.',
+    ', and timing details on PakBizBranches.',
+    ' and official contact details.',
+    ' and contact details.',
+    '.'
+  ]
+  let description = baseDesc
+  for (const suffix of descSuffixes) {
+    const candidate = baseDesc + suffix
+    if (candidate.length >= 125 && candidate.length <= 145) {
+      description = candidate
+      break
+    }
+  }
+  if (description.length > 145) {
+    description = description.substring(0, 142) + '...'
+  }
+  if (description.length < 125) {
+    const padding = ' Discover verified listings, ratings, reviews, and maps for local Pakistani businesses.'
+    const candidate = description + padding
+    if (candidate.length >= 125 && candidate.length <= 145) {
+      description = candidate
+    } else {
+      description = (description + padding).substring(0, 142) + '...'
+    }
+  }
+  if (description.length > 145) {
+    description = description.substring(0, 145)
+  }
+  if (description.length < 125) {
+    description = description.padEnd(125, '.')
   }
 
   const url = `${BASE_URL}/${slug}/`
