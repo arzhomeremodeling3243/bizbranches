@@ -60,6 +60,7 @@ export default function RootLayout({
     <html lang="en" className={outfit.variable}>
       <head>
         <meta name="google-site-verification" content="D2TTC8ZWjbjA3wgOFcyrfBnFkjC3TAiCG7E6wDxDGK4" />
+        <meta name="ahrefs-site-verification" content="22e1275092fa85b1" />
         <link rel="alternate" hrefLang="en-PK" href="https://www.pakbizbranhces.online/" />
         <link rel="alternate" hrefLang="x-default" href="https://www.pakbizbranhces.online/" />
 

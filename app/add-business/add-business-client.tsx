@@ -71,7 +71,7 @@ export default function AddBussinessClient() {
   const [screenshotUploading, setScreenshotUploading] = useState(false)
   const [businessIdInput, setBusinessIdInput] = useState('')
   const [copiedField, setCopiedField] = useState<string | null>(null)
-  const [selectedPlan, setSelectedPlan] = useState<'standard' | 'express'>('standard')
+  const [selectedPlan, setSelectedPlan] = useState<'standard' | 'express' | 'authority'>('standard')
   const screenshotInputRef = useRef<HTMLInputElement>(null)
 
   // Web Audio chime synthesis
@@ -542,7 +542,7 @@ export default function AddBussinessClient() {
         paymentScreenshotUrl: compressedBase64,
         paymentSubmittedAt: serverTimestamp(),
         paymentPlan: selectedPlan,
-        paymentPlanPrice: selectedPlan === 'standard' ? 10 : 20,
+        paymentPlanPrice: selectedPlan === 'standard' ? 10 : selectedPlan === 'express' ? 20 : 50,
         status: 'pending' // ensure status is pending for admin authorization
       })
 
@@ -727,7 +727,7 @@ export default function AddBussinessClient() {
                         </label>
 
                         <label 
-                          className={`flex items-start gap-4 p-4 rounded-2xl border-2 transition-all cursor-pointer ${
+                          className={`flex items-start gap-4 p-4 rounded-2xl border-2 transition-all cursor-pointer relative overflow-hidden ${
                             selectedPlan === 'express'
                               ? 'border-blue-600 bg-blue-50/20'
                               : 'border-slate-200 bg-white hover:border-slate-300'
@@ -750,6 +750,36 @@ export default function AddBussinessClient() {
                             </div>
                             <p className="text-xs text-slate-500 mt-1 leading-relaxed">
                               Your business page will be created and indexed on search engines within **72 to 96 hours** after payment verification.
+                            </p>
+                          </div>
+                        </label>
+
+                        <label 
+                          className={`flex items-start gap-4 p-4 rounded-2xl border-2 transition-all cursor-pointer relative overflow-hidden ${
+                            selectedPlan === 'authority'
+                              ? 'border-orange-500 bg-orange-50/20 shadow-md shadow-orange-500/5 ring-2 ring-orange-500/10'
+                              : 'border-slate-200 bg-white hover:border-slate-300'
+                          }`}
+                        >
+                          <div className="absolute top-0 right-0 bg-gradient-to-r from-orange-500 to-amber-500 text-white text-[8px] font-black px-2 py-0.5 rounded-bl uppercase tracking-wider">
+                            Popular & Famous
+                          </div>
+                          <input 
+                            type="radio" 
+                            name="paymentPlan" 
+                            checked={selectedPlan === 'authority'}
+                            onChange={() => setSelectedPlan('authority')}
+                            className="mt-1 accent-orange-600 cursor-pointer"
+                          />
+                          <div className="pr-14">
+                            <div className="flex justify-between items-center">
+                              <span className="font-bold text-slate-800 text-sm flex items-center gap-1.5">
+                                SEO Authority Plan
+                              </span>
+                              <span className="font-black text-orange-600 text-sm">RS: 50</span>
+                            </div>
+                            <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                              Created from simple data into a **3000+ words page**, standard SEO meta tags, **5+ backlinks**, **indexing within 48 hours**, and **free support**.
                             </p>
                           </div>
                         </label>
@@ -821,11 +851,11 @@ export default function AddBussinessClient() {
                         <div>
                           <span className="text-xs text-slate-400 block font-medium">Amount to Pay</span>
                           <span className="font-bold text-blue-600 text-lg">
-                            RS: {selectedPlan === 'standard' ? '10' : '20'}
+                            RS: {selectedPlan === 'standard' ? '10' : selectedPlan === 'express' ? '20' : '50'}
                           </span>
                         </div>
                         <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-blue-50 text-blue-700 border border-blue-100">
-                          {selectedPlan === 'standard' ? 'Standard Plan' : 'Express Plan'}
+                          {selectedPlan === 'standard' ? 'Standard Plan' : selectedPlan === 'express' ? 'Express Plan' : 'SEO Authority Plan'}
                         </span>
                       </div>
 
