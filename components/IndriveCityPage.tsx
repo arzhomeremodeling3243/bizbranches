@@ -10,7 +10,7 @@ export default function IndriveCityPage({ city }: { city: string }) {
     `When it comes to modern transportation in ${city}, Indrive has revolutionized the way residents and visitors commute. The traditional ride-hailing models are being challenged by the peer-to-peer negotiation system that Indrive offers. In ${city}, this means passengers have the absolute freedom to propose a fare that makes sense for their specific route, whether it's a short trip to the local market or a longer journey across the city. This flexibility is crucial in a vibrant and dynamic environment like ${city}, where traffic conditions, weather, and time of day can significantly impact travel plans.`,
     `Moreover, the safety features integrated into the Indrive application provide peace of mind for both drivers and passengers in ${city}. With real-time GPS tracking, verifiable driver profiles, and a robust rating system, users can make informed decisions before accepting a ride. For the hardworking drivers of ${city}, Indrive presents an unparalleled opportunity to earn a fair income. Unlike other platforms that take exorbitant commissions, Indrive's model ensures that the majority of the fare goes directly into the driver's pocket, empowering the local economy of ${city}.`,
     `The courier and freight services offered by Indrive are equally transformative for businesses in ${city}. Small enterprises, home-based businesses, and individuals frequently need reliable delivery options. By expanding their services beyond just passenger transport, Indrive has created a comprehensive logistics ecosystem. Sending a package across ${city} is now as simple as booking a ride, with the added benefit of transparent pricing.`,
-    `Customer support for Indrive users in ${city} is designed to be responsive and helpful. Should you encounter any issues with a ride or a delivery, the in-app support center provides quick resolutions. Contacting the directory support team via official email at support@pakbizbranhces.online ensures that your concerns regarding business visibility are addressed promptly. The community-driven nature of the app relies heavily on user feedback, making every rating and review count towards a better experience in ${city}.`,
+    `Customer support for Indrive users in ${city} is designed to be responsive and helpful. Should you encounter any issues with a ride or a delivery, the in-app support center provides quick resolutions. Contacting the Indrive support team via official email at support@indrive.com ensures that your concerns are addressed promptly. The community-driven nature of the app relies heavily on user feedback, making every rating and review count towards a better experience in ${city}.`,
     `Exploring ${city} has never been more convenient. From its historical landmarks to its bustling commercial centers, ${city} offers a unique blend of culture and commerce. Indrive acts as the perfect companion for navigating this landscape. Whether you are a daily commuter relying on consistent transport or a tourist eager to see the sights of ${city}, the app's intuitive interface and fair pricing model make it the top choice for mobility in Pakistan.`
   ];
   
@@ -85,7 +85,7 @@ export default function IndriveCityPage({ city }: { city: string }) {
                     </div>
                     <div>
                         <h3 className="font-semibold text-lg text-gray-900 mb-2">What are the contact details for support?</h3>
-                        <p>You can reach the general directory support team at support@pakbizbranhces.online or call +92 314 2552851 for business inquiries related to the directory listings. This remarkable service enhances the overall quality of life in {city}, providing an essential service that connects communities and fosters economic growth. The ongoing development of infrastructure in {city} pairs perfectly with the technological advancements brought by Indrive. Residents of {city} are increasingly adopting this smart mobility solution.</p>
+                        <p>You can reach the official Indrive support team at support@indrive.com for any ride or account-related inquiries. Telephone support is securely managed through the in-app calling feature. This remarkable service enhances the overall quality of life in {city}, providing an essential service that connects communities and fosters economic growth. The ongoing development of infrastructure in {city} pairs perfectly with the technological advancements brought by Indrive. Residents of {city} are increasingly adopting this smart mobility solution.</p>
                     </div>
                 </div>
               </section>
@@ -106,7 +106,7 @@ export default function IndriveCityPage({ city }: { city: string }) {
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-gray-900">Phone Support</p>
-                      <a href="tel:+923142552851" className="text-blue-600 hover:underline font-medium">+92 314 2552851</a>
+                      <p className="text-gray-600 font-medium">Available via Indrive App</p>
                     </div>
                   </div>
 
@@ -119,7 +119,7 @@ export default function IndriveCityPage({ city }: { city: string }) {
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-gray-900">Email Address</p>
-                      <a href="mailto:support@pakbizbranhces.online" className="text-blue-600 hover:underline break-all text-sm">support@pakbizbranhces.online</a>
+                      <a href="mailto:support@indrive.com" className="text-blue-600 hover:underline break-all text-sm">support@indrive.com</a>
                     </div>
                   </div>
 
