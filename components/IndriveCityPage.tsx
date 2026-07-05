@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import { BannerAdLoader, NativeAdLoader } from '@/components/ads/ads-loader'
@@ -30,7 +31,16 @@ export default function IndriveCityPage({ city }: { city: string }) {
         
         {/* Hero Section */}
         <section className="bg-[#0f2b3d] py-16 sm:py-20">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
+            <div className="bg-white p-3 rounded-2xl shadow-sm mb-6 inline-block">
+              <Image 
+                src="/indrive-logo.png" 
+                alt="Indrive Logo" 
+                width={120} 
+                height={120} 
+                className="w-auto h-16 sm:h-20 object-contain"
+              />
+            </div>
             <h1 className="text-3xl md:text-5xl font-bold text-white text-balance mb-6">
               Indrive in {city}, Pakistan: Affordable Rides & Services
             </h1>
