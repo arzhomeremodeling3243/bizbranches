@@ -185,6 +185,28 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Indrive Locations Internal Links */}
+        <div className="mt-12 pt-8 border-t border-white/10">
+          <h3 className="font-bold text-white mb-4 uppercase text-xs tracking-widest">Indrive Pakistan</h3>
+          <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-white/50">
+            {[
+              'karachi', 'lahore', 'islamabad', 'rawalpindi', 'faisalabad', 'multan', 'peshawar', 'quetta',
+              'gujranwala', 'sialkot', 'hyderabad', 'bahawalpur', 'sargodha', 'sukkur', 'gujrat', 'gwadar',
+              'vehari', 'abbottabad', 'mardan', 'khanewal', 'larkana', 'kasur', 'sheikhupura', 'okara',
+              'murree', 'mianwali', 'jhelum', 'sahiwal', 'jhang', 'rahim-yar-khan'
+            ].map((city) => (
+              <Link
+                key={city}
+                href={`/indrive-pakistan-${city}/`}
+                className="hover:text-[#60a5fa] transition-colors capitalize"
+                title={`Indrive ${city}`}
+              >
+                Indrive {city.replace(/-/g, ' ')}
+              </Link>
+            ))}
+          </div>
+        </div>
+
         {/* Bottom Bar */}
         <div className="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-6 text-sm text-white/40">
           <p className="flex items-center gap-1">

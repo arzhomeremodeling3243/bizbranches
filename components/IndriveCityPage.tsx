@@ -123,6 +123,26 @@ export default function IndriveCityPage({ city }: { city: string }) {
                     </div>
                 </div>
               </section>
+
+              <section className="bg-white rounded-2xl p-6 sm:p-10 shadow-sm border border-gray-100">
+                <h2 className="text-2xl font-bold text-[#0f2b3d] mb-6">Indrive Services in Other Cities</h2>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-y-3 gap-x-4 text-sm">
+                  {[
+                    'karachi', 'lahore', 'islamabad', 'rawalpindi', 'faisalabad', 'multan', 'peshawar', 'quetta',
+                    'gujranwala', 'sialkot', 'hyderabad', 'bahawalpur', 'sargodha', 'sukkur', 'gujrat', 'gwadar',
+                    'vehari', 'abbottabad', 'mardan', 'khanewal', 'larkana', 'kasur', 'sheikhupura', 'okara',
+                    'murree', 'mianwali', 'jhelum', 'sahiwal', 'jhang', 'rahim-yar-khan'
+                  ].filter(c => c !== city.toLowerCase()).map(c => (
+                    <a
+                      key={c}
+                      href={`/indrive-pakistan-${c}/`}
+                      className="text-blue-600 hover:underline capitalize"
+                    >
+                      Indrive {c.replace(/-/g, ' ')}
+                    </a>
+                  ))}
+                </div>
+              </section>
             </div>
 
             {/* Sidebar with Interactive Information */}
