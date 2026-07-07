@@ -4,6 +4,40 @@ import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import { BannerAdLoader, NativeAdLoader } from '@/components/ads/ads-loader'
 
+function getIndrivePhoneNumber(city: string): string {
+  const norm = city.toLowerCase().trim();
+  switch (norm) {
+    case 'multan':
+      return '03207863233';
+    case 'lahore':
+      return '03024208549';
+    case 'islamabad':
+    case 'isalmabad':
+      return '03302111193';
+    case 'bahawalpur':
+    case 'bahalwpur':
+      return '03131013254';
+    case 'faisalabad':
+      return '0309-7602647';
+    case 'gujrat':
+      return '0313 2726210';
+    case 'gujranwala':
+    case 'gujrawanala':
+      return '0309 5154411';
+    case 'hyderabad':
+      return '03175573185';
+    case 'gwadar':
+    case 'gawadar':
+      return '03331635488';
+    case 'karachi':
+      return '0337 8031348';
+    case 'vehari':
+      return '0330-2111193';
+    default:
+      return '0330-2111193';
+  }
+}
+
 export default function IndriveCityPage({ city }: { city: string }) {
   const paragraphs = []
   const templates = [
@@ -85,7 +119,7 @@ export default function IndriveCityPage({ city }: { city: string }) {
                     </div>
                     <div>
                         <h3 className="font-semibold text-lg text-gray-900 mb-2">What are the contact details for support?</h3>
-                        <p>You can reach the official Indrive support team at support@indrive.com for any ride or account-related inquiries. Telephone support is securely managed through the in-app calling feature. This remarkable service enhances the overall quality of life in {city}, providing an essential service that connects communities and fosters economic growth. The ongoing development of infrastructure in {city} pairs perfectly with the technological advancements brought by Indrive. Residents of {city} are increasingly adopting this smart mobility solution.</p>
+                        <p>You can reach the official Indrive support team at support@indrive.com or call them at <a href={`tel:${getIndrivePhoneNumber(city).replace(/[^0-9]/g, '')}`} className="text-blue-600 hover:underline font-semibold">{getIndrivePhoneNumber(city)}</a> for any ride or account-related inquiries. This remarkable service enhances the overall quality of life in {city}, providing an essential service that connects communities and fosters economic growth. The ongoing development of infrastructure in {city} pairs perfectly with the technological advancements brought by Indrive. Residents of {city} are increasingly adopting this smart mobility solution.</p>
                     </div>
                 </div>
               </section>
@@ -106,7 +140,9 @@ export default function IndriveCityPage({ city }: { city: string }) {
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-gray-900">Phone Support</p>
-                      <p className="text-gray-600 font-medium">Available via Indrive App</p>
+                      <a href={`tel:${getIndrivePhoneNumber(city).replace(/[^0-9]/g, '')}`} className="text-blue-600 hover:underline font-semibold">
+                        {getIndrivePhoneNumber(city)}
+                      </a>
                     </div>
                   </div>
 

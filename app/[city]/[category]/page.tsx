@@ -5,6 +5,22 @@ import React from 'react'
 
 export const dynamic = 'force-static'
 
+export async function generateStaticParams() {
+  const paths: { city: string; category: string }[] = []
+  CITIES.forEach((city) => {
+    const citySlug = city.toLowerCase().replace(/\s+/g, '-')
+    CATEGORIES.forEach((category) => {
+      paths.push({
+        city: citySlug,
+        category: category.id,
+      })
+    })
+  })
+  return paths
+}
+
+export const dynamicParams = false
+
 const BASE_URL = 'https://www.pakbizbranhces.online'
 
 function findCityBySlug(slug: string): string | null {

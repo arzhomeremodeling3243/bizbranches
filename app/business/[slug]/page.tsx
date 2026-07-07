@@ -1,10 +1,16 @@
 import { Metadata } from 'next'
 import { CATEGORIES } from '@/lib/data'
-import { findStaticBusinessBySlug } from '@/lib/static-db'
+import { findStaticBusinessBySlug, STATIC_BUSINESSES } from '@/lib/static-db'
 import BusinessDetailClient from './business-detail-client'
 import React from 'react'
 
 export const dynamic = 'force-static'
+
+export async function generateStaticParams() {
+  return STATIC_BUSINESSES.map((b) => ({
+    slug: b.slug,
+  }))
+}
 
 const BASE_URL = 'https://www.pakbizbranhces.online'
 

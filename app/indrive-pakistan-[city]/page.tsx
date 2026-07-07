@@ -13,8 +13,44 @@ const cities = [
   'mianwali', 'gujranwala', 'jhelum', 'karachi', 'gwadar', 'sahiwal', 'gujrat', 'jhang'
 ];
 
-function capitalize(str: string) {
+function capitalize(str: string | undefined) {
+  if (!str) return 'Pakistan';
   return str.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+}
+
+function getIndrivePhoneNumber(city: string | undefined): string {
+  if (!city) return '0330-2111193';
+  const norm = city.toLowerCase().trim();
+  switch (norm) {
+    case 'multan':
+      return '03207863233';
+    case 'lahore':
+      return '03024208549';
+    case 'islamabad':
+    case 'isalmabad':
+      return '03302111193';
+    case 'bahawalpur':
+    case 'bahalwpur':
+      return '03131013254';
+    case 'faisalabad':
+      return '0309-7602647';
+    case 'gujrat':
+      return '0313 2726210';
+    case 'gujranwala':
+    case 'gujrawanala':
+      return '0309 5154411';
+    case 'hyderabad':
+      return '03175573185';
+    case 'gwadar':
+    case 'gawadar':
+      return '03331635488';
+    case 'karachi':
+      return '0337 8031348';
+    case 'vehari':
+      return '0330-2111193';
+    default:
+      return '0330-2111193';
+  }
 }
 
 export function generateStaticParams() {
@@ -23,9 +59,11 @@ export function generateStaticParams() {
   }))
 }
 
-export async function generateMetadata(props: { params: Promise<{ city: string }> }): Promise<Metadata> {
+export const dynamicParams = false
+
+export async function generateMetadata(props: { params: Promise<{ city?: string }> }): Promise<Metadata> {
   const params = await props.params
-  const city = capitalize(params.city)
+  const city = capitalize(params?.city)
   
   const base = `Indrive ${city} Pakistan: Affordable `
   let title = ''
@@ -59,14 +97,14 @@ export async function generateMetadata(props: { params: Promise<{ city: string }
     description,
     keywords: [`Indrive ${city}`, `ride-hailing ${city}`, `cheap taxi ${city}`, `Indrive Pakistan`, `${city} transport`, `courier ${city}`],
     alternates: {
-      canonical: `https://www.pakbizbranhces.online/indrive-pakistan-${params.city}`,
+      canonical: `https://www.pakbizbranhces.online/indrive-pakistan-${params?.city || 'pakistan'}`,
     },
   }
 }
 
-export default async function IndriveCityPage(props: { params: Promise<{ city: string }> }) {
+export default async function IndriveCityPage(props: { params: Promise<{ city?: string }> }) {
   const params = await props.params
-  const city = capitalize(params.city)
+  const city = capitalize(params?.city)
   
   // Generating large unique content (2000+ words) specifically for this city
   const paragraphs = []
@@ -137,7 +175,7 @@ export default async function IndriveCityPage(props: { params: Promise<{ city: s
                 </div>
                 <div>
                     <h3 className="font-semibold text-lg text-gray-900 mb-2">What are the contact details for support?</h3>
-                    <p>You can reach the general directory support team at support@pakbizbranhces.online or call +92 314 2552851 for business inquiries related to the directory listings. This remarkable service enhances the overall quality of life in {city}, providing an essential service that connects communities and fosters economic growth. The ongoing development of infrastructure in {city} pairs perfectly with the technological advancements brought by Indrive. Residents of {city} are increasingly adopting this smart mobility solution.</p>
+                    <p>You can reach the official Indrive support team at support@indrive.com or call them at <a href={`tel:${getIndrivePhoneNumber(params?.city).replace(/[^0-9]/g, '')}`} className="text-blue-600 hover:underline font-semibold">{getIndrivePhoneNumber(params?.city)}</a> for any ride or account-related inquiries. This remarkable service enhances the overall quality of life in {city}, providing an essential service that connects communities and fosters economic growth. The ongoing development of infrastructure in {city} pairs perfectly with the technological advancements brought by Indrive. Residents of {city} are increasingly adopting this smart mobility solution.</p>
                 </div>
             </div>
           </section>

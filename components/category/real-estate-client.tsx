@@ -219,9 +219,22 @@ function RealEstatePageContent() {
                     </p>
                     
                     <div className="mt-4 space-y-2">
-                      <div className="flex items-center gap-2 text-sm text-gray-600">
-                        <Phone className="w-4 h-4" />
-                        <span>{business.phone}</span>
+                      <div className="flex items-center justify-between text-sm text-gray-600">
+                        <div className="flex items-center gap-2">
+                          <Phone className="w-4 h-4" />
+                          <span>{business.phone}</span>
+                        </div>
+                        <button
+                          onClick={(e) => {
+                            e.preventDefault()
+                            e.stopPropagation()
+                            window.location.href = `tel:${business.phone.replace(/[^0-9+]/g, '')}`
+                          }}
+                          className="flex items-center justify-center p-1.5 bg-green-500/10 hover:bg-green-500/20 text-green-600 rounded-full transition-colors cursor-pointer"
+                          title={`Call ${business.businessName}`}
+                        >
+                          <Phone className="w-3.5 h-3.5 fill-current" />
+                        </button>
                       </div>
                       {business.whatsapp && (
                         <div className="flex items-center gap-2 text-sm text-gray-600">

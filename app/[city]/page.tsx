@@ -1,11 +1,22 @@
 import { Metadata } from 'next'
 import { CATEGORIES, CITIES } from '@/lib/data'
 import { getCategoryKeywordCluster, getCityKeywordCluster } from '@/lib/organic-keywords'
-import { findStaticBusinessBySlug } from '@/lib/static-db'
+import { findStaticBusinessBySlug, STATIC_BUSINESSES } from '@/lib/static-db'
 import CatchAllPageClient from './catch-all-page-client'
 import React from 'react'
 
 export const dynamic = 'force-static'
+
+export async function generateStaticParams() {
+  const cities = CITIES.map(c => c.toLowerCase().replace(/\s+/g, '-'))
+  const categories = CATEGORIES.map(c => c.id)
+  const businesses = STATIC_BUSINESSES.map(b => b.slug)
+
+  const allSlugs = Array.from(new Set([...cities, ...categories, ...businesses]))
+  return allSlugs.map(slug => ({
+    city: slug
+  }))
+}
 
 const BASE_URL = 'https://www.pakbizbranhces.online'
 

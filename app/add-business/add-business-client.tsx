@@ -1024,12 +1024,22 @@ export default function AddBussinessClient() {
                       </div>
                     </div>
 
-                    <button
-                      onClick={() => window.location.reload()}
-                      className="w-full max-w-xs py-4 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold transition-all cursor-pointer"
-                    >
-                      List Another Business
-                    </button>
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                      {submittedSlug && (
+                        <Link
+                          href={`/${submittedSlug}/`}
+                          className="w-full max-w-xs py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold transition-all hover:scale-105 active:scale-95 shadow-sm cursor-pointer text-center inline-block"
+                        >
+                          View Your Business Page
+                        </Link>
+                      )}
+                      <button
+                        onClick={() => window.location.reload()}
+                        className="w-full max-w-xs py-4 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold transition-all hover:scale-105 active:scale-95 shadow-sm cursor-pointer"
+                      >
+                        List Another Business
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>

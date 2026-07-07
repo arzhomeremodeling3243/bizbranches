@@ -9,8 +9,12 @@ const BASE_URL = 'https://www.pakbizbranhces.online'
 export const dynamic = 'force-static'
 
 export async function generateStaticParams() {
-  return []
+  return CITIES.map((c) => ({
+    city: c.toLowerCase().replace(/\s+/g, '-'),
+  }))
 }
+
+export const dynamicParams = false
 
 function findCityBySlug(slug: string): string | null {
   const normalized = slug.replace(/-/g, ' ').toLowerCase()

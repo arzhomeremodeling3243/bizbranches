@@ -213,9 +213,22 @@ function RestaurantsPageContent() {
                     </p>
                     
                     <div className="mt-4 space-y-2">
-                      <div className="flex items-center gap-2 text-sm text-gray-600">
-                        <Phone className="w-4 h-4" />
-                        <span>{restaurant.phone}</span>
+                      <div className="flex items-center justify-between text-sm text-gray-600">
+                        <div className="flex items-center gap-2">
+                          <Phone className="w-4 h-4" />
+                          <span>{restaurant.phone}</span>
+                        </div>
+                        <button
+                          onClick={(e) => {
+                            e.preventDefault()
+                            e.stopPropagation()
+                            window.location.href = `tel:${restaurant.phone.replace(/[^0-9+]/g, '')}`
+                          }}
+                          className="flex items-center justify-center p-1.5 bg-orange-500/10 hover:bg-orange-500/20 text-orange-500 rounded-full transition-colors cursor-pointer"
+                          title={`Call ${restaurant.businessName}`}
+                        >
+                          <Phone className="w-3.5 h-3.5 fill-current" />
+                        </button>
                       </div>
                       {restaurant.whatsapp && (
                         <div className="flex items-center gap-2 text-sm text-gray-600">

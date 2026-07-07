@@ -272,9 +272,22 @@ export default function CityCategoryListClient({ citySlug, categorySlug }: { cit
                       </div>
                     </div>
                     <p className="text-sm text-gray-600 line-clamp-2 leading-relaxed flex-1">{biz.description}</p>
-                    <div className="mt-3 flex items-center gap-2 text-xs text-gray-500">
-                      <Phone className="w-3.5 h-3.5" />
-                      {biz.phone}
+                    <div className="mt-3 flex items-center justify-between border-t border-gray-50 pt-3">
+                      <div className="flex items-center gap-2 text-xs text-gray-500">
+                        <Phone className="w-3.5 h-3.5" />
+                        {biz.phone}
+                      </div>
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault()
+                          e.stopPropagation()
+                          window.location.href = `tel:${biz.phone.replace(/[^0-9+]/g, '')}`
+                        }}
+                        className="flex items-center justify-center p-2 bg-[#60a5fa]/10 hover:bg-[#60a5fa]/20 text-[#60a5fa] rounded-full transition-colors cursor-pointer"
+                        title={`Call ${biz.businessName}`}
+                      >
+                        <Phone className="w-4 h-4 fill-current" />
+                      </button>
                     </div>
                   </Link>
                 ))}

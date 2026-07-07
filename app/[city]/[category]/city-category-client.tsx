@@ -250,12 +250,25 @@ export default function CityCategoryClient({ citySlug, categorySlug }: { citySlu
                       <p className="text-gray-600 text-sm line-clamp-2 mb-4">
                         {biz.description}
                       </p>
-                      <div className="flex items-center gap-4">
+                      <div className="flex items-center justify-between border-t border-gray-50 pt-3 mt-1">
                         <div className="flex items-center gap-1.5 text-sm font-semibold text-[#0f2b3d]">
                           <Phone className="w-4 h-4 text-[#60a5fa]" />
                           {biz.phone}
                         </div>
-                        <span className="text-xs text-[#60a5fa] font-bold group-hover:translate-x-1 transition-transform">View Details →</span>
+                        <div className="flex items-center gap-3">
+                          <button
+                            onClick={(e) => {
+                              e.preventDefault()
+                              e.stopPropagation()
+                              window.location.href = `tel:${biz.phone.replace(/[^0-9+]/g, '')}`
+                            }}
+                            className="flex items-center justify-center p-2 bg-[#60a5fa]/10 hover:bg-[#60a5fa]/20 text-[#60a5fa] rounded-full transition-colors cursor-pointer"
+                            title={`Call ${biz.businessName}`}
+                          >
+                            <Phone className="w-4 h-4 fill-current" />
+                          </button>
+                          <span className="text-xs text-[#60a5fa] font-bold group-hover:translate-x-1 transition-transform">View Details →</span>
+                        </div>
                       </div>
                     </div>
                   </Link>

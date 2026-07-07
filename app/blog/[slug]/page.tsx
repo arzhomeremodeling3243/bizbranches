@@ -16,6 +16,8 @@ export async function generateStaticParams() {
   return BLOG_POSTS.filter(post => !post.hidden).map(post => ({ slug: post.slug }))
 }
 
+export const dynamicParams = false
+
 export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const params = await props.params;
   const post = BLOG_POSTS.find(p => p.slug === params.slug)

@@ -394,9 +394,24 @@ export default function CatchAllPageClient({ slug }: { slug: string }) {
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {businessesList.map(biz => (
-                  <Link key={biz.id} href={`/${biz.slug}/`} className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 hover:shadow-md transition-all group">
-                     <h3 className="font-bold text-gray-900 group-hover:text-[#60a5fa] truncate">{biz.businessName}</h3>
-                     <p className="text-sm text-gray-500">{biz.phone}</p>
+                  <Link key={biz.id} href={`/${biz.slug}/`} className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 hover:shadow-md transition-all group flex flex-col justify-between">
+                     <div className="min-w-0">
+                       <h3 className="font-bold text-gray-900 group-hover:text-[#60a5fa] truncate mb-2">{biz.businessName}</h3>
+                     </div>
+                     <div className="flex items-center justify-between border-t border-gray-50 pt-2 mt-2">
+                       <span className="text-sm text-gray-500">{biz.phone}</span>
+                       <button
+                         onClick={(e) => {
+                           e.preventDefault()
+                           e.stopPropagation()
+                           window.location.href = `tel:${biz.phone.replace(/[^0-9+]/g, '')}`
+                         }}
+                         className="flex items-center justify-center p-1.5 bg-[#60a5fa]/10 hover:bg-[#60a5fa]/20 text-[#60a5fa] rounded-full transition-colors cursor-pointer"
+                         title={`Call ${biz.businessName}`}
+                       >
+                         <Phone className="w-3.5 h-3.5 fill-current" />
+                       </button>
+                     </div>
                   </Link>
                 ))}
               </div>
@@ -457,9 +472,26 @@ export default function CatchAllPageClient({ slug }: { slug: string }) {
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {businessesList.map(biz => (
-                  <Link key={biz.id} href={`/${biz.slug}/`} className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 hover:shadow-md transition-all group">
-                     <h3 className="font-bold text-gray-900 group-hover:text-[#60a5fa] truncate">{biz.businessName}</h3>
-                     <p className="text-sm text-gray-500">{biz.city}</p>
+                  <Link key={biz.id} href={`/${biz.slug}/`} className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 hover:shadow-md transition-all group flex flex-col justify-between">
+                     <div className="min-w-0">
+                       <h3 className="font-bold text-gray-900 group-hover:text-[#60a5fa] truncate mb-2">{biz.businessName}</h3>
+                     </div>
+                     <div className="flex items-center justify-between border-t border-gray-50 pt-2 mt-2">
+                       <span className="text-sm text-gray-500">{biz.city}</span>
+                       {biz.phone && (
+                         <button
+                           onClick={(e) => {
+                             e.preventDefault()
+                             e.stopPropagation()
+                             window.location.href = `tel:${biz.phone.replace(/[^0-9+]/g, '')}`
+                           }}
+                           className="flex items-center justify-center p-1.5 bg-[#60a5fa]/10 hover:bg-[#60a5fa]/20 text-[#60a5fa] rounded-full transition-colors cursor-pointer"
+                           title={`Call ${biz.businessName}`}
+                         >
+                           <Phone className="w-3.5 h-3.5 fill-current" />
+                         </button>
+                       )}
+                     </div>
                   </Link>
                 ))}
               </div>
@@ -705,14 +737,29 @@ export default function CatchAllPageClient({ slug }: { slug: string }) {
                       <h2 className="text-2xl font-bold text-[#0f2b3d]">Similar Businesses in {business.city}</h2>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         {similarBusinesses.map(biz => (
-                          <Link key={biz.id} href={`/${biz.slug}/`} className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:border-[#60a5fa]/30 transition-all flex items-center gap-4 group">
-                            <div className="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center shrink-0 group-hover:bg-blue-50">
-                              <Building2 className="w-6 h-6 text-gray-400 group-hover:text-[#60a5fa]" />
+                          <Link key={biz.id} href={`/${biz.slug}/`} className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:border-[#60a5fa]/30 transition-all flex items-center justify-between gap-4 group">
+                            <div className="flex items-center gap-4 min-w-0">
+                              <div className="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center shrink-0 group-hover:bg-blue-50">
+                                <Building2 className="w-6 h-6 text-gray-400 group-hover:text-[#60a5fa]" />
+                              </div>
+                              <div className="min-w-0">
+                                <span className="block font-bold text-gray-900 group-hover:text-[#60a5fa] truncate">{biz.businessName}</span>
+                                <span className="block text-sm text-gray-500">{biz.phone}</span>
+                              </div>
                             </div>
-                            <div className="min-w-0">
-                              <span className="block font-bold text-gray-900 group-hover:text-[#60a5fa] truncate">{biz.businessName}</span>
-                              <span className="block text-sm text-gray-500">{biz.phone}</span>
-                            </div>
+                            {biz.phone && (
+                              <button
+                                onClick={(e) => {
+                                  e.preventDefault()
+                                  e.stopPropagation()
+                                  window.location.href = `tel:${biz.phone.replace(/[^0-9+]/g, '')}`
+                                }}
+                                className="flex items-center justify-center p-2 bg-[#60a5fa]/10 hover:bg-[#60a5fa]/20 text-[#60a5fa] rounded-full transition-colors cursor-pointer shrink-0"
+                                title={`Call ${biz.businessName}`}
+                              >
+                                <Phone className="w-4 h-4 fill-current" />
+                              </button>
+                            )}
                           </Link>
                         ))}
                       </div>
@@ -724,14 +771,29 @@ export default function CatchAllPageClient({ slug }: { slug: string }) {
                       <h2 className="text-2xl font-bold text-[#0f2b3d]">{business.businessName} Locations in Other Cities</h2>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         {branches.map(br => (
-                          <Link key={br.id} href={`/${br.slug}/`} className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:border-[#60a5fa]/30 transition-all flex items-center gap-4 group">
-                            <div className="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center shrink-0 group-hover:bg-blue-50">
-                              <MapPin className="w-6 h-6 text-[#60a5fa]" />
+                          <Link key={br.id} href={`/${br.slug}/`} className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:border-[#60a5fa]/30 transition-all flex items-center justify-between gap-4 group">
+                            <div className="flex items-center gap-4 min-w-0">
+                              <div className="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center shrink-0 group-hover:bg-blue-50">
+                                <MapPin className="w-6 h-6 text-[#60a5fa]" />
+                              </div>
+                              <div className="min-w-0">
+                                <span className="block font-bold text-gray-900 group-hover:text-[#60a5fa] truncate">{business.businessName} – {br.city}</span>
+                                <span className="block text-sm text-gray-500">{br.phone}</span>
+                              </div>
                             </div>
-                            <div className="min-w-0">
-                              <span className="block font-bold text-gray-900 group-hover:text-[#60a5fa] truncate">{business.businessName} – {br.city}</span>
-                              <span className="block text-sm text-gray-500">{br.phone}</span>
-                            </div>
+                            {br.phone && (
+                              <button
+                                onClick={(e) => {
+                                  e.preventDefault()
+                                  e.stopPropagation()
+                                  window.location.href = `tel:${br.phone.replace(/[^0-9+]/g, '')}`
+                                }}
+                                className="flex items-center justify-center p-2 bg-[#60a5fa]/10 hover:bg-[#60a5fa]/20 text-[#60a5fa] rounded-full transition-colors cursor-pointer shrink-0"
+                                title={`Call ${business.businessName}`}
+                              >
+                                <Phone className="w-4 h-4 fill-current" />
+                              </button>
+                            )}
                           </Link>
                         ))}
                       </div>
