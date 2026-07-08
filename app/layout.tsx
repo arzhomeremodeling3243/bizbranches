@@ -117,8 +117,8 @@ export default function RootLayout({
               contactPoint: {
                 '@type': 'ContactPoint',
                 contactType: 'customer service',
-                email: 'support@pakbizbranhces.online',
-                telephone: '+923142552851',
+                email: 'admin@pakbizbranhces.online',
+                telephone: '+923345636230',
                 areaServed: {
                   '@type': 'Country',
                   name: 'Pakistan'

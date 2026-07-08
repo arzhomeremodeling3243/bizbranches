@@ -255,8 +255,8 @@ export default function CityCategoryListClient({ citySlug, categorySlug }: { cit
                     className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 hover:shadow-md hover:border-[#60a5fa]/30 transition-all group flex flex-col"
                   >
                     <div className="flex items-start gap-3 mb-3">
-                      {biz.logoUrl ? (
-                        <img src={biz.logoUrl} alt={biz.businessName} className="w-14 h-14 rounded-lg object-cover border border-gray-100 shrink-0" loading="lazy" />
+                      {biz.logoUrl || ((biz.businessName?.toLowerCase().includes('yango') || biz.slug?.toLowerCase().includes('yango')) ? '/yango-logo.jpg' : '') ? (
+                        <img src={biz.logoUrl || '/yango-logo.jpg'} alt={biz.businessName} className="w-14 h-14 rounded-lg object-cover border border-gray-100 shrink-0" loading="lazy" />
                       ) : (
                         <div className="w-14 h-14 rounded-lg bg-gradient-to-br from-[#0f2b3d] to-[#1a3f57] flex items-center justify-center shrink-0">
                           <Building2 className="w-7 h-7 text-white/60" />

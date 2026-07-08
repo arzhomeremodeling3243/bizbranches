@@ -81,7 +81,7 @@ export default function PrivacyPage() {
           </p>
           <p className="font-medium text-gray-900">
             PakBizBranches Support<br />
-            Email: support@pakbizbranhces.online<br />
+            Email: admin@pakbizbranhces.online<br />
             Address: Gulghast Colony, Urdu Bazar, Multan, Pakistan
           </p>
           <div className="mt-8">

@@ -156,7 +156,9 @@ export default function ContactClient() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-1">Email Us</h3>
-                    <p className="text-gray-600">support@pakbizbranhces.online</p>
+                    <a href="mailto:admin@pakbizbranhces.online" className="text-gray-600 hover:text-blue-600 transition-colors">
+                      admin@pakbizbranhces.online
+                    </a>
                     <p className="text-sm text-gray-500">Official business inquiries & support</p>
                   </div>
                 </div>
@@ -167,7 +169,9 @@ export default function ContactClient() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-1">Call Us</h3>
-                    <p className="text-gray-600">+92 314 2552851</p>
+                    <a href="tel:+923345636230" className="text-gray-600 hover:text-green-600 transition-colors">
+                      +92 334 5636230
+                    </a>
                     <p className="text-sm text-gray-500">Direct Support Line (Monday to Friday)</p>
                   </div>
                 </div>
@@ -178,7 +182,9 @@ export default function ContactClient() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-1">WhatsApp</h3>
-                    <p className="text-gray-600">+92 314 2552851</p>
+                    <a href="https://wa.me/923345636230" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-purple-600 transition-colors">
+                      +92 334 5636230
+                    </a>
                     <p className="text-sm text-gray-500">Quick assistance via WhatsApp</p>
                   </div>
                 </div>

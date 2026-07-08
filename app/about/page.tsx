@@ -107,8 +107,8 @@ export default function AboutPage() {
                   <h4 className="font-bold text-[#0f2b3d] mb-2">Corporate Information</h4>
                   <ul className="space-y-1 text-sm">
                     <li><strong>HQ Location:</strong> Gulghast Colony, Urdu Bazar, Multan, Punjab, Pakistan</li>
-                    <li><strong>Email:</strong> support@pakbizbranhces.online</li>
-                    <li><strong>Hotline:</strong> +92 314 2552851</li>
+                    <li><strong>Email:</strong> admin@pakbizbranhces.online</li>
+                    <li><strong>Hotline:</strong> +92 334 5636230</li>
                   </ul>
                 </div>
               </div>

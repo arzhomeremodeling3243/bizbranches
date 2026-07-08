@@ -533,6 +533,8 @@ export default function CatchAllPageClient({ slug }: { slug: string }) {
     const ratingValue = business.rating || 4.8
     const reviewCount = business.reviewCount || 12
 
+    const finalLogoUrl = business.logoUrl || ((business.businessName?.toLowerCase().includes('yango') || business.slug?.toLowerCase().includes('yango')) ? '/yango-logo.jpg' : '')
+
     const localBusinessSchema = {
       '@context': 'https://schema.org',
       '@type': 'LocalBusiness',
@@ -552,7 +554,7 @@ export default function CatchAllPageClient({ slug }: { slug: string }) {
       },
       areaServed: { '@type': 'City', name: business.city },
       ...(businessCategory && { knowsAbout: businessCategory.name }),
-      ...(business.logoUrl && { image: business.logoUrl, logo: business.logoUrl }),
+      ...(finalLogoUrl && { image: finalLogoUrl, logo: finalLogoUrl }),
       ...(sameAs.length > 0 && { sameAs }),
       aggregateRating: {
         '@type': 'AggregateRating',
@@ -631,8 +633,8 @@ export default function CatchAllPageClient({ slug }: { slug: string }) {
 
               <div className="flex flex-col md:flex-row gap-8 items-start">
                 <div className="shrink-0">
-                  {business.logoUrl ? (
-                    <img src={business.logoUrl} alt={business.businessName} className="w-32 h-32 rounded-2xl object-cover border border-gray-200 shadow-sm" loading="lazy" />
+                  {finalLogoUrl ? (
+                    <img src={finalLogoUrl} alt={business.businessName} className="w-32 h-32 rounded-2xl object-cover border border-gray-200 shadow-sm" loading="lazy" />
                   ) : (
                     <div className="w-32 h-32 rounded-2xl bg-gradient-to-br from-[#0f2b3d] to-[#1a3f57] flex items-center justify-center border border-gray-200">
                       <Building2 className="w-16 h-16 text-white/60" />

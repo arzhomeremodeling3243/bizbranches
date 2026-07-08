@@ -52,13 +52,13 @@ export default function Footer() {
                   <span itemProp="addressLocality">Multan</span>, <span itemProp="addressRegion">Punjab</span>, <span itemProp="addressCountry">PK</span>
                 </span>
               </address>
-              <a href="tel:+923142552851" className="flex items-center gap-3 text-sm text-white/60 hover:text-[#60a5fa] transition-colors" title="Call Us">
+              <a href="tel:+923345636230" className="flex items-center gap-3 text-sm text-white/60 hover:text-[#60a5fa] transition-colors" title="Call Us">
                 <Phone className="w-5 h-5 text-[#60a5fa] shrink-0" />
-                +92 314 2552851
+                +92 334 5636230
               </a>
-              <a href="mailto:support@pakbizbranhces.online" className="flex items-center gap-3 text-sm text-white/60 hover:text-[#60a5fa] transition-colors" title="Email Us">
+              <a href="mailto:admin@pakbizbranhces.online" className="flex items-center gap-3 text-sm text-white/60 hover:text-[#60a5fa] transition-colors" title="Email Us">
                 <Mail className="w-5 h-5 text-[#60a5fa] shrink-0" />
-                support@pakbizbranhces.online
+                admin@pakbizbranhces.online
               </a>
             </div>
           </div>

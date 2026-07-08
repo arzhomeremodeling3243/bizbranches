@@ -191,6 +191,8 @@ export default function BusinessDetailClient({ slug }: { slug: string }) {
   if (business.facebookPage) sameAs.push(business.facebookPage)
   if (business.youtubeChannel) sameAs.push(business.youtubeChannel)
 
+  const finalLogoUrl = business.logoUrl || ((business.businessName?.toLowerCase().includes('yango') || business.slug?.toLowerCase().includes('yango')) ? '/yango-logo.jpg' : '')
+
   const localBusinessSchema: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
@@ -213,7 +215,7 @@ export default function BusinessDetailClient({ slug }: { slug: string }) {
       name: business.city,
     },
     ...(category && { knowsAbout: category.name }),
-    ...(business.logoUrl && { image: business.logoUrl, logo: business.logoUrl }),
+    ...(finalLogoUrl && { image: finalLogoUrl, logo: finalLogoUrl }),
     ...(sameAs.length > 0 && { sameAs }),
   }
 
@@ -298,9 +300,9 @@ export default function BusinessDetailClient({ slug }: { slug: string }) {
             <div className="flex flex-col md:flex-row gap-8 items-start">
               {/* Logo */}
               <div className="shrink-0">
-                {business.logoUrl ? (
+                {finalLogoUrl ? (
                   <img
-                    src={business.logoUrl}
+                    src={finalLogoUrl}
                     alt={`${business.businessName} logo`}
                     width={128}
                     height={128}
