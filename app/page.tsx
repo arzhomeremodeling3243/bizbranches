@@ -8,6 +8,7 @@ import { CATEGORIES, CITIES } from '@/lib/data'
 import Link from 'next/link'
 import { BannerAdLoader, NativeAdLoader } from '@/components/ads/ads-loader'
 import { Check } from 'lucide-react'
+import { STATIC_BUSINESSES } from '@/lib/static-db'
 
 // ─── Above-the-fold: loaded eagerly ─────────────────────────────────────────
 import AboutSection from '@/components/home/about-section'
@@ -978,6 +979,35 @@ export default async function HomePage() {
         <TrustSection />
         <CitiesGrid />
         <CTASection />
+
+        {/* SEO Directory Index Section */}
+        <section className="py-12 bg-slate-50 border-t border-gray-200" aria-label="Directory Index">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-xl font-bold text-slate-800 mb-6">Directory Index: All Verified Pakistani Businesses</h2>
+            
+            <details className="group bg-white rounded-2xl border border-slate-200 p-6 [&_summary::-webkit-details-marker]:hidden">
+              <summary className="flex items-center justify-between cursor-pointer focus:outline-none">
+                <span className="text-sm font-semibold text-slate-700">Click to expand index of all 590+ verified business pages</span>
+                <span className="transition group-open:-rotate-180">
+                  <svg fill="none" height="24" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="24" className="text-slate-500 w-5 h-5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </span>
+              </summary>
+              
+              <div className="mt-6 pt-6 border-t border-slate-100 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-x-4 gap-y-2 text-xs">
+                {STATIC_BUSINESSES.map(b => (
+                  <Link 
+                    key={b.slug} 
+                    href={`/${b.slug}/`} 
+                    className="text-slate-500 hover:text-blue-500 transition-colors truncate"
+                    title={b.businessName}
+                  >
+                    {b.businessName}
+                  </Link>
+                ))}
+              </div>
+            </details>
+          </div>
+        </section>
 
         {/* Ad slot 4: footer banner */}
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-6">
