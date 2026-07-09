@@ -59,7 +59,7 @@ export default function HtmlSitemapPage() {
               <ul className="space-y-2">
                 {CATEGORIES.map(cat => (
                   <li key={cat.id}>
-                    <Link href={`/categories/${cat.id}/`} className="text-[#60a5fa] hover:underline text-sm">{cat.name}</Link>
+                    <Link href={`/${cat.id}/`} className="text-[#60a5fa] hover:underline text-sm">{cat.name}</Link>
                   </li>
                 ))}
               </ul>
@@ -71,7 +71,7 @@ export default function HtmlSitemapPage() {
               <ul className="space-y-2">
                 {TIER1_CITIES.map(city => (
                   <li key={city}>
-                    <Link href={`/cities/${city.toLowerCase().replace(/ /g, '-')}/`} className="text-[#60a5fa] hover:underline text-sm">{city} Business Directory</Link>
+                    <Link href={`/${city.toLowerCase().replace(/ /g, '-')}/`} className="text-[#60a5fa] hover:underline text-sm">{city} Business Directory</Link>
                   </li>
                 ))}
               </ul>
@@ -85,7 +85,7 @@ export default function HtmlSitemapPage() {
                   CATEGORIES.map(cat => (
                     <Link
                       key={`${city}-${cat.id}`}
-                      href={`/locations/${city.toLowerCase().replace(/ /g, '-')}/${cat.id}/`}
+                      href={`/${city.toLowerCase().replace(/ /g, '-')}/${cat.id}/`}
                       className="text-xs text-[#60a5fa] hover:underline leading-tight"
                     >
                       {cat.name} in {city}
@@ -106,7 +106,7 @@ export default function HtmlSitemapPage() {
                 {CITIES.map(city => (
                   <Link
                     key={city}
-                    href={`/cities/${city.toLowerCase().replace(/ /g, '-')}/`}
+                    href={`/${city.toLowerCase().replace(/ /g, '-')}/`}
                     className="text-xs text-[#60a5fa] hover:underline"
                   >
                     {city}

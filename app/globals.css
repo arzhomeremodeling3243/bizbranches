@@ -49,8 +49,7 @@
 }
 
 @theme inline {
-  /* Use the CSS variable injected by next/font — falls back to system-ui */
-  --font-sans: var(--font-outfit, 'system-ui', sans-serif);
+  --font-sans: 'Outfit', 'system-ui', sans-serif;
   --font-mono: 'Geist Mono', 'Geist Mono Fallback';
 
   --color-background: var(--background);

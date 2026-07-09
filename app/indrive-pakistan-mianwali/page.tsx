@@ -38,7 +38,7 @@ export function generateMetadata(): Metadata {
     description,
     keywords: [`Indrive ${city}`, `ride-hailing ${city}`, `cheap taxi ${city}`, `Indrive Pakistan`, `${city} transport`, `courier ${city}`],
     alternates: {
-      canonical: `https://www.pakbizbranhces.online/indrive-pakistan-mianwali`,
+      canonical: `https://www.pakbizbranhces.online/indrive-pakistan-mianwali/`,
     },
   }
 }

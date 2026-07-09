@@ -182,9 +182,9 @@ export default function BusinessDetailClient({ slug }: { slug: string }) {
   const mapQuery = encodeURIComponent(`${business.address}, ${business.city}, Pakistan`)
   const mapSrc = `https://maps.google.com/maps?q=${mapQuery}&output=embed`
 
-  const pageUrl = `https://www.pakbizbranhces.online/business/${slug}/`
-  const categoryUrl = `/categories/${business.category}/`
-  const cityUrl = `/cities/${encodeURIComponent(business.city.toLowerCase().replace(/ /g, '-'))}/`
+  const pageUrl = `https://www.pakbizbranhces.online/${slug}/`
+  const categoryUrl = `/${business.category}/`
+  const cityUrl = `/${encodeURIComponent(business.city.toLowerCase().replace(/ /g, '-'))}/`
 
   const sameAs: string[] = []
   if (business.websiteUrl) sameAs.push(business.websiteUrl)

@@ -97,7 +97,7 @@ export async function generateMetadata(props: { params: Promise<{ city?: string 
     description,
     keywords: [`Indrive ${city}`, `ride-hailing ${city}`, `cheap taxi ${city}`, `Indrive Pakistan`, `${city} transport`, `courier ${city}`],
     alternates: {
-      canonical: `https://www.pakbizbranhces.online/indrive-pakistan-${params?.city || 'pakistan'}`,
+      canonical: `https://www.pakbizbranhces.online/indrive-pakistan-${params?.city || 'pakistan'}/`,
     },
   }
 }

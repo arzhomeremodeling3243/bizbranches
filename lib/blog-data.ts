@@ -705,7 +705,7 @@ export const BLOG_POSTS = [
       <p>Once satisfied with a supplier's quality, negotiate payment terms, minimum order quantities, delivery schedules, and return policies. Building a long-term relationship with reliable suppliers is far more valuable than chasing the lowest price.</p>
 
       <h2>Start Sourcing on PakBizBranches</h2>
-      <p>Browse our directory of Lahore businesses to find suppliers in your industry. <a href="/cities/lahore">Explore Lahore businesses</a> or search by category to find verified, contact-ready suppliers today.</p>
+      <p>Browse our directory of Lahore businesses to find suppliers in your industry. <a href="/lahore/">Explore Lahore businesses</a> or search by category to find verified, contact-ready suppliers today.</p>
     `,
     author: "Alex Rivers",
     date: "March 17, 2026",

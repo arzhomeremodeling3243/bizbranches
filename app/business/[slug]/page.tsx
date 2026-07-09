@@ -5,7 +5,7 @@ import BusinessDetailClient from './business-detail-client'
 import React from 'react'
 
 export const dynamic = 'force-static'
-export const dynamicParams = false
+export const dynamicParams = true
 
 export async function generateStaticParams() {
   return STATIC_BUSINESSES.map((b) => ({
@@ -112,7 +112,7 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
     description = description.padEnd(125, '.')
   }
 
-  const url = `${BASE_URL}/business/${slug}/`
+  const url = `${BASE_URL}/${slug}/`
 
   return {
     title,

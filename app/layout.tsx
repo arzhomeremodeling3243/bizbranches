@@ -1,19 +1,12 @@
 import type { Metadata } from 'next'
-import { Outfit } from 'next/font/google'
 import './globals.css'
 import AntiCopyWrapper from '@/components/anti-copy-wrapper'
 import FloatingWhatsAppButton from '@/components/floating-whatsapp-button'
 import ChatWidgetLoader from '@/components/chat-widget-loader'
 
-// ─── next/font: zero render-blocking, automatic font-display:swap, self-hosted ──
-const outfit = Outfit({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-outfit',
-  weight: ['400', '500', '600', '700', '800'],
-  preload: true,
-  fallback: ['system-ui', 'sans-serif'],
-})
+const outfit = {
+  variable: 'font-sans'
+}
 
 export const metadata: Metadata = {
   title: 'Pakistan Business Directory: Find Local Businesses',
@@ -59,6 +52,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={outfit.variable}>
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
         <meta name="google-site-verification" content="D2TTC8ZWjbjA3wgOFcyrfBnFkjC3TAiCG7E6wDxDGK4" />
         <meta name="ahrefs-site-verification" content="22e1275092fa85b1" />
         <link rel="alternate" hrefLang="en-PK" href="https://www.pakbizbranhces.online/" />

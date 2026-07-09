@@ -189,9 +189,9 @@ export default function CityCategoryListClient({ citySlug, categorySlug }: { cit
             <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-white/60 mb-6">
               <Link href="/" className="hover:text-white transition-colors">Home</Link>
               <ChevronRight className="w-4 h-4" />
-              <Link href={`/categories/${categorySlug}/`} className="hover:text-white transition-colors">{category.name}</Link>
+              <Link href={`/${categorySlug}/`} className="hover:text-white transition-colors">{category.name}</Link>
               <ChevronRight className="w-4 h-4" />
-              <Link href={`/cities/${citySlug}/`} className="hover:text-white transition-colors">{cityName}</Link>
+              <Link href={`/${citySlug}/`} className="hover:text-white transition-colors">{cityName}</Link>
             </nav>
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
               {category.name} in {cityName}
@@ -210,10 +210,10 @@ export default function CityCategoryListClient({ citySlug, categorySlug }: { cit
           {/* Related Pages Nav */}
           <section className="mb-8">
             <div className="flex flex-wrap gap-3">
-              <Link href={`/cities/${citySlug}/`} className="inline-flex items-center gap-1.5 px-4 py-2 bg-white rounded-lg border border-gray-200 text-sm font-medium text-gray-700 hover:border-[#60a5fa] hover:text-[#60a5fa] transition-colors shadow-sm">
+              <Link href={`/${citySlug}/`} className="inline-flex items-center gap-1.5 px-4 py-2 bg-white rounded-lg border border-gray-200 text-sm font-medium text-gray-700 hover:border-[#60a5fa] hover:text-[#60a5fa] transition-colors shadow-sm">
                 <MapPin className="w-3.5 h-3.5" /> All businesses in {cityName}
               </Link>
-              <Link href={`/categories/${categorySlug}/`} className="inline-flex items-center gap-1.5 px-4 py-2 bg-white rounded-lg border border-gray-200 text-sm font-medium text-gray-700 hover:border-[#60a5fa] hover:text-[#60a5fa] transition-colors shadow-sm">
+              <Link href={`/${categorySlug}/`} className="inline-flex items-center gap-1.5 px-4 py-2 bg-white rounded-lg border border-gray-200 text-sm font-medium text-gray-700 hover:border-[#60a5fa] hover:text-[#60a5fa] transition-colors shadow-sm">
                 <Building2 className="w-3.5 h-3.5" /> All {category.name} in Pakistan
               </Link>
             </div>
@@ -342,8 +342,8 @@ export default function CityCategoryListClient({ citySlug, categorySlug }: { cit
             <div className="mt-10 pt-8 border-t border-gray-100 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm font-medium">
               <span className="text-gray-400">Related:</span>
               <Link href="/" className="text-[#60a5fa] hover:underline" title="Pakistan Business Directory">Directory Home</Link>
-              <Link href={`/cities/${citySlug}/`} className="text-[#60a5fa] hover:underline" title={`Businesses in ${cityName}`}>All {cityName} Businesses</Link>
-              <Link href={`/categories/${categorySlug}/`} className="text-[#60a5fa] hover:underline" title={`${category.name} in Pakistan`}>All {category.name}</Link>
+              <Link href={`/${citySlug}/`} className="text-[#60a5fa] hover:underline" title={`Businesses in ${cityName}`}>All {cityName} Businesses</Link>
+              <Link href={`/${categorySlug}/`} className="text-[#60a5fa] hover:underline" title={`${category.name} in Pakistan`}>All {category.name}</Link>
               <Link href="/add-business/" className="text-[#60a5fa] hover:underline" title="Add Business Free">Add Business Free</Link>
               <Link href="/blog/" className="text-[#60a5fa] hover:underline" title="Business Blog">Business Blog</Link>
             </div>
