@@ -8,9 +8,7 @@ export const dynamic = 'force-static'
 export const dynamicParams = true
 
 export async function generateStaticParams() {
-  return STATIC_BUSINESSES.map((b) => ({
-    slug: b.slug,
-  }))
+  return []
 }
 
 const BASE_URL = 'https://www.pakbizbranhces.online'

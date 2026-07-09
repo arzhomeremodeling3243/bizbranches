@@ -9,14 +9,7 @@ export const dynamic = 'force-static'
 export const dynamicParams = true
 
 export async function generateStaticParams() {
-  const cities = CITIES.map(c => c.toLowerCase().replace(/\s+/g, '-'))
-  const categories = CATEGORIES.map(c => c.id)
-  const businesses = STATIC_BUSINESSES.map(b => b.slug)
-
-  const allSlugs = Array.from(new Set([...cities, ...categories, ...businesses]))
-  return allSlugs.map(slug => ({
-    city: slug
-  }))
+  return []
 }
 
 const BASE_URL = 'https://www.pakbizbranhces.online'
