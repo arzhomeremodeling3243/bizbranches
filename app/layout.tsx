@@ -57,6 +57,7 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
         <meta name="google-site-verification" content="D2TTC8ZWjbjA3wgOFcyrfBnFkjC3TAiCG7E6wDxDGK4" />
         <meta name="ahrefs-site-verification" content="22e1275092fa85b1" />
+        <meta name="monetag" content="60b70317a96e2ce7f8ea8bac10160fde" />
         <link rel="alternate" hrefLang="en-PK" href="https://www.pakbizbranhces.online/" />
         <link rel="alternate" hrefLang="x-default" href="https://www.pakbizbranhces.online/" />
 
