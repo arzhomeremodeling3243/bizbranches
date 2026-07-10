@@ -5,6 +5,16 @@ import { fetchAllBusinessesForSitemap } from '@/lib/firebase-server'
 
 const BASE_URL = 'https://www.pakbizbranhces.online'
 
+function getAbsoluteImageUrl(url: string): string {
+  if (!url) return ''
+  if (url.startsWith('http://') || url.startsWith('https://')) {
+    return url
+  }
+  const cleanUrl = url.startsWith('/') ? url : `/${url}`
+  return `${BASE_URL}${cleanUrl}`
+}
+
+
 const TOP_CITIES = [
   'Karachi', 'Lahore', 'Islamabad', 'Rawalpindi', 'Faisalabad',
   'Multan', 'Peshawar', 'Quetta', 'Sialkot', 'Gujranwala',
@@ -99,7 +109,7 @@ export async function GET() {
     }
     if ((post as any).image) {
       urlItem.image = {
-        loc: `${BASE_URL}${(post as any).image}`,
+        loc: getAbsoluteImageUrl((post as any).image),
         title: post.title
       }
     }
@@ -117,7 +127,7 @@ export async function GET() {
         priority: '0.75',
         ...(biz.logoUrl ? {
           image: {
-            loc: biz.logoUrl,
+            loc: getAbsoluteImageUrl(biz.logoUrl),
             title: biz.slug.replace(/-/g, ' ')
           }
         } : {})

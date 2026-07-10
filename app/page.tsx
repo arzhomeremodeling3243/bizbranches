@@ -943,7 +943,7 @@ export default async function HomePage() {
                     return (
                       <tr key={b.id} className="hover:bg-gray-50 transition-colors">
                         <td className="px-6 py-4 font-medium text-[#0f2b3d]">
-                          <Link href={`/business/${b.slug}/`} className="hover:text-emerald-600 transition-colors">
+                          <Link href={`/${b.slug}/`} className="hover:text-emerald-600 transition-colors">
                             {b.businessName}
                           </Link>
                         </td>

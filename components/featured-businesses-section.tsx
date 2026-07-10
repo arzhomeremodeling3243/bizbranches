@@ -160,7 +160,7 @@ export default function FeaturedBusinessesSection({ businesses }: FeaturedBusine
 
                   {/* View Details Link */}
                   <Link
-                    href={business.slug ? `/${business.slug}` : `/business/${business.id}`}
+                    href={business.slug ? `/${business.slug}/` : `/${business.id}/`}
                     className="block w-full text-center px-4 py-2.5 bg-amber-50 text-amber-600 rounded-lg text-xs font-semibold hover:bg-amber-100 transition-colors border border-amber-200 hover:border-amber-300"
                   >
                     View Details

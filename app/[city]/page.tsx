@@ -6,10 +6,25 @@ import CatchAllPageClient from './catch-all-page-client'
 import React from 'react'
 
 export const dynamic = 'force-static'
-export const dynamicParams = true
+export const dynamicParams = false
 
 export async function generateStaticParams() {
-  return []
+  // Pre-render major cities
+  const cityParams = CITIES.map(c => ({
+    city: c.toLowerCase().replace(/\s+/g, '-')
+  }))
+
+  // Pre-render categories
+  const categoryParams = CATEGORIES.map(c => ({
+    city: c.id
+  }))
+
+  // Pre-render static businesses
+  const businessParams = STATIC_BUSINESSES.map(b => ({
+    city: b.slug
+  }))
+
+  return [...cityParams, ...categoryParams, ...businessParams]
 }
 
 const BASE_URL = 'https://www.pakbizbranhces.online'

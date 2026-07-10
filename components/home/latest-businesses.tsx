@@ -168,9 +168,8 @@ export default function LatestBusinesses({ businesses }: LatestBusinessesProps) 
                     )}
                   </div>
 
-                  {/* View Details Link */}
                   <Link
-                    href={`/business/${business.slug}/`}
+                    href={`/${business.slug}/`}
                     className="block w-full text-center px-4 py-2.5 bg-blue-50 text-blue-600 rounded-lg text-xs font-semibold hover:bg-blue-100 transition-colors border border-blue-200 hover:border-blue-300"
                   >
                     View Details

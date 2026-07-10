@@ -184,7 +184,7 @@ function RestaurantsPageContent() {
               {businesses.map((restaurant) => (
                 <Link
                   key={restaurant.id}
-                  href={restaurant.slug ? `/${restaurant.slug}` : `/business/${restaurant.id}`}
+                  href={restaurant.slug ? `/${restaurant.slug}/` : `/${restaurant.id}/`}
                   className="group bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300"
                 >
                   <div className="p-6">

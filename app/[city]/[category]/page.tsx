@@ -5,11 +5,30 @@ import React from 'react'
 
 export const dynamic = 'force-static'
 
-export async function generateStaticParams() {
-  return []
-}
+export const dynamicParams = false
 
-export const dynamicParams = true
+export async function generateStaticParams() {
+  const topCities = [
+    'Karachi', 'Lahore', 'Islamabad', 'Rawalpindi', 'Faisalabad',
+    'Multan', 'Peshawar', 'Quetta', 'Sialkot', 'Gujranwala',
+    'Hyderabad', 'Abbottabad', 'Sargodha', 'Bahawalpur', 'Sahiwal',
+    'Mardan', 'Sukkur', 'Larkana', 'Gwadar', 'Muzaffarabad'
+  ]
+
+  const params: { city: string; category: string }[] = []
+
+  topCities.forEach(city => {
+    const citySlug = city.toLowerCase().replace(/\s+/g, '-')
+    CATEGORIES.forEach(cat => {
+      params.push({
+        city: citySlug,
+        category: cat.id
+      })
+    })
+  })
+
+  return params
+}
 
 const BASE_URL = 'https://www.pakbizbranhces.online'
 

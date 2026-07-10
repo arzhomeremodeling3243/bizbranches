@@ -3,6 +3,16 @@ import { fetchAllBusinessesForSitemap } from '@/lib/firebase-server'
 
 const BASE_URL = 'https://www.pakbizbranhces.online'
 
+function getAbsoluteImageUrl(url: string): string {
+  if (!url) return ''
+  if (url.startsWith('http://') || url.startsWith('https://')) {
+    return url
+  }
+  const cleanUrl = url.startsWith('/') ? url : `/${url}`
+  return `${BASE_URL}${cleanUrl}`
+}
+
+
 export async function GET() {
   const lastmod = new Date().toISOString().split('T')[0]
   const businesses = await fetchAllBusinessesForSitemap()
@@ -12,7 +22,7 @@ export async function GET() {
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 ${businesses.map(biz => {
   const imageXml = biz.logoUrl ? `\n    <image:image>
-      <image:loc>${biz.logoUrl}</image:loc>
+      <image:loc>${getAbsoluteImageUrl(biz.logoUrl)}</image:loc>
       <image:title>${biz.slug.replace(/-/g, ' ')}</image:title>
     </image:image>` : ''
   return `  <url>

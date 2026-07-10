@@ -190,7 +190,7 @@ function RealEstatePageContent() {
               {businesses.map((business) => (
                 <Link
                   key={business.id}
-                  href={business.slug ? `/${business.slug}` : `/business/${business.id}`}
+                  href={business.slug ? `/${business.slug}/` : `/${business.id}/`}
                   className="group bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300"
                 >
                   <div className="p-6">
