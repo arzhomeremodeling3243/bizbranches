@@ -22,9 +22,9 @@ interface BannerAdLoaderProps {
 }
 
 export function BannerAdLoader({ variant = 'inline', className }: BannerAdLoaderProps) {
-  return <BannerAdDynamic variant={variant} className={className} />
+  return null
 }
 
 export function NativeAdLoader() {
-  return <NativeAdDynamic />
+  return null
 }
