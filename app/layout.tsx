@@ -115,7 +115,6 @@ export default function RootLayout({
                 '@type': 'ContactPoint',
                 contactType: 'customer service',
                 email: 'admin@pakbizbranhces.online',
-                telephone: '+923345636230',
                 areaServed: {
                   '@type': 'Country',
                   name: 'Pakistan'
@@ -169,7 +168,6 @@ export default function RootLayout({
               '@id': 'https://www.pakbizbranhces.online/#localbusiness',
               name: 'PakBizBranches Business Directory',
               url: 'https://www.pakbizbranhces.online/',
-              telephone: '+923345636230',
               description: 'Free Pakistan business directory service connecting local businesses with customers',
               address: {
                 '@type': 'PostalAddress',

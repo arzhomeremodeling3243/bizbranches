@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react'
+import { Mail, MapPin, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react'
 
 export default function Footer() {
   return (
@@ -52,10 +52,6 @@ export default function Footer() {
                   <span itemProp="addressLocality">Multan</span>, <span itemProp="addressRegion">Punjab</span>, <span itemProp="addressCountry">PK</span>
                 </span>
               </address>
-              <a href="tel:+923345636230" className="flex items-center gap-3 text-sm text-white/60 hover:text-[#60a5fa] transition-colors" title="Call Us">
-                <Phone className="w-5 h-5 text-[#60a5fa] shrink-0" />
-                +92 334 5636230
-              </a>
               <a href="mailto:admin@pakbizbranhces.online" className="flex items-center gap-3 text-sm text-white/60 hover:text-[#60a5fa] transition-colors" title="Email Us">
                 <Mail className="w-5 h-5 text-[#60a5fa] shrink-0" />
                 admin@pakbizbranhces.online

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Mail, Phone, MapPin, MessageCircle, Send, Building2 } from 'lucide-react'
+import { Mail, MapPin, MessageCircle, Send, Building2 } from 'lucide-react'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import { sendContactEmail } from '@/lib/email-service'
@@ -160,19 +160,6 @@ export default function ContactClient() {
                       admin@pakbizbranhces.online
                     </a>
                     <p className="text-sm text-gray-500">Official business inquiries & support</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Phone className="w-6 h-6 text-green-600" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900 mb-1">Call Us</h3>
-                    <a href="tel:+923345636230" className="text-gray-600 hover:text-green-600 transition-colors">
-                      +92 334 5636230
-                    </a>
-                    <p className="text-sm text-gray-500">Direct Support Line (Monday to Friday)</p>
                   </div>
                 </div>
 
