@@ -11,6 +11,7 @@ import { db } from '@/lib/firebase'
 import { collection, query, where, getDocs, limit } from 'firebase/firestore'
 import { LIVE_STATUSES } from '@/lib/category-mappings'
 import { BannerAdLoader, NativeAdLoader } from '@/components/ads/ads-loader'
+import CountdownLoader from '@/components/ui/countdown-loader'
 import React from 'react'
 
 const BASE_URL = 'https://www.pakbizbranhces.online'
@@ -49,6 +50,7 @@ function findCategoryBySlug(slug: string) {
 export default function CityCategoryClient({ citySlug, categorySlug }: { citySlug: string, categorySlug: string }) {
   const [businesses, setBusinesses] = useState<Business[]>([])
   const [loading, setLoading] = useState(true)
+  const [countdownDone, setCountdownDone] = useState(false)
   
   const cityName = findCityBySlug(citySlug)
   const category = findCategoryBySlug(categorySlug)
@@ -94,16 +96,14 @@ export default function CityCategoryClient({ citySlug, categorySlug }: { citySlu
     )
   }
 
-  if (loading) {
+  if (loading || !countdownDone) {
     return (
       <>
         <Navbar />
-        <main className="bg-[#f8fafc] min-h-screen py-16 flex items-center justify-center">
-          <div className="flex flex-col items-center gap-4">
-            <Loader2 className="w-12 h-12 text-[#60a5fa] animate-spin" />
-            <p className="text-slate-500 font-medium text-sm animate-pulse">Loading {category.name} in {cityName}...</p>
-          </div>
-        </main>
+        <CountdownLoader 
+          isDataLoading={loading} 
+          onComplete={() => setCountdownDone(true)} 
+        />
         <Footer />
       </>
     )

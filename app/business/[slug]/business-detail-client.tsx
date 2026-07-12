@@ -12,6 +12,7 @@ import { CATEGORIES } from '@/lib/data'
 import { LIVE_STATUSES } from '@/lib/category-mappings'
 import { findStaticBusinessBySlug, getStaticSimilar } from '@/lib/static-db'
 import { BannerAdLoader, NativeAdLoader } from '@/components/ads/ads-loader'
+import CountdownLoader from '@/components/ui/countdown-loader'
 import React from 'react'
 
 const BASE_URL = 'https://www.pakbizbranhces.online'
@@ -73,6 +74,7 @@ export default function BusinessDetailClient({ slug }: { slug: string }) {
   const [business, setBusiness] = useState<Business | null>(null)
   const [similarBusinesses, setSimilarBusinesses] = useState<Business[]>([])
   const [loading, setLoading] = useState(true)
+  const [countdownDone, setCountdownDone] = useState(false)
   const [is404, setIs404] = useState(false)
 
   useEffect(() => {
@@ -159,16 +161,14 @@ export default function BusinessDetailClient({ slug }: { slug: string }) {
     notFound()
   }
 
-  if (loading || !business) {
+  if (loading || !business || !countdownDone) {
     return (
       <>
         <Navbar />
-        <main className="bg-[#f8fafc] min-h-screen py-16 flex items-center justify-center">
-          <div className="flex flex-col items-center gap-4">
-            <Loader2 className="w-12 h-12 text-[#60a5fa] animate-spin" />
-            <p className="text-slate-500 font-medium text-sm animate-pulse">Loading business profile...</p>
-          </div>
-        </main>
+        <CountdownLoader 
+          isDataLoading={loading || !business} 
+          onComplete={() => setCountdownDone(true)} 
+        />
         <Footer />
       </>
     )

@@ -10,7 +10,7 @@ import { useEffect, useRef, useState } from "react"
 // Default Adsterra native placement supplied by the site owner.
 // Can be overridden per instance via props if more zones are added later.
 const DEFAULT_SCRIPT_SRC =
-  "https://pl29173372.profitablecpmratenetwork.com/9442a49cfd7e075a23629b2020f8e485/invoke.js"
+  "https://pl29173372.effectivecpmnetwork.com/9442a49cfd7e075a23629b2020f8e485/invoke.js"
 const DEFAULT_CONTAINER_ID = "container-9442a49cfd7e075a23629b2020f8e485"
 
 // Module-level flag so multiple <NativeAd /> instances on one page share a single script tag.

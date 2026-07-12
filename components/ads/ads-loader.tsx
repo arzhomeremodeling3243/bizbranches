@@ -14,6 +14,11 @@ const NativeAdDynamic = dynamic(() => import('@/components/ads/native-ad'), {
   loading: () => null,
 })
 
+const SkyscraperAdDynamic = dynamic(() => import('@/components/ads/skyscraper-ad'), {
+  ssr: false,
+  loading: () => null,
+})
+
 type BannerVariant = 'inline' | 'sidebar' | 'sticky-mobile'
 
 interface BannerAdLoaderProps {
@@ -22,9 +27,13 @@ interface BannerAdLoaderProps {
 }
 
 export function BannerAdLoader({ variant = 'inline', className }: BannerAdLoaderProps) {
-  return null
+  return <BannerAdDynamic variant={variant} className={className} />
 }
 
 export function NativeAdLoader() {
-  return null
+  return <NativeAdDynamic />
+}
+
+export function SkyscraperAdLoader({ className }: { className?: string }) {
+  return <SkyscraperAdDynamic className={className} />
 }

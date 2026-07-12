@@ -9,6 +9,7 @@ import {
 } from 'lucide-react'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
+import CountdownLoader from '@/components/ui/countdown-loader'
 import { db } from '@/lib/firebase'
 import { collection, query, where, getDocs, limit } from 'firebase/firestore'
 import { CATEGORIES, CITIES } from '@/lib/data'
@@ -173,6 +174,7 @@ function generateDynamicAboutSection(business: Business, categoryName: string): 
 export default function CatchAllPageClient({ slug }: { slug: string }) {
   const [viewType, setViewType] = useState<'city' | 'category' | 'business' | 'loading' | '404'>('loading')
   const [loading, setLoading] = useState(true)
+  const [countdownDone, setCountdownDone] = useState(false)
   
   // Data States
   const [cityName, setCityName] = useState<string | null>(null)
@@ -332,16 +334,14 @@ export default function CatchAllPageClient({ slug }: { slug: string }) {
   }, [slug])
 
   // Loading skeleton state
-  if (loading || viewType === 'loading') {
+  if (loading || viewType === 'loading' || !countdownDone) {
     return (
       <>
         <Navbar />
-        <main className="bg-[#f8fafc] min-h-screen py-16 flex items-center justify-center">
-          <div className="flex flex-col items-center gap-4">
-            <Loader2 className="w-12 h-12 text-[#60a5fa] animate-spin" />
-            <p className="text-slate-500 font-medium text-sm animate-pulse">Loading verified directory listings...</p>
-          </div>
-        </main>
+        <CountdownLoader 
+          isDataLoading={loading || viewType === 'loading'} 
+          onComplete={() => setCountdownDone(true)} 
+        />
         <Footer />
       </>
     )

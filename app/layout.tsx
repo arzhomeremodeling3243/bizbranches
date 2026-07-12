@@ -3,6 +3,7 @@ import './globals.css'
 import AntiCopyWrapper from '@/components/anti-copy-wrapper'
 import FloatingWhatsAppButton from '@/components/floating-whatsapp-button'
 import ChatWidgetLoader from '@/components/chat-widget-loader'
+import { NativeAdLoader, SkyscraperAdLoader } from '@/components/ads/ads-loader'
 
 const outfit = {
   variable: 'font-sans'
@@ -193,7 +194,21 @@ export default function RootLayout({
         <AntiCopyWrapper />
         <FloatingWhatsAppButton />
         <ChatWidgetLoader />
+
+        {/* Desktop Skyscraper Ads */}
+        <div className="fixed left-4 top-28 z-50 hidden xl:block">
+          <SkyscraperAdLoader />
+        </div>
+        <div className="fixed right-4 top-28 z-50 hidden xl:block">
+          <SkyscraperAdLoader />
+        </div>
+
         {children}
+
+        {/* Global Bottom Native Ad */}
+        <div className="w-full max-w-7xl mx-auto px-4 my-8">
+          <NativeAdLoader />
+        </div>
       </body>
     </html>
   )
