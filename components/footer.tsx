@@ -205,9 +205,22 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-6 text-sm text-white/40">
-          <p className="flex items-center gap-1">
-            &copy; {new Date().getFullYear()} <span className="text-white/60 font-semibold">PakBizBranches</span>. Built for Pakistan with 💙.
-          </p>
+          <div className="flex flex-col gap-1 items-center sm:items-start">
+            <p className="flex items-center gap-1">
+              &copy; {new Date().getFullYear()} <span className="text-white/60 font-semibold">PakBizBranches</span>. Built for Pakistan with 💙.
+            </p>
+            <p className="text-xs text-white/30">
+              Designed & Developed by{' '}
+              <a
+                href="https://www.imrandigitals.online/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#60a5fa] hover:underline font-medium"
+              >
+                Imran Digitals
+              </a>
+            </p>
+          </div>
           <div className="flex flex-wrap justify-center gap-x-8 gap-y-2">
             <Link href="/privacy/" className="hover:text-white/80 transition-colors uppercase text-[10px] tracking-widest font-bold">Privacy</Link>
             <Link href="/terms/" className="hover:text-white/80 transition-colors uppercase text-[10px] tracking-widest font-bold">Terms</Link>
