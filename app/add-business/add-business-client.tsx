@@ -1455,6 +1455,11 @@ export default function AddBussinessClient() {
               <p>• For support, email us at admin@pakbizbranhces.online</p>
             </div>
           </div>
+
+          {/* Adsterra Native Ad */}
+          <div className="mt-8">
+            <NativeAdLoader />
+          </div>
             </div>
 
           </div>

@@ -74,12 +74,9 @@ export default function CountdownLoader({ onComplete, isDataLoading, label }: Co
 
   return (
     <div className="bg-[#f8fafc] py-12 flex flex-col lg:flex-row items-center lg:items-start justify-center gap-8 px-4 w-full min-h-screen">
-      {/* Left Sidebar Ads - Stack of up to 4 Skyscraper Banners */}
+      {/* Left Sidebar Ad - Only one Skyscraper Banner */}
       <div className="flex flex-col gap-6 shrink-0 lg:w-[160px] w-full items-center lg:items-end">
         <LocalSkyscraperAd id="left-ad-1" />
-        <LocalSkyscraperAd id="left-ad-2" className="hidden sm:block" />
-        <LocalSkyscraperAd id="left-ad-3" className="hidden lg:block" />
-        <LocalSkyscraperAd id="left-ad-4" className="hidden lg:block" />
       </div>
 
       {/* Central Countdown Loader Card */}
@@ -169,12 +166,9 @@ export default function CountdownLoader({ onComplete, isDataLoading, label }: Co
         `}} />
       </div>
 
-      {/* Right Sidebar Ads - Stack of up to 4 Skyscraper Banners */}
+      {/* Right Sidebar Ad - Only one Skyscraper Banner */}
       <div className="flex flex-col gap-6 shrink-0 lg:w-[160px] w-full items-center lg:items-start">
         <LocalSkyscraperAd id="right-ad-1" />
-        <LocalSkyscraperAd id="right-ad-2" className="hidden sm:block" />
-        <LocalSkyscraperAd id="right-ad-3" className="hidden lg:block" />
-        <LocalSkyscraperAd id="right-ad-4" className="hidden lg:block" />
       </div>
     </div>
   )

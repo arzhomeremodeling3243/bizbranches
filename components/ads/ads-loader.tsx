@@ -27,7 +27,9 @@ interface BannerAdLoaderProps {
 }
 
 export function BannerAdLoader({ variant = 'inline', className }: BannerAdLoaderProps) {
-  return <BannerAdDynamic variant={variant} className={className} />
+  // Since only the Native Ad script is provided, we map the banner placements
+  // to render NativeAdDynamic to make sure ads load and display properly.
+  return <NativeAdDynamic className={className} />
 }
 
 export function NativeAdLoader() {

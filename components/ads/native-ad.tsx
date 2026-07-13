@@ -34,6 +34,7 @@ export default function NativeAd({
   minHeight = 250,
 }: NativeAdProps) {
   const rootRef = useRef<HTMLElement | null>(null)
+  const containerRef = useRef<HTMLDivElement | null>(null)
   const [shouldLoad, setShouldLoad] = useState(false)
 
   // Gate the ad script behind BOTH conditions:
@@ -98,27 +99,41 @@ export default function NativeAd({
     }
   }, [])
 
-  // Inject the Adsterra invoke script exactly once across the whole SPA lifetime.
+  // Inject script and handle DOM mutation for ID uniqueness
   useEffect(() => {
     if (!shouldLoad) return
-    if (adsterraScriptInjected) return
     if (typeof document === "undefined") return
+    if (!containerRef.current) return
 
-    const existing = document.querySelector<HTMLScriptElement>(
-      `script[src="${scriptSrc}"]`
-    )
-    if (existing) {
-      adsterraScriptInjected = true
-      return
-    }
+    const container = containerRef.current
+    container.innerHTML = ""
+    container.id = containerId // Set to expected Adsterra ID
+
+    // Set up MutationObserver to watch for Adsterra injecting iframe/ad content
+    const observer = new MutationObserver((mutations) => {
+      const hasAdContent = Array.from(container.children).some(
+        (child) => child.tagName !== "SCRIPT"
+      )
+      if (hasAdContent) {
+        // Change container ID so any subsequent script doesn't conflict
+        container.id = `${containerId}-loaded-${Math.random().toString(36).substring(2, 9)}`
+        observer.disconnect()
+      }
+    })
+
+    observer.observe(container, { childList: true, subtree: true })
 
     const script = document.createElement("script")
     script.src = scriptSrc
     script.async = true
     script.setAttribute("data-cfasync", "false")
-    document.body.appendChild(script)
-    adsterraScriptInjected = true
-  }, [shouldLoad, scriptSrc])
+    container.appendChild(script)
+
+    return () => {
+      observer.disconnect()
+      container.innerHTML = ""
+    }
+  }, [shouldLoad, scriptSrc, containerId])
 
   return (
     <aside
@@ -133,6 +148,7 @@ export default function NativeAd({
       </div>
       {/* Reserved-height container — prevents CLS even before ad paints */}
       <div
+        ref={containerRef}
         id={containerId}
         style={{ minHeight }}
         className="w-full overflow-hidden rounded-lg bg-slate-50/50"
