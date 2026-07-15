@@ -456,7 +456,7 @@ const businessData = {
                 </p>
                 <div className="flex flex-wrap gap-3">
                   <a
-                    href="https://wa.me/923345636230?text=Hi%2C%20I%20want%20to%20promote%20my%20business%20on%20your%20listing%20website.%20Please%20share%20details."
+                    href="https://wa.me/923345636230"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg font-semibold text-sm hover:shadow-lg hover:scale-105 transition-all duration-200"

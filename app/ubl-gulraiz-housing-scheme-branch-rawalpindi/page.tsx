@@ -1,0 +1,41 @@
+import { Metadata } from 'next'
+import CatchAllPageClient from '@/app/[city]/catch-all-page-client'
+import React from 'react'
+
+export const dynamic = 'force-static'
+
+export function generateMetadata(): Metadata {
+  const title = "UBL Gulraiz Housing Scheme Branch Rawalpindi - Details"
+  const description = "Get verified details for UBL Gulraiz Housing Scheme branch in Rawalpindi, Pakistan. Find branch address, contact phone, and helpline info."
+  const url = "https://www.pakbizbranhces.online/ubl-gulraiz-housing-scheme-branch-rawalpindi/"
+  
+  return {
+    title,
+    description,
+    keywords: [
+      "United Bank Limited ubl gulraiz housing scheme branch rawalpindi",
+      "UBL Rawalpindi branch",
+      "UBL helpline Rawalpindi",
+      "United Bank Limited Rawalpindi",
+      "UBL contact number Rawalpindi"
+    ],
+    alternates: { canonical: url },
+    openGraph: { 
+      title, 
+      description, 
+      url, 
+      siteName: 'PakBizBranches', 
+      locale: 'en_PK', 
+      type: 'website' 
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description
+    }
+  }
+}
+
+export default function Page() {
+  return <CatchAllPageClient slug="ubl-gulraiz-housing-scheme-branch-rawalpindi" />
+}
