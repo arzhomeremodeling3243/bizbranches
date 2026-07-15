@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { fetchAllBusinessesForSitemap } from '@/lib/firebase-server'
+import { HIGH_PRIORITY_SLUGS } from '@/lib/static-db'
 
 const BASE_URL = 'https://www.pakbizbranhces.online'
 
@@ -21,6 +22,7 @@ export async function GET() {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 ${businesses.map(biz => {
+  const isHighPriority = HIGH_PRIORITY_SLUGS.has(biz.slug)
   const imageXml = biz.logoUrl ? `\n    <image:image>
       <image:loc>${getAbsoluteImageUrl(biz.logoUrl)}</image:loc>
       <image:title>${biz.slug.replace(/-/g, ' ')}</image:title>
@@ -29,7 +31,7 @@ ${businesses.map(biz => {
     <loc>${BASE_URL}/${biz.slug}/</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.75</priority>${imageXml}
+    <priority>${isHighPriority ? '0.90' : '0.75'}</priority>${imageXml}
   </url>`
 }).join('\n')}
 </urlset>`

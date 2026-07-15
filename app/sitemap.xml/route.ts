@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { CITIES, CATEGORIES } from '@/lib/data'
 import { BLOG_POSTS } from '@/lib/blog-data'
 import { fetchAllBusinessesForSitemap } from '@/lib/firebase-server'
+import { HIGH_PRIORITY_SLUGS } from '@/lib/static-db'
 
 const BASE_URL = 'https://www.pakbizbranhces.online'
 
@@ -120,11 +121,12 @@ export async function GET() {
   try {
     const businesses = await fetchAllBusinessesForSitemap()
     businesses.forEach(biz => {
+      const isHighPriority = HIGH_PRIORITY_SLUGS.has(biz.slug)
       urls.push({
         loc: `${BASE_URL}/${biz.slug}/`,
         lastmod,
         changefreq: 'weekly',
-        priority: '0.75',
+        priority: isHighPriority ? '0.90' : '0.75',
         ...(biz.logoUrl ? {
           image: {
             loc: getAbsoluteImageUrl(biz.logoUrl),
