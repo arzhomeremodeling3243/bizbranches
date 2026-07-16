@@ -100,14 +100,14 @@ export default function CityCategoryListClient({ citySlug, categorySlug }: { cit
   }
 
   const content = generateCityCategoryContent(cityName, categorySlug)
-  const pageUrl = `${BASE_URL}/locations/${citySlug}/${categorySlug}`
+  const pageUrl = `${BASE_URL}/${citySlug}/${categorySlug}/`
 
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: `${BASE_URL}/` },
-      { '@type': 'ListItem', position: 2, name: category.name, item: `${BASE_URL}/categories/${categorySlug}/` },
+      { '@type': 'ListItem', position: 2, name: category.name, item: `${BASE_URL}/${categorySlug}/` },
       { '@type': 'ListItem', position: 3, name: cityName, item: pageUrl },
     ],
   }
@@ -251,7 +251,7 @@ export default function CityCategoryListClient({ citySlug, categorySlug }: { cit
                 {businesses.map(biz => (
                   <Link
                     key={biz.id}
-                    href={`/business/${biz.slug}/`}
+                    href={`/${biz.slug}/`}
                     className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 hover:shadow-md hover:border-[#60a5fa]/30 transition-all group flex flex-col"
                   >
                     <div className="flex items-start gap-3 mb-3">
@@ -315,7 +315,7 @@ export default function CityCategoryListClient({ citySlug, categorySlug }: { cit
                 .map(city => (
                 <Link
                   key={city}
-                  href={`/locations/${city.toLowerCase().replace(/ /g, '-')}/${categorySlug}/`}
+                  href={`/${city.toLowerCase().replace(/ /g, '-')}/${categorySlug}/`}
                   className="inline-flex items-center gap-1.5 px-4 py-2 bg-white rounded-lg border border-gray-200 text-sm font-medium text-gray-700 hover:border-[#60a5fa] hover:text-[#60a5fa] transition-colors shadow-sm"
                 >
                   <MapPin className="w-3.5 h-3.5" />

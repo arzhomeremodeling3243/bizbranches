@@ -118,7 +118,7 @@ export default function CityClient({ citySlug }: { citySlug: string }) {
       '@type': 'ListItem',
       position: i + 1,
       name: b.businessName,
-      url: `${BASE_URL}/business/${b.slug}/`,
+      url: `${BASE_URL}/${b.slug}/`,
     })),
   } : null
 
@@ -157,7 +157,7 @@ export default function CityClient({ citySlug }: { citySlug: string }) {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
     name: b.businessName,
-    url: `${BASE_URL}/business/${b.slug}/`,
+    url: `${BASE_URL}/${b.slug}/`,
     telephone: b.phone,
     address: {
       '@type': 'PostalAddress',
@@ -227,7 +227,7 @@ export default function CityClient({ citySlug }: { citySlug: string }) {
                 {CATEGORIES.filter(cat => businesses.some(b => b.category === cat.id)).map(cat => (
                   <Link
                     key={cat.id}
-                    href={`/locations/${citySlug}/${cat.id}`}
+                    href={`/${citySlug}/${cat.id}/`}
                     className="bg-white rounded-xl p-4 text-center shadow-sm border border-gray-100 hover:shadow-md hover:border-[#60a5fa]/30 transition-all group"
                   >
                     <div
@@ -269,7 +269,7 @@ export default function CityClient({ citySlug }: { citySlug: string }) {
                   return (
                     <Link
                       key={biz.id}
-                      href={`/business/${biz.slug}/`}
+                      href={`/${biz.slug}/`}
                       className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 hover:shadow-md hover:border-[#60a5fa]/30 transition-all group flex flex-col"
                     >
                       <div className="flex items-start gap-3 mb-3">
@@ -347,7 +347,7 @@ export default function CityClient({ citySlug }: { citySlug: string }) {
                   {CATEGORIES.filter(cat => businesses.some(b => b.category === cat.id)).map(cat => (
                     <Link
                       key={cat.id}
-                      href={`/locations/${citySlug}/${cat.id}/`}
+                      href={`/${citySlug}/${cat.id}/`}
                       className="inline-flex items-center gap-1 px-3 py-1.5 bg-blue-50 text-[#60a5fa] rounded-full text-sm font-medium hover:bg-blue-100 transition-colors"
                     >
                       {cat.name} in {cityName}

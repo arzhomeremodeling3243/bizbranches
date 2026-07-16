@@ -5,10 +5,12 @@ import BusinessDetailClient from './business-detail-client'
 import React from 'react'
 
 export const dynamic = 'force-static'
-export const dynamicParams = true
+export const dynamicParams = false
 
 export async function generateStaticParams() {
-  return []
+  return STATIC_BUSINESSES.map(b => ({
+    slug: b.slug
+  }))
 }
 
 const BASE_URL = 'https://www.pakbizbranhces.online'

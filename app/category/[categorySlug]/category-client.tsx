@@ -131,7 +131,7 @@ export default function CategoryClient({ categorySlug }: { categorySlug: string 
       '@type': 'ListItem',
       position: i + 1,
       name: b.businessName,
-      url: `${BASE_URL}/business/${b.slug}/`,
+      url: `${BASE_URL}/${b.slug}/`,
     })),
   } : null
 
@@ -167,7 +167,7 @@ export default function CategoryClient({ categorySlug }: { categorySlug: string 
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
     name: b.businessName,
-    url: `${BASE_URL}/business/${b.slug}/`,
+    url: `${BASE_URL}/${b.slug}/`,
     telephone: b.phone,
     address: {
       '@type': 'PostalAddress',
@@ -234,7 +234,7 @@ export default function CategoryClient({ categorySlug }: { categorySlug: string 
                 {CITIES.filter(city => businesses.some(b => b.city === city)).map(city => (
                   <Link
                     key={city}
-                    href={`/locations/${city.toLowerCase().replace(/ /g, '-')}/${categorySlug}`}
+                    href={`/${city.toLowerCase().replace(/ /g, '-')}/${categorySlug}/`}
                     className="inline-flex items-center gap-1.5 px-4 py-2 bg-white rounded-lg border border-gray-200 text-sm font-medium text-gray-700 hover:border-[#60a5fa] hover:text-[#60a5fa] transition-colors shadow-sm"
                   >
                     <MapPin className="w-3.5 h-3.5" />
@@ -268,7 +268,7 @@ export default function CategoryClient({ categorySlug }: { categorySlug: string 
                   return (
                     <React.Fragment key={biz.id}>
                       <Link
-                        href={`/business/${biz.slug}/`}
+                        href={`/${biz.slug}/`}
                         className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 hover:shadow-md hover:border-[#60a5fa]/30 transition-all group flex flex-col"
                       >
                         <div className="flex items-start gap-3 mb-3">
@@ -347,7 +347,7 @@ export default function CategoryClient({ categorySlug }: { categorySlug: string 
                     .map(city => (
                     <Link
                       key={city}
-                      href={`/locations/${city.toLowerCase().replace(/ /g, '-')}/${categorySlug}/`}
+                      href={`/${city.toLowerCase().replace(/ /g, '-')}/${categorySlug}/`}
                       className="inline-flex items-center gap-1 px-3 py-1.5 bg-blue-50 text-[#60a5fa] rounded-full text-sm font-medium hover:bg-blue-100 transition-colors"
                     >
                       <MapPin className="w-3 h-3" />

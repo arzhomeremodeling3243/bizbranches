@@ -9,12 +9,14 @@ interface CountdownLoaderProps {
   label?: string
 }
 
-const ENGAGEMENT_MESSAGES = [
-  "Connecting to PakBizBranches database...",
-  "Searching verified listings in Karachi, Lahore & Islamabad...",
-  "Confirming active WhatsApp and contact details...",
-  "Optimizing layout for mobile and desktop screens...",
-  "Almost there! Opening directory listings..."
+const INTERACTIVE_MESSAGES = [
+  "We are fetching business details...",
+  "Combining directory pages...",
+  "Verifying active phone and contact info...",
+  "We value our customers...",
+  "Formatting layout for your device...",
+  "Ensuring direct WhatsApp connections...",
+  "Almost ready to show details..."
 ]
 
 // Local Skyscraper Ad component to load multiple unique 160x600 banner ads
@@ -51,26 +53,31 @@ function LocalSkyscraperAd({ id, className = '' }: { id: string; className?: str
 }
 
 export default function CountdownLoader({ onComplete, isDataLoading, label }: CountdownLoaderProps) {
-  const [secondsLeft, setSecondsLeft] = useState(5)
+  const [msgIndex, setMsgIndex] = useState(0)
 
+  // Rotate message index every 400ms
   useEffect(() => {
-    if (secondsLeft <= 0) {
-      if (!isDataLoading) {
-        onComplete()
-      }
-      return
+    const interval = setInterval(() => {
+      setMsgIndex(prev => (prev + 1) % INTERACTIVE_MESSAGES.length)
+    }, 400)
+    return () => clearInterval(interval)
+  }, [])
+
+  // Auto-complete when data is loaded, with a hard timeout cap of 2.1 seconds (2100ms)
+  useEffect(() => {
+    const maxTimeout = setTimeout(() => {
+      onComplete()
+    }, 2100)
+
+    if (!isDataLoading) {
+      onComplete()
+      clearTimeout(maxTimeout)
     }
 
-    const timer = setTimeout(() => {
-      setSecondsLeft(prev => prev - 1)
-    }, 1000)
+    return () => clearTimeout(maxTimeout)
+  }, [isDataLoading, onComplete])
 
-    return () => clearTimeout(timer)
-  }, [secondsLeft, isDataLoading, onComplete])
-
-  // Map 5..1 down to index 0..4
-  const messageIndex = Math.max(0, Math.min(4, 5 - secondsLeft))
-  const displayMessage = label || ENGAGEMENT_MESSAGES[messageIndex]
+  const displayMessage = label || INTERACTIVE_MESSAGES[msgIndex]
 
   return (
     <div className="bg-[#f8fafc] py-12 flex flex-col lg:flex-row items-center lg:items-start justify-center gap-8 px-4 w-full min-h-screen">
@@ -85,7 +92,7 @@ export default function CountdownLoader({ onComplete, isDataLoading, label }: Co
         <div className="absolute -top-24 -left-24 w-48 h-48 rounded-full bg-blue-500/5 blur-3xl" />
         <div className="absolute -bottom-24 -right-24 w-48 h-48 rounded-full bg-emerald-500/5 blur-3xl" />
 
-        {/* Circular Progress Countdown */}
+        {/* Circular Progress Container */}
         <div className="relative w-32 h-32 flex items-center justify-center mb-8">
           <svg className="w-full h-full transform -rotate-90">
             {/* Background Circle */}
@@ -98,38 +105,32 @@ export default function CountdownLoader({ onComplete, isDataLoading, label }: Co
               stroke="currentColor"
               fill="transparent"
             />
-            {/* Animated Front Circle */}
+            {/* Animated Front Circle (Static active styling since numbers are removed) */}
             <circle
               cx="64"
               cy="64"
               r="48"
-              className="text-[#60a5fa] transition-all duration-1000 ease-linear"
+              className="text-[#60a5fa]"
               strokeWidth="6"
               strokeDasharray="301.6"
-              strokeDashoffset={301.6 - (301.6 * secondsLeft) / 5}
+              strokeDashoffset="75.4" // partially filled indicator
               strokeLinecap="round"
               stroke="currentColor"
               fill="transparent"
             />
           </svg>
-          {/* Central Countdown Text */}
+          {/* Central Spinner */}
           <div className="absolute flex flex-col items-center">
-            {secondsLeft > 0 ? (
-              <span key={secondsLeft} className="text-4xl font-extrabold text-[#0f2b3d] animate-scale-up">
-                {secondsLeft}
-              </span>
-            ) : (
-              <Loader2 className="w-8 h-8 text-emerald-500 animate-spin" />
-            )}
-            <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 mt-0.5">
-              {secondsLeft > 0 ? "seconds" : "loading"}
+            <Loader2 className="w-10 h-10 text-[#60a5fa] animate-spin" />
+            <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 mt-2">
+              Loading
             </span>
           </div>
         </div>
 
         {/* Engagement Title */}
         <h3 className="text-lg font-bold text-[#0f2b3d] mb-2">
-          {secondsLeft > 0 ? "Loading Directory" : "Polishing Details"}
+          Polishing Details
         </h3>
 
         {/* Rotating Engagement Message */}
@@ -141,10 +142,7 @@ export default function CountdownLoader({ onComplete, isDataLoading, label }: Co
 
         {/* Progress Bar (Visual indicator) */}
         <div className="w-full bg-slate-100 h-1.5 rounded-full mt-6 overflow-hidden">
-          <div 
-            className="bg-gradient-to-r from-blue-400 to-[#60a5fa] h-full rounded-full transition-all duration-1000 ease-linear"
-            style={{ width: `${(5 - secondsLeft) * 20}%` }}
-          />
+          <div className="bg-gradient-to-r from-blue-400 to-[#60a5fa] h-full rounded-full w-2/3 animate-pulse" />
         </div>
 
         {/* Footer Brand Label */}
@@ -153,17 +151,6 @@ export default function CountdownLoader({ onComplete, isDataLoading, label }: Co
           <span className="text-[#60a5fa]">Branches</span>
           <span className="text-emerald-500 w-1.5 h-1.5 rounded-full animate-ping" />
         </p>
-
-        {/* CSS Keyframe Injector */}
-        <style dangerouslySetInnerHTML={{ __html: `
-          @keyframes scaleUp {
-            0% { transform: scale(0.8); opacity: 0.5; }
-            100% { transform: scale(1); opacity: 1; }
-          }
-          .animate-scale-up {
-            animation: scaleUp 0.3s ease-out forwards;
-          }
-        `}} />
       </div>
 
       {/* Right Sidebar Ad - Only one Skyscraper Banner */}

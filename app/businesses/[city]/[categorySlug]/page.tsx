@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { CITIES, CATEGORIES } from '@/lib/data'
+import { CITIES, CATEGORIES, TOP_CITIES } from '@/lib/data'
 import { getCategoryKeywordCluster, getCityKeywordCluster } from '@/lib/organic-keywords'
 import CityCategoryListClient from './city-category-list-client'
 import React from 'react'
@@ -7,10 +7,22 @@ import React from 'react'
 export const dynamic = 'force-static'
 
 export async function generateStaticParams() {
-  return []
+  const params: { city: string; categorySlug: string }[] = []
+
+  TOP_CITIES.forEach(city => {
+    const citySlug = city.toLowerCase().replace(/\s+/g, '-')
+    CATEGORIES.forEach(cat => {
+      params.push({
+        city: citySlug,
+        categorySlug: cat.id
+      })
+    })
+  })
+
+  return params
 }
 
-export const dynamicParams = true
+export const dynamicParams = false
 
 const BASE_URL = 'https://www.pakbizbranhces.online'
 
@@ -49,7 +61,7 @@ export async function generateMetadata(props: { params: Promise<{ city: string; 
     }
   }
 
-  const url = `${BASE_URL}/locations/${params.city}/${params.categorySlug}/`
+  const url = `${BASE_URL}/${params.city}/${params.categorySlug}/`
   const keywordCluster = [
     ...getCategoryKeywordCluster(params.categorySlug),
     ...getCityKeywordCluster(cityName),

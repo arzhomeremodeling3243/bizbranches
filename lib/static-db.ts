@@ -115,6 +115,10 @@ export const HIGH_PRIORITY_SLUGS = new Set<string>([
   "australian-concept-infertility-medical-center-lahore",
   "dusky-solutions-karachi",
   "diamasiajewels-lahore",
+  "imusafirpk-islamabad",
+  "fivi-communication-pvt-ltd-chakwal",
+  "wall-paint-dubai-karachi",
+  "royalex-leather-karachi",
   // 14 UBL Karachi branches
   "ubl-head-office-karachi",
   "ubl-al-haroon-branch-karachi",

@@ -24,6 +24,7 @@ interface Business {
   logoUrl?: string
   createdAt: any
   status: string
+  slug: string
 }
 
 function RestaurantsContent() {
@@ -209,7 +210,7 @@ function RestaurantsContent() {
                         Call
                       </a>
                       <Link
-                        href={`/business/${business.id}`}
+                        href={`/${business.slug || business.id}/`}
                         className="flex-1 inline-flex items-center justify-center px-3 py-2 border border-gray-300 text-gray-700 text-sm rounded-lg hover:bg-gray-50 transition-colors"
                       >
                         View Details

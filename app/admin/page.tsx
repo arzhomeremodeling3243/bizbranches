@@ -186,7 +186,7 @@ export default function AdminPage() {
         fetch('/api/indexnow', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ urls: [`${window.location.origin}/business/${business.slug}/`] })
+          body: JSON.stringify({ urls: [`${window.location.origin}/${business.slug}/`] })
         }).catch(() => {})
       }
 
@@ -217,7 +217,7 @@ export default function AdminPage() {
         fetch('/api/indexnow', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ urls: [`${window.location.origin}/business/${selectedBusiness.slug}/`] })
+          body: JSON.stringify({ urls: [`${window.location.origin}/${selectedBusiness.slug}/`] })
         }).catch(() => {})
       }
 
@@ -246,7 +246,7 @@ export default function AdminPage() {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ urls: [
-            `${window.location.origin}/business/${business.slug}/`,
+            `${window.location.origin}/${business.slug}/`,
             `${window.location.origin}/sitemaps/businesses.xml`,
           ] })
         }).catch(() => {})
@@ -599,7 +599,7 @@ export default function AdminPage() {
                                 <Trash2 className="w-4 h-4" />
                               </button>
                               <Link
-                                href={`/business/${business.slug || business.id}/`}
+                                href={`/${business.slug || business.id}/`}
                                 target="_blank"
                                 className="text-gray-600 hover:text-gray-900 cursor-pointer"
                               >

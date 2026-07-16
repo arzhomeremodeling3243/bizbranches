@@ -44,6 +44,13 @@ export const CITIES = Array.from(new Set([
 ]))
 
 
+export const TOP_CITIES = [
+  'Karachi', 'Lahore', 'Islamabad', 'Rawalpindi', 'Faisalabad',
+  'Multan', 'Peshawar', 'Quetta', 'Sialkot', 'Gujranwala',
+  'Hyderabad', 'Abbottabad', 'Sargodha', 'Bahawalpur', 'Sahiwal',
+  'Mardan', 'Sukkur', 'Larkana', 'Gwadar', 'Muzaffarabad'
+]
+
 export const CATEGORIES = [
   { id: 'restaurants', name: 'Restaurants & Food', icon: 'restaurant', count: 8420, color: '#f59e0b' },
   { id: 'real-estate', name: 'Real Estate', icon: 'real-estate', count: 5210, color: '#10b981' },

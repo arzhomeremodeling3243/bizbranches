@@ -8,16 +8,9 @@ export const dynamic = 'force-static'
 export const dynamicParams = false
 
 export async function generateStaticParams() {
-  const topCities = [
-    'Karachi', 'Lahore', 'Islamabad', 'Rawalpindi', 'Faisalabad',
-    'Multan', 'Peshawar', 'Quetta', 'Sialkot', 'Gujranwala',
-    'Hyderabad', 'Abbottabad', 'Sargodha', 'Bahawalpur', 'Sahiwal',
-    'Mardan', 'Sukkur', 'Larkana', 'Gwadar', 'Muzaffarabad'
-  ]
-
   const params: { city: string; category: string }[] = []
 
-  topCities.forEach(city => {
+  CITIES.forEach(city => {
     const citySlug = city.toLowerCase().replace(/\s+/g, '-')
     CATEGORIES.forEach(cat => {
       params.push({

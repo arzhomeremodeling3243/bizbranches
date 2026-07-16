@@ -273,12 +273,18 @@ export default function AddBussinessClient() {
       return
     }
 
-    // Create preview
+    // Create preview and compress to WebP
     const reader = new FileReader()
-    reader.onload = (e) => {
+    reader.onload = async (e) => {
       const result = e.target?.result as string
-      setLogoPreview(result)
-      setFormData(prev => ({ ...prev, logoUrl: result }))
+      try {
+        const compressed = await compressImage(result, 200, 200)
+        setLogoPreview(compressed)
+        setFormData(prev => ({ ...prev, logoUrl: compressed }))
+      } catch (err) {
+        setLogoPreview(result)
+        setFormData(prev => ({ ...prev, logoUrl: result }))
+      }
       setErrors(prev => ({ ...prev, logo: '' }))
     }
     reader.readAsDataURL(file)
@@ -383,7 +389,7 @@ export default function AddBussinessClient() {
 
       // IndexNow Automatic Submission - omitted for pending listings to prevent indexing unapproved pages
       /*
-      const pageUrl = `${window.location.origin}/business/${businessData.slug}/`;
+      const pageUrl = `${window.location.origin}/${businessData.slug}/`;
       fetch('/api/indexnow', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -422,13 +428,19 @@ export default function AddBussinessClient() {
 
     setScreenshotFile(file)
     const reader = new FileReader()
-    reader.onload = (e) => {
-      setScreenshotPreview(e.target?.result as string)
+    reader.onload = async (e) => {
+      const result = e.target?.result as string
+      try {
+        const compressed = await compressImage(result, 800, 800)
+        setScreenshotPreview(compressed)
+      } catch (err) {
+        setScreenshotPreview(result)
+      }
     }
     reader.readAsDataURL(file)
   }
 
-  const compressImage = (base64Str: string, maxWidth = 800, maxHeight = 800): Promise<string> => {
+  function compressImage(base64Str: string, maxWidth = 800, maxHeight = 800): Promise<string> {
     return new Promise((resolve) => {
       const img = new Image()
       const timeout = setTimeout(() => {
@@ -460,7 +472,7 @@ export default function AddBussinessClient() {
           canvas.height = height
           const ctx = canvas.getContext('2d')
           ctx?.drawImage(img, 0, 0, width, height)
-          resolve(canvas.toDataURL('image/jpeg', 0.6)) // 60% quality is plenty for verification
+          resolve(canvas.toDataURL('image/webp', 0.7)) // Compress to next-gen WebP format
         } catch (e) {
           resolve(base64Str)
         }
