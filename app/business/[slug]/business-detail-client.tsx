@@ -14,6 +14,7 @@ import { findStaticBusinessBySlug, getStaticSimilar } from '@/lib/static-db'
 import { BannerAdLoader, NativeAdLoader } from '@/components/ads/ads-loader'
 import CountdownLoader from '@/components/ui/countdown-loader'
 import React from 'react'
+import { getBusinessLogoUrl } from '@/lib/utils'
 
 const BASE_URL = 'https://www.pakbizbranhces.online'
 
@@ -191,7 +192,7 @@ export default function BusinessDetailClient({ slug }: { slug: string }) {
   if (business.facebookPage) sameAs.push(business.facebookPage)
   if (business.youtubeChannel) sameAs.push(business.youtubeChannel)
 
-  const finalLogoUrl = business.logoUrl || ((business.businessName?.toLowerCase().includes('yango') || business.slug?.toLowerCase().includes('yango')) ? '/yango-logo.jpg' : '')
+  const finalLogoUrl = getBusinessLogoUrl(business.logoUrl, business.businessName, business.slug)
 
   const localBusinessSchema: Record<string, unknown> = {
     '@context': 'https://schema.org',

@@ -14,6 +14,7 @@ import NativeAd from '@/components/ads/native-ad'
 import BannerAd from '@/components/ads/banner-ad'
 import CountdownLoader from '@/components/ui/countdown-loader'
 import React from 'react'
+import { getBusinessLogoUrl } from '@/lib/utils'
 
 const BASE_URL = 'https://www.pakbizbranhces.online'
 
@@ -272,8 +273,8 @@ export default function CategoryClient({ categorySlug }: { categorySlug: string 
                         className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 hover:shadow-md hover:border-[#60a5fa]/30 transition-all group flex flex-col"
                       >
                         <div className="flex items-start gap-3 mb-3">
-                          {biz.logoUrl || ((biz.businessName?.toLowerCase().includes('yango') || biz.slug?.toLowerCase().includes('yango')) ? '/yango-logo.jpg' : '') ? (
-                            <img src={biz.logoUrl || '/yango-logo.jpg'} alt={biz.businessName} className="w-14 h-14 rounded-lg object-cover border border-gray-100 shrink-0" loading="lazy" />
+                          {getBusinessLogoUrl(biz.logoUrl, biz.businessName, biz.slug) ? (
+                            <img src={getBusinessLogoUrl(biz.logoUrl, biz.businessName, biz.slug)} alt={biz.businessName} className="w-14 h-14 rounded-lg object-cover border border-gray-100 shrink-0" loading="lazy" />
                           ) : (
                             <div className="w-14 h-14 rounded-lg bg-gradient-to-br from-[#0f2b3d] to-[#1a3f57] flex items-center justify-center shrink-0">
                               <Building2 className="w-7 h-7 text-white/60" />
