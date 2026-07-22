@@ -29,10 +29,10 @@ export default function HeroSection() {
           id="hero-heading"
           className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-4 text-balance"
         >
-          Find Any Business in Pakistan – Karachi, Lahore, Islamabad & Beyond
+          Pakistan Free Business Directory – Find Verified Local Companies
         </h1>
         <p className="text-[#60a5fa] font-semibold text-sm sm:text-base mb-6 tracking-wide uppercase">
-          Pakistan Business Directory: Connecting local shops with buyers across the country.
+          Pakistan Free Business Directory: Connecting local shops with buyers across the country.
         </p>
         <div className="text-base sm:text-lg text-white/90 mb-8 leading-relaxed max-w-2xl sm:max-w-3xl mx-auto space-y-4">
           <p>

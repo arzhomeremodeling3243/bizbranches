@@ -50,19 +50,19 @@ export const revalidate = 604800
 const BASE_URL = 'https://www.pakbizbranhces.online'
 
 export const metadata: Metadata = {
-  title: 'Pakistan Business Directory – Verified Local Companies',
+  title: 'Pakistan Free Business Directory – Verified Local Companies',
   description:
-    'Find verified business contact details, phone numbers, addresses and WhatsApp links across Pakistan. Search or list your business for free today.',
+    'Search or list your business on the premier Pakistan free business directory. Find verified business contact details, phone numbers, addresses, and WhatsApp links today.',
   keywords:
-    'Pakistan business directory, free business listing Pakistan, Karachi business listings, Lahore business directory, Islamabad business listings, local services Pakistan, business phone numbers Pakistan, verified business contacts Pakistan, find businesses Pakistan 2026',
+    'pakistan free business directory, Pakistan business directory, free business listing Pakistan, Karachi business listings, Lahore business directory, Islamabad business listings, local services Pakistan, business phone numbers Pakistan, verified business contacts Pakistan, find businesses Pakistan 2026',
   authors: [{ name: 'PakBizBranches', url: 'https://www.pakbizbranhces.online/' }],
   alternates: {
     canonical: 'https://www.pakbizbranhces.online/',
   },
   openGraph: {
-    title: 'Pakistan Business Directory – Verified Local Companies',
+    title: 'Pakistan Free Business Directory – Verified Local Companies',
     description:
-      'Find verified business contact details, phone numbers, addresses and WhatsApp links across Pakistan. Search or list your business for free today.',
+      'Search or list your business on the premier Pakistan free business directory. Find verified business contact details, phone numbers, addresses, and WhatsApp links today.',
     url: 'https://www.pakbizbranhces.online/',
     siteName: 'PakBizBranches',
     locale: 'en_PK',
@@ -148,7 +148,7 @@ export default async function HomePage() {
     '@type': 'Product',
     'name': 'PakBizBranches',
     'image': 'https://www.pakbizbranhces.online/logo.png',
-    'description': 'Pakistan Business Directory: Search Local Services. List your business free on PakBizBranches.',
+    'description': 'Pakistan Free Business Directory: Search Local Services. List your business free on PakBizBranches.',
     'brand': {
       '@type': 'Brand',
       'name': 'PakBizBranches'
@@ -366,7 +366,7 @@ export default async function HomePage() {
             </h2>
             <div className="prose prose-gray max-w-none text-gray-700 leading-relaxed space-y-6">
               <p className="text-lg font-medium text-gray-800">
-                PakBizBranches is an online Pakistan business directory that helps local business owners across the country display their contact details and connect with buyers. You pay no fees, need no credit card, and your listing never expires.
+                PakBizBranches is an online Pakistan free business directory that helps local business owners across the country display their contact details and connect with buyers. You pay no fees, need no credit card, and your listing never expires.
               </p>
               <p>
                 To start, you sign up with your phone number and add your business details. You enter your business name, city, area, category, WhatsApp number, and photos. Your listing goes live after our team runs a quick verification check. Customers search by city, area, or category to find you easily on our site and on Google. For instance, a tailor in Johar Town Lahore and a car workshop in Saddar Karachi both appear in the same local search.
@@ -516,7 +516,7 @@ export default async function HomePage() {
                 It is fair to ask this question because most directories start free and later force you to pay. We do things differently. We run our site using advertising revenue from paid featured placements instead of charging you. Your basic listing with your phone, city, and photo is free forever. A halal butcher in Gulshan-e-Iqbal Karachi pays nothing to list or stay visible.
               </p>
               <p>
-                Pakistan has 5.2 million registered SMEs according to SMEDA, but only 12% have an online presence. With 48.5 million active internet users according to the PTA in 2024, our country cannot afford to have local shops invisible online. We built PakBizBranches so people can find local businesses easily. This is why we help Pakistani shop owners reach customers for free.
+                Pakistan has 5.2 million registered SMEs according to SMEDA, but only 12% have an online presence. With 48.5 million active internet users according to the PTA in 2024, our country cannot afford to have local shops invisible online. We built PakBizBranches as a premier Pakistan free business directory so people can find local businesses easily. This is why we help Pakistani shop owners reach customers for free.
               </p>
               <p>
                 A free business listing Pakistan profile includes your contact details, photos, category, city, area, WhatsApp button, map pin, and business hours. It is fully functional, not a trial. It is bilkul free, koi lafda nahi. Paid upgrades are optional and only highlight your listing at the top of search results if you want extra exposure.
@@ -693,7 +693,7 @@ export default async function HomePage() {
 
             <div className="prose prose-gray max-w-none text-gray-600 leading-relaxed">
               <p>
-                This data shows that PakBizBranches offers the best business directory Pakistan option for local growth. The biggest difference is cost, because we provide free listings while others charge in USD or PKR. We also fit local needs better, offering WhatsApp contact, Roman Urdu support, and neighborhood search. Create your free business listing today to see the difference yourself.
+                This data shows that PakBizBranches offers the best Pakistan free business directory option for local growth. The biggest difference is cost, because we provide free listings while others charge in USD or PKR. We also fit local needs better, offering WhatsApp contact, Roman Urdu support, and neighborhood search. Create your free business listing today to see the difference yourself.
               </p>
             </div>
           </div>

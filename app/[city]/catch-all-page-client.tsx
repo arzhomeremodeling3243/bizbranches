@@ -643,7 +643,17 @@ export default function CatchAllPageClient({ slug }: { slug: string }) {
                   )}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h1 className="text-3xl md:text-4xl font-bold text-[#0f2b3d] mb-2">{business.businessName} {business.city}</h1>
+                  <h1 className="text-3xl md:text-4xl font-bold text-[#0f2b3d] mb-2">
+                    {business.businessName} {business.city}
+                    {slug.toLowerCase().startsWith('ubl-') && (
+                      ` - ${slug
+                        .toLowerCase()
+                        .replace(/^ubl-/, 'ubl bank limited-')
+                        .replace(/-branch-/g, '-')
+                        .replace(/-branch$/g, '')
+                        .replace(/-/g, ' ')}`
+                    )}
+                  </h1>
                   <div className="flex flex-wrap items-center gap-3 text-gray-500 mb-6">
                     <Link href={categoryUrl} className="inline-flex items-center gap-1 px-3 py-1 bg-blue-50 text-[#60a5fa] rounded-full text-sm font-medium hover:bg-blue-100 transition-colors">
                       {categoryName}

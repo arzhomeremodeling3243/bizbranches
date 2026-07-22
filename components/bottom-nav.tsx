@@ -1,0 +1,96 @@
+'use client'
+
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { Home, LayoutGrid, Plus, LogIn, User, MapPin } from 'lucide-react'
+import { auth } from '@/lib/firebase'
+import { onAuthStateChanged } from 'firebase/auth'
+
+export default function BottomNav() {
+  const pathname = usePathname()
+  const [user, setUser] = useState<any>(null)
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser)
+    })
+    return () => unsubscribe()
+  }, [])
+
+  // Navigation items definition
+  const items = [
+    {
+      label: 'Home',
+      href: '/',
+      icon: Home,
+      active: pathname === '/'
+    },
+    {
+      label: 'Categories',
+      href: '/categories/',
+      icon: LayoutGrid,
+      active: pathname.startsWith('/categories') || pathname.startsWith('/category')
+    },
+    {
+      label: 'Add',
+      href: '/add-business/',
+      icon: Plus,
+      isCenter: true
+    },
+    {
+      label: user ? 'Profile' : 'Login',
+      href: user ? '/user/profile/' : '/auth/login/',
+      icon: user ? User : LogIn,
+      active: pathname.startsWith('/auth/login') || pathname.startsWith('/user/profile')
+    },
+    {
+      label: 'Cities',
+      href: '/cities/',
+      icon: MapPin,
+      active: pathname.startsWith('/cities') || pathname.startsWith('/city')
+    }
+  ]
+
+  return (
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-[#0f2b3d] border-t border-white/5 rounded-t-3xl shadow-[0_-8px_30px_rgba(0,0,0,0.3)] md:hidden pb-safe">
+      <div className="flex items-center justify-around h-16 px-2 relative">
+        {items.map((item, idx) => {
+          const Icon = item.icon
+
+          if (item.isCenter) {
+            return (
+              <Link
+                key={idx}
+                href={item.href}
+                className="relative -top-4 flex items-center justify-center w-14 h-14 bg-emerald-500 hover:bg-emerald-600 rounded-full text-white border-4 border-[#0f2b3d] shadow-lg hover:scale-105 transition-all duration-200"
+                title="Add Your Business"
+              >
+                <Plus className="w-8 h-8" />
+              </Link>
+            )
+          }
+
+          return (
+            <Link
+              key={idx}
+              href={item.href}
+              className={`flex flex-col items-center justify-center flex-1 py-1 transition-colors duration-200 ${
+                item.active ? 'text-emerald-400' : 'text-white/60 hover:text-white'
+              }`}
+            >
+              <div
+                className={`w-9 h-9 rounded-full flex items-center justify-center mb-0.5 transition-colors ${
+                  item.active ? 'bg-white/10' : 'bg-transparent'
+                }`}
+              >
+                <Icon className="w-5 h-5" />
+              </div>
+              <span className="text-[10px] font-semibold">{item.label}</span>
+            </Link>
+          )
+        })}
+      </div>
+    </nav>
+  )
+}

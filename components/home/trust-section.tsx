@@ -30,7 +30,7 @@ export default function TrustSection() {
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold text-[#0f2b3d] mb-4">Why Trust PakBizBranches?</h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            We are dedicated to building Pakistan's most reliable and transparent business directory, 
+            We are dedicated to building a Pakistan free business directory that is reliable, transparent, and verified, 
             connecting customers with verified local services every day.
           </p>
         </div>

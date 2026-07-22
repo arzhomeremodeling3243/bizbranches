@@ -12,7 +12,7 @@ export default function Footer() {
             <Link href="/" className="flex items-center gap-2 mb-6" title="PakBizBranches - Home">
               <Image
                 src="/logo-img.png"
-                alt="PakBizBranches Logo"
+                alt="Pakistan Free Business Directory – PakBizBranches Logo"
                 width={40}
                 height={40}
                 className="object-contain rounded-md"

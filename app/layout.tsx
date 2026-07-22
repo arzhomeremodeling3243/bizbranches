@@ -1,20 +1,25 @@
 import type { Metadata } from 'next'
+import { Outfit } from 'next/font/google'
 import './globals.css'
 import AntiCopyWrapper from '@/components/anti-copy-wrapper'
 import FloatingWhatsAppButton from '@/components/floating-whatsapp-button'
 import ChatWidgetLoader from '@/components/chat-widget-loader'
 import { NativeAdLoader, SkyscraperAdLoader } from '@/components/ads/ads-loader'
+import BottomNav from '@/components/bottom-nav'
 
-const outfit = {
-  variable: 'font-sans'
-}
+const outfit = Outfit({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800'],
+  display: 'swap',
+  variable: '--font-sans',
+})
 
 export const metadata: Metadata = {
-  title: 'Pakistan Business Directory: Find Local Businesses',
+  title: 'Pakistan Free Business Directory: Find Local Businesses',
   description:
-    'Find verified local businesses, phone numbers, and addresses by city and category. 15,000 plus listings across 150 plus cities on PakBizBranches.',
+    'Search or list your business on the premier Pakistan free business directory. Find verified local businesses, phone numbers, and addresses by city and category. 15,000 plus listings across 150 plus cities on PakBizBranches.',
   keywords:
-    'Pakistan business directory, free business listing Pakistan, Karachi business listings, Lahore business directory, Islamabad business listings, local services Pakistan, business phone numbers Pakistan, companies in Pakistan by city, verified business contacts Pakistan, WhatsApp business directory Pakistan',
+    'pakistan free business directory, Pakistan business directory, free business listing Pakistan, Karachi business listings, Lahore business directory, Islamabad business listings, local services Pakistan, business phone numbers Pakistan, companies in Pakistan by city, verified business contacts Pakistan, WhatsApp business directory Pakistan',
   authors: [{ name: 'PakBizBranches', url: 'https://www.pakbizbranhces.online/' }],
   metadataBase: new URL('https://www.pakbizbranhces.online/'),
   icons: {
@@ -26,9 +31,9 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: 'Pakistan Business Directory: Find Local Businesses',
+    title: 'Pakistan Free Business Directory: Find Local Businesses',
     description:
-      'Search verified Pakistan businesses by category and city. Find phone numbers, addresses, and WhatsApp contacts free on PakBizBranches.',
+      'Search or list your business on the premier Pakistan free business directory. Find verified local businesses, phone numbers, and addresses by city and category.',
     url: 'https://www.pakbizbranhces.online/',
     siteName: 'PakBizBranches',
     locale: 'en_PK',
@@ -36,9 +41,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Pakistan Business Directory: Find Local Businesses',
+    title: 'Pakistan Free Business Directory: Find Local Businesses',
     description:
-      'List your business for free and get discovered by thousands of local customers across Pakistan on PakBizBranches directory.',
+      'Search or list your business on the premier Pakistan free business directory. Find verified local businesses, phone numbers, and addresses by city and category.',
   },
   robots: {
     index: true,
@@ -55,12 +60,33 @@ export default function RootLayout({
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(s){s.dataset.zone='11265640',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))`
+            __html: `
+              (function() {
+                var loaded = false;
+                function loadAdScript() {
+                  if (loaded) return;
+                  loaded = true;
+                  var s = document.createElement('script');
+                  s.dataset.zone = '11265640';
+                  s.src = 'https://nap5k.com/tag.min.js';
+                  var target = [document.documentElement, document.body].filter(Boolean).pop();
+                  if (target) target.appendChild(s);
+                  
+                  // Clean up listeners
+                  window.removeEventListener('scroll', loadAdScript);
+                  window.removeEventListener('pointerdown', loadAdScript);
+                  window.removeEventListener('touchstart', loadAdScript);
+                  window.removeEventListener('keydown', loadAdScript);
+                }
+                window.addEventListener('scroll', loadAdScript, { passive: true, once: true });
+                window.addEventListener('pointerdown', loadAdScript, { passive: true, once: true });
+                window.addEventListener('touchstart', loadAdScript, { passive: true, once: true });
+                window.addEventListener('keydown', loadAdScript, { once: true });
+              })();
+            `
           }}
         />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
         <meta name="google-site-verification" content="D2TTC8ZWjbjA3wgOFcyrfBnFkjC3TAiCG7E6wDxDGK4" />
         <meta name="ahrefs-site-verification" content="22e1275092fa85b1" />
         <link rel="alternate" hrefLang="en-PK" href="https://www.pakbizbranhces.online/" />
@@ -90,9 +116,9 @@ export default function RootLayout({
                   document.head.appendChild(s);
                 }
                 if (document.readyState === 'complete') {
-                  setTimeout(loadGA, 0);
+                  setTimeout(loadGA, 3000);
                 } else {
-                  window.addEventListener('load', function() { setTimeout(loadGA, 0); }, { once: true });
+                  window.addEventListener('load', function() { setTimeout(loadGA, 3000); }, { once: true });
                 }
               })();
             `,
@@ -190,7 +216,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="font-sans antialiased">
+      <body className="font-sans antialiased pb-16 md:pb-0">
         <AntiCopyWrapper />
         <FloatingWhatsAppButton />
         <ChatWidgetLoader />
@@ -209,6 +235,8 @@ export default function RootLayout({
         <div className="w-full max-w-7xl mx-auto px-4 my-8">
           <NativeAdLoader />
         </div>
+
+        <BottomNav />
       </body>
     </html>
   )

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 interface SkyscraperAdProps {
   className?: string
@@ -8,9 +8,25 @@ interface SkyscraperAdProps {
 
 export default function SkyscraperAd({ className = '' }: SkyscraperAdProps) {
   const containerRef = useRef<HTMLDivElement | null>(null)
+  const [isDesktop, setIsDesktop] = useState(false)
 
   useEffect(() => {
     if (typeof window === 'undefined') return
+
+    const checkIsDesktop = () => {
+      setIsDesktop(window.innerWidth >= 1280)
+    }
+
+    checkIsDesktop()
+    window.addEventListener('resize', checkIsDesktop)
+
+    return () => {
+      window.removeEventListener('resize', checkIsDesktop)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!isDesktop) return
     if (!containerRef.current) return
 
     // Clear any existing children to prevent duplicate scripts or iframes on hot-reloading
@@ -31,7 +47,9 @@ export default function SkyscraperAd({ className = '' }: SkyscraperAdProps) {
     script.async = true
 
     containerRef.current.appendChild(script)
-  }, [])
+  }, [isDesktop])
+
+  if (!isDesktop) return null
 
   return (
     <div className={`w-[160px] h-[600px] bg-slate-50/50 rounded-lg overflow-hidden flex items-center justify-center border border-slate-100 ${className}`}>

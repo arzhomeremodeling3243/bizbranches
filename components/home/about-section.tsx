@@ -7,13 +7,13 @@ export default function AboutSection() {
         <div className="text-center mb-10 sm:mb-12">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 text-primary px-3 py-1.5 text-xs font-semibold uppercase tracking-wide mb-4">
             <Globe className="w-3.5 h-3.5" />
-            Pakistan&apos;s Free Business Directory
+            Pakistan Free Business Directory
           </span>
           <h2 id="what-is-pakbizbranches" className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 tracking-tight">
             What is PakBizBranches?
           </h2>
           <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            PakBizBranches is Pakistan&apos;s leading free business listing directory. Find verified <strong>local businesses by city</strong> and{' '}
+            PakBizBranches is the leading Pakistan free business directory. Find verified <strong>local businesses by city</strong> and{' '}
             <a className="text-primary font-medium hover:underline" href="/categories/" title="Browse all business categories in Pakistan">
               business categories in Pakistan
             </a>

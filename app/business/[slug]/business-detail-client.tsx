@@ -323,6 +323,14 @@ export default function BusinessDetailClient({ slug }: { slug: string }) {
               <div className="flex-1 min-w-0">
                 <h1 className="text-3xl md:text-4xl font-bold text-[#0f2b3d] mb-2">
                   {business.businessName} {business.city}
+                  {slug.toLowerCase().startsWith('ubl-') && (
+                    ` - ${slug
+                      .toLowerCase()
+                      .replace(/^ubl-/, 'ubl bank limited-')
+                      .replace(/-branch-/g, '-')
+                      .replace(/-branch$/g, '')
+                      .replace(/-/g, ' ')}`
+                  )}
                 </h1>
                 <p className="text-sm text-gray-500 mb-3">
                   Official Details &amp; Contact Information

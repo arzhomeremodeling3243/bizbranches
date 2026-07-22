@@ -30,7 +30,7 @@ export default function FAQSection() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-[#0f2b3d] mb-4">Frequently Asked Questions</h2>
-          <p className="text-gray-600">Everything you need to know about Pakistan's leading business directory.</p>
+          <p className="text-gray-600">Everything you need to know about the leading Pakistan free business directory.</p>
         </div>
         
         <Accordion type="single" collapsible className="w-full">
