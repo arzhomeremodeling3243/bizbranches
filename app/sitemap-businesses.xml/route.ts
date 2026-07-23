@@ -4,6 +4,10 @@ import { HIGH_PRIORITY_SLUGS } from '@/lib/static-db'
 
 const BASE_URL = 'https://www.pakbizbranhces.online'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
+
 function getAbsoluteImageUrl(url: string): string {
   if (!url) return ''
   if (url.startsWith('http://') || url.startsWith('https://')) {

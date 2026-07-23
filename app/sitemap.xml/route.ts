@@ -6,6 +6,10 @@ import { HIGH_PRIORITY_SLUGS } from '@/lib/static-db'
 
 const BASE_URL = 'https://www.pakbizbranhces.online'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
+
 function getAbsoluteImageUrl(url: string): string {
   if (!url) return ''
   if (url.startsWith('http://') || url.startsWith('https://')) {
@@ -154,6 +158,20 @@ export async function GET() {
       priority: '0.8'
     })
   })
+
+  // 8. Location Pages
+  TOP_CITIES.forEach(city => {
+    const citySlug = city.toLowerCase().replace(/ /g, '-')
+    CATEGORIES.forEach(cat => {
+      urls.push({
+        loc: `${BASE_URL}/locations/${citySlug}/${cat.id}/`,
+        lastmod,
+        changefreq: 'weekly',
+        priority: '0.7'
+      })
+    })
+  })
+
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
