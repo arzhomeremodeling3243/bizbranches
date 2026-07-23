@@ -57,6 +57,17 @@ function serializeTimestamp(timestamp: any): string {
   return new Date().toISOString()
 }
 
+// Helper: Wrap promise with timeout to prevent slow network hanging server renders
+function fetchWithTimeout<T>(promise: Promise<T>, ms: number = 1500): Promise<T> {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => reject(new Error('Firebase query timeout')), ms)
+    promise.then(
+      res => { clearTimeout(timer); resolve(res) },
+      err => { clearTimeout(timer); reject(err) }
+    )
+  })
+}
+
 // Fetch latest businesses - merging static & dynamic
 export async function fetchLatestBusinesses(count: number = 8): Promise<Business[]> {
   try {
@@ -66,7 +77,7 @@ export async function fetchLatestBusinesses(count: number = 8): Promise<Business
       limit(count * 2) // Fetch more to account for status filtering
     )
     
-    const snapshot = await getDocs(q)
+    const snapshot = await fetchWithTimeout(getDocs(q), 1500)
     const dbBusinesses: Business[] = []
     
     snapshot.docs.forEach(doc => {
@@ -131,7 +142,7 @@ export async function fetchFeaturedBusinesses(count: number = 4): Promise<Busine
       limit(100)
     )
     
-    const snapshot = await getDocs(q)
+    const snapshot = await fetchWithTimeout(getDocs(q), 1500)
     const dbBusinesses: Business[] = []
     
     snapshot.docs.forEach(doc => {

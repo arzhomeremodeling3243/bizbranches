@@ -63,8 +63,11 @@ export default function Navbar() {
 
           {/* Mobile hamburger */}
           <button
+            id="mobile-hamburger-btn"
             className="md:hidden text-white p-2 cursor-pointer"
             aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
+            aria-controls="mobile-nav-menu"
             onClick={() => setOpen(!open)}
           >
             {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -75,12 +78,14 @@ export default function Navbar() {
       {/* Mobile Menu */}
       {open && (
         <nav
+          id="mobile-nav-menu"
           className="md:hidden bg-[#0a1e2b] border-t border-white/10 px-4 py-4 flex flex-col gap-3"
           aria-label="Mobile navigation"
         >
           {navLinks.map((link) => (
             <Link
               key={link.href}
+              id={`mobile-nav-${link.label.toLowerCase().replace(/\s+/g, '-')}`}
               href={link.href}
               onClick={() => setOpen(false)}
               className={`text-sm font-medium py-2 px-3 rounded-lg transition-colors ${
@@ -93,6 +98,7 @@ export default function Navbar() {
             </Link>
           ))}
           <Link
+            id="mobile-nav-add-business"
             href="/add-business"
             onClick={() => setOpen(false)}
             className="mt-1 px-4 py-2 rounded-lg bg-[#60a5fa] text-white text-sm font-semibold text-center hover:bg-blue-400 transition-colors"

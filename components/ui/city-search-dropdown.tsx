@@ -81,6 +81,9 @@ export default function CitySearchDropdown({
       <div className="relative">
         <MapPin className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2 pointer-events-none" />
         <input
+          id="city-search-input"
+          name="city"
+          aria-label="Search by city"
           type="text"
           value={displayValue}
           onChange={handleInputChange}

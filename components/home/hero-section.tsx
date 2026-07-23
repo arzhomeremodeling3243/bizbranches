@@ -52,12 +52,14 @@ export default function HeroSection() {
         {/* Action Buttons */}
         <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
           <Link
+            id="hero-list-business-btn"
             href="/add-business/"
             className="bg-[#60a5fa] hover:bg-blue-600 text-white font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-xl transition-colors duration-200 text-sm sm:text-base shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 cursor-pointer text-center"
           >
             List Your Business for Free
           </Link>
           <Link
+            id="hero-browse-categories-btn"
             href="/categories/"
             className="bg-white/10 hover:bg-white/20 text-white font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-xl transition-colors duration-200 text-sm sm:text-base border border-white/20 backdrop-blur-sm hover:border-white/30 cursor-pointer text-center"
           >
@@ -66,10 +68,10 @@ export default function HeroSection() {
         </div>
 
         <div className="mt-6 sm:mt-8 bg-white/10 backdrop-blur-md rounded-xl p-4 sm:p-6 max-w-2xl mx-auto border border-white/20">
-          <p className="text-white/90 text-sm sm:text-base">
+          <p className="text-white text-sm sm:text-base font-medium">
             Pakistan business directory with city pages, category pages, and direct contact details to help users quickly compare local services.
           </p>
-          <div className="mt-4 flex flex-wrap justify-center gap-2 text-xs sm:text-sm text-white/85">
+          <div className="mt-4 flex flex-wrap justify-center gap-2 text-xs sm:text-sm text-slate-100 font-medium">
             <span className="bg-white/10 px-3 py-1 rounded-full">15,000+ Listings</span>
             <span className="bg-white/10 px-3 py-1 rounded-full">150+ Cities</span>
             <span className="bg-white/10 px-3 py-1 rounded-full">Verified Contacts</span>
@@ -80,28 +82,28 @@ export default function HeroSection() {
         <div className="mt-4 sm:mt-6 flex flex-wrap items-center justify-center gap-4 sm:gap-6">
           <Link
             href="/blog/"
-            className="text-white/60 hover:text-white text-xs sm:text-sm transition-colors"
+            className="text-slate-200 hover:text-white text-xs sm:text-sm font-medium transition-colors"
           >
             📚 Business Guide
           </Link>
-          <span className="text-white/30">•</span>
+          <span className="text-white/50">•</span>
           <Link
             href="/blog/how-to-add-business/"
-            className="text-white/60 hover:text-white text-xs sm:text-sm transition-colors"
+            className="text-slate-200 hover:text-white text-xs sm:text-sm font-medium transition-colors"
           >
             📝 How to Add Business Free
           </Link>
-          <span className="text-white/30">•</span>
+          <span className="text-white/50">•</span>
           <Link
             href="/restaurants/"
-            className="text-white/60 hover:text-white text-xs sm:text-sm transition-colors"
+            className="text-slate-200 hover:text-white text-xs sm:text-sm font-medium transition-colors"
           >
             🍽️ Restaurants
           </Link>
-          <span className="text-white/30">•</span>
+          <span className="text-white/50">•</span>
           <Link
             href="/healthcare/"
-            className="text-white/60 hover:text-white text-xs sm:text-sm transition-colors"
+            className="text-slate-200 hover:text-white text-xs sm:text-sm font-medium transition-colors"
           >
             🏥 Healthcare
           </Link>
@@ -109,7 +111,7 @@ export default function HeroSection() {
 
         {/* Popular Searches: keyword-rich city+category links */}
         <div className="mt-4 sm:mt-5 flex flex-wrap items-center justify-center gap-2">
-          <span className="text-white/40 text-xs">Popular:</span>
+          <span className="text-slate-300 text-xs font-medium">Popular:</span>
           {[
             { href: '/karachi/restaurants/', label: 'Restaurants Karachi' },
             { href: '/lahore/real-estate/', label: 'Real Estate Lahore' },
@@ -120,14 +122,14 @@ export default function HeroSection() {
             <Link
               key={href}
               href={href}
-              className="text-white/50 hover:text-white/80 text-xs px-2 py-0.5 rounded border border-white/10 hover:border-white/25 transition-colors"
+              className="text-slate-200 hover:text-white text-xs px-2 py-0.5 rounded border border-white/20 hover:border-white/40 transition-colors"
             >
               {label}
             </Link>
           ))}
         </div>
 
-        <p className="mt-4 sm:mt-6 text-white/40 text-xs sm:text-sm">
+        <p className="mt-4 sm:mt-6 text-slate-300 text-xs sm:text-sm font-medium">
           Popular: Restaurants, Real Estate, Healthcare, Technology
         </p>
       </div>

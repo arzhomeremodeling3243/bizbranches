@@ -28,6 +28,8 @@ export default function HeroSearchForm() {
       <div className="flex items-center gap-2 flex-1 px-3">
         <Search className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 shrink-0" aria-hidden="true" />
         <input
+          id="search-query-input"
+          name="q"
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
@@ -46,8 +48,10 @@ export default function HeroSearchForm() {
         />
       </div>
       <button
+        id="hero-search-submit"
         type="submit"
         className="bg-[#0f2b3d] hover:bg-[#1a3f57] text-white font-semibold px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl transition-colors duration-200 text-sm sm:text-base cursor-pointer"
+        aria-label="Submit business search"
       >
         Search
       </button>
