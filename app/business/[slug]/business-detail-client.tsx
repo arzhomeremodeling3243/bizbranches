@@ -13,7 +13,6 @@ import { LIVE_STATUSES } from '@/lib/category-mappings'
 import { findStaticBusinessBySlug, getStaticSimilar } from '@/lib/static-db'
 import { BannerAdLoader, NativeAdLoader } from '@/components/ads/ads-loader'
 import CountdownLoader from '@/components/ui/countdown-loader'
-import React from 'react'
 import { getBusinessLogoUrl } from '@/lib/utils'
 
 const BASE_URL = 'https://www.pakbizbranhces.online'

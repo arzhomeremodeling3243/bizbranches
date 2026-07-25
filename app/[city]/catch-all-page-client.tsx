@@ -18,7 +18,6 @@ import { generateCategoryContent, generateCityContent, CITY_INFO } from '@/lib/s
 import { getCategoryKeywordCluster, getCityKeywordCluster } from '@/lib/organic-keywords'
 import { findStaticBusinessBySlug, getStaticSimilar, getStaticBranches } from '@/lib/static-db'
 import { BannerAdLoader, NativeAdLoader } from '@/components/ads/ads-loader'
-import React from 'react'
 import { getBusinessLogoUrl } from '@/lib/utils'
 
 const BASE_URL = 'https://www.pakbizbranhces.online'
