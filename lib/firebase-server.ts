@@ -58,7 +58,7 @@ function serializeTimestamp(timestamp: any): string {
 }
 
 // Helper: Wrap promise with timeout to prevent slow network hanging server renders
-function fetchWithTimeout<T>(promise: Promise<T>, ms: number = 1500): Promise<T> {
+function fetchWithTimeout<T>(promise: Promise<T>, ms: number = 2000): Promise<T> {
   return new Promise((resolve, reject) => {
     const timer = setTimeout(() => reject(new Error('Firebase query timeout')), ms)
     promise.then(
@@ -67,6 +67,7 @@ function fetchWithTimeout<T>(promise: Promise<T>, ms: number = 1500): Promise<T>
     )
   })
 }
+
 
 // Fetch latest businesses - merging static & dynamic
 export async function fetchLatestBusinesses(count: number = 8): Promise<Business[]> {
@@ -77,7 +78,7 @@ export async function fetchLatestBusinesses(count: number = 8): Promise<Business
       limit(count * 2) // Fetch more to account for status filtering
     )
     
-    const snapshot = await fetchWithTimeout(getDocs(q), 1500)
+    const snapshot = await fetchWithTimeout(getDocs(q), 2000)
     const dbBusinesses: Business[] = []
     
     snapshot.docs.forEach(doc => {
@@ -142,7 +143,7 @@ export async function fetchFeaturedBusinesses(count: number = 4): Promise<Busine
       limit(100)
     )
     
-    const snapshot = await fetchWithTimeout(getDocs(q), 1500)
+    const snapshot = await fetchWithTimeout(getDocs(q), 2000)
     const dbBusinesses: Business[] = []
     
     snapshot.docs.forEach(doc => {
@@ -212,7 +213,7 @@ export async function fetchCategoryBusinesses(
       limit(pageLimit * 2)
     )
 
-    const snapshot = await getDocs(q)
+    const snapshot = await fetchWithTimeout(getDocs(q), 2000)
     const dbBusinesses: Business[] = []
     
     snapshot.docs.forEach(doc => {
@@ -283,7 +284,7 @@ export async function fetchCityBusinesses(
       limit(pageLimit * 2)
     )
 
-    const snapshot = await getDocs(q)
+    const snapshot = await fetchWithTimeout(getDocs(q), 2000)
     const dbBusinesses: Business[] = []
     
     snapshot.docs.forEach(doc => {
@@ -355,7 +356,7 @@ export async function fetchCityCategoryBusinesses(
       limit(pageLimit * 4)
     )
 
-    const snapshot = await getDocs(q)
+    const snapshot = await fetchWithTimeout(getDocs(q), 2000)
     const dbBusinesses: Business[] = []
     
     snapshot.docs.forEach(doc => {
@@ -429,7 +430,7 @@ export async function fetchAllBusinessesForSitemap(): Promise<{ slug: string, lo
       orderBy('createdAt', 'desc')
     )
 
-    const snapshot = await getDocs(q)
+    const snapshot = await fetchWithTimeout(getDocs(q), 2000)
     const dbSitemapItems: { slug: string, logoUrl?: string }[] = []
     
     snapshot.docs.forEach(doc => {

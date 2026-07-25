@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ArrowLeft, Phone, Mail, MapPin, MessageCircle, Building2, Globe, Facebook, Youtube, ExternalLink, Loader2 } from 'lucide-react'
@@ -495,7 +495,24 @@ export default function BusinessDetailClient({ slug }: { slug: string }) {
                     <div className="flex items-start gap-3">
                       <Phone className="w-5 h-5 text-[#60a5fa] mt-0.5 shrink-0" />
                       <div>
-                        <p className="font-medium text-gray-900">{business.phone}</p>
+                        <p className="font-medium text-gray-900">
+                          {business.phone ? (
+                            business.phone.split(/[,/]/).map((num, idx, arr) => {
+                              const trimmed = num.trim()
+                              const cleanDigits = trimmed.replace(/[^0-9+]/g, '')
+                              return (
+                                <React.Fragment key={idx}>
+                                  <a href={`tel:${cleanDigits}`} className="hover:underline text-blue-600">
+                                    {trimmed}
+                                  </a>
+                                  {idx < arr.length - 1 ? ', ' : ''}
+                                </React.Fragment>
+                              )
+                            })
+                          ) : (
+                            'N/A'
+                          )}
+                        </p>
                         <p className="text-sm text-gray-500">Phone</p>
                       </div>
                     </div>
@@ -504,7 +521,25 @@ export default function BusinessDetailClient({ slug }: { slug: string }) {
                       <div className="flex items-start gap-3">
                         <MessageCircle className="w-5 h-5 text-green-600 mt-0.5 shrink-0" />
                         <div>
-                          <p className="font-medium text-gray-900">{business.whatsapp}</p>
+                          <p className="font-medium text-gray-900">
+                            {business.whatsapp.split(/[,/]/).map((num, idx, arr) => {
+                              const trimmed = num.trim()
+                              const cleanDigits = trimmed.replace(/[^0-9]/g, '')
+                              return (
+                                <React.Fragment key={idx}>
+                                  <a
+                                    href={`https://wa.me/${cleanDigits}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="hover:underline text-blue-600"
+                                  >
+                                    {trimmed}
+                                  </a>
+                                  {idx < arr.length - 1 ? ', ' : ''}
+                                </React.Fragment>
+                              )
+                            })}
+                          </p>
                           <p className="text-sm text-gray-500">WhatsApp</p>
                         </div>
                       </div>

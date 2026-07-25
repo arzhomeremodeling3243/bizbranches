@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import {
@@ -517,7 +517,8 @@ export default function CatchAllPageClient({ slug }: { slug: string }) {
   if (viewType === 'business' && business) {
     const businessCategory = CATEGORIES.find(c => c.id === business.category)
     const categoryName = businessCategory?.name ?? business.category
-    const whatsappUrl = business.whatsapp ? `https://wa.me/${business.whatsapp.replace(/[^0-9]/g, '')}` : null
+    const primaryWhatsapp = business.whatsapp ? business.whatsapp.split(/[,/]/)[0].replace(/[^0-9]/g, '') : null
+    const whatsappUrl = primaryWhatsapp ? `https://wa.me/${primaryWhatsapp}` : null
     const mapQuery = encodeURIComponent(`${business.address}, ${business.city}, Pakistan`)
     const mapSrc = `https://maps.google.com/maps?q=${mapQuery}&output=embed`
     const pageUrl = `${BASE_URL}/${slug}/`
@@ -715,8 +716,47 @@ export default function CatchAllPageClient({ slug }: { slug: string }) {
                     <h3 className="text-xl font-bold text-[#0f2b3d] mt-8 mb-4">Contact Information</h3>
                     <ul className="list-disc pl-5 space-y-2 text-gray-600">
                       <li><strong>Address:</strong> {business.address}, {business.city}, Pakistan</li>
-                      <li><strong>Phone:</strong> <a href={`tel:${business.phone}`} className="text-blue-600 hover:underline">{business.phone}</a></li>
-                      {business.whatsapp && <li><strong>WhatsApp:</strong> {business.whatsapp}</li>}
+                      <li>
+                        <strong>Phone:</strong>{' '}
+                        {business.phone ? (
+                          business.phone.split(/[,/]/).map((num, idx, arr) => {
+                            const trimmed = num.trim()
+                            const cleanDigits = trimmed.replace(/[^0-9+]/g, '')
+                            return (
+                              <React.Fragment key={idx}>
+                                <a href={`tel:${cleanDigits}`} className="text-blue-600 hover:underline">
+                                  {trimmed}
+                                </a>
+                                {idx < arr.length - 1 ? ', ' : ''}
+                              </React.Fragment>
+                            )
+                          })
+                        ) : (
+                          'N/A'
+                        )}
+                      </li>
+                      {business.whatsapp && (
+                        <li>
+                          <strong>WhatsApp:</strong>{' '}
+                          {business.whatsapp.split(/[,/]/).map((num, idx, arr) => {
+                            const trimmed = num.trim()
+                            const cleanDigits = trimmed.replace(/[^0-9]/g, '')
+                            return (
+                              <React.Fragment key={idx}>
+                                <a
+                                  href={`https://wa.me/${cleanDigits}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-blue-600 hover:underline"
+                                >
+                                  {trimmed}
+                                </a>
+                                {idx < arr.length - 1 ? ', ' : ''}
+                              </React.Fragment>
+                            )
+                          })}
+                        </li>
+                      )}
                       {business.email && <li><strong>Email:</strong> <a href={`mailto:${business.email}`} className="text-blue-600 hover:underline">{business.email}</a></li>}
                     </ul>
                   </div>
