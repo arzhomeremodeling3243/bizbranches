@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { Search, Edit2, Trash2, Eye, Users, Building2, Mail, Phone, Shield, LogOut, CheckCircle, XCircle, AlertCircle, Star, Settings } from 'lucide-react'
+import { Search, Edit2, Trash2, Eye, Users, Building2, Mail, Phone, Shield, LogOut, CheckCircle, XCircle, AlertCircle, Star, Settings, DollarSign, Calendar, TrendingUp, Wallet, Coins, ArrowUpRight } from 'lucide-react'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import AdminLogin from '@/components/admin-login'
@@ -29,12 +29,14 @@ interface Business {
   logoUrl?: string
   slug?: string
   createdAt: any
+  updatedAt?: any
+  approvedAt?: any
   status: string
   isFeatured?: boolean
   businessId?: string
   paymentScreenshotUrl?: string
   paymentSubmittedAt?: any
-  paymentPlan?: 'standard' | 'express'
+  paymentPlan?: 'standard' | 'express' | 'authority' | 'priority'
   paymentPlanPrice?: number
 }
 
@@ -47,6 +49,29 @@ interface ContactForm {
   timestamp: any
 }
 
+const PAST_ALL_TIME_EARNINGS = 300
+
+function getBusinessPrice(b: Business): number {
+  if (typeof b.paymentPlanPrice === 'number' && b.paymentPlanPrice > 0) {
+    return b.paymentPlanPrice
+  }
+  if (b.paymentPlan === 'express') return 20
+  if (b.paymentPlan === 'standard') return 10
+  if (b.paymentPlan === 'authority' || b.paymentPlan === 'priority') return 50
+  return 10
+}
+
+function parseTimestampDate(ts: any): Date | null {
+  if (!ts) return null
+  if (ts.toDate && typeof ts.toDate === 'function') return ts.toDate()
+  if (ts.seconds) return new Date(ts.seconds * 1000)
+  if (typeof ts === 'string') {
+    const d = new Date(ts)
+    if (!isNaN(d.getTime())) return d
+  }
+  return null
+}
+
 export default function AdminPage() {
   const router = useRouter()
   const [businesses, setBusinesses] = useState<Business[]>([])
@@ -56,7 +81,8 @@ export default function AdminPage() {
   const [selectedBusiness, setSelectedBusiness] = useState<Business | null>(null)
   const [isEditing, setIsEditing] = useState(false)
   const [editForm, setEditForm] = useState<Partial<Business>>({})
-  const [activeTab, setActiveTab] = useState<'businesses' | 'contacts' | 'pages'>('businesses')
+  const [activeTab, setActiveTab] = useState<'businesses' | 'contacts' | 'pages' | 'earnings'>('businesses')
+  const [earningsFilter, setEarningsFilter] = useState<'all' | 'lastWeek'>('all')
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [currentUser, setCurrentUser] = useState<any>(null)
@@ -239,7 +265,11 @@ export default function AdminPage() {
     try {
       const business = businesses.find(b => b.id === businessId)
       const businessRef = doc(db, 'businesses', businessId)
-      await updateDoc(businessRef, { status: 'approved' })
+      const nowIso = new Date().toISOString()
+      await updateDoc(businessRef, { 
+        status: 'approved',
+        approvedAt: nowIso
+      })
       
       if (business?.slug) {
         fetch('/api/indexnow', {
@@ -253,7 +283,7 @@ export default function AdminPage() {
       }
 
       setBusinesses(prev => prev.map(b =>
-        b.id === businessId ? { ...b, status: 'approved' } : b
+        b.id === businessId ? { ...b, status: 'approved', approvedAt: nowIso } : b
       ))
     } catch (error) {
       console.error('Error activating business:', error)
@@ -461,6 +491,17 @@ export default function AdminPage() {
                 >
                   <Settings className="w-4 h-4" />
                   Page Settings
+                </button>
+                <button
+                  onClick={() => setActiveTab('earnings')}
+                  className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center gap-2 cursor-pointer ${
+                    activeTab === 'earnings'
+                      ? 'border-emerald-500 text-emerald-600 font-bold'
+                      : 'border-transparent text-gray-500 hover:text-gray-700'
+                  }`}
+                >
+                  <Coins className="w-4 h-4 text-emerald-600" />
+                  Earnings
                 </button>
               </nav>
             </div>
@@ -700,6 +741,254 @@ export default function AdminPage() {
                   <li>Modify pages-config.ts to change settings</li>
                   <li>robots.txt ensures crawlers only index active pages</li>
                 </ul>
+              </div>
+            </div>
+          )}
+
+          {/* Earnings Tab */}
+          {activeTab === 'earnings' && (
+            <div className="space-y-6">
+              {/* Earnings Overview Hero Banner */}
+              <div className="bg-gradient-to-r from-emerald-900 via-teal-900 to-slate-900 text-white rounded-2xl p-6 md:p-8 shadow-xl border border-emerald-800/40 relative overflow-hidden">
+                <div className="absolute right-0 top-0 -mt-10 -mr-10 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                
+                <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-emerald-800/60">
+                  <div>
+                    <div className="flex items-center gap-2 text-emerald-400 font-semibold text-sm uppercase tracking-wider mb-1">
+                      <Coins className="w-5 h-5" />
+                      Revenue & Earnings Dashboard
+                    </div>
+                    <h2 className="text-2xl md:text-3xl font-extrabold text-white">Platform Earnings Overview</h2>
+                    <p className="text-emerald-200/80 text-sm mt-1">
+                      When you verify and approve business plan payments (10 PKR, 20 PKR, 50 PKR), earnings update automatically.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Two Option Cards: All-Time Earnings & Last Week (7 Days) Earnings */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                  {/* Option 1: All Time Earnings */}
+                  <div
+                    onClick={() => setEarningsFilter('all')}
+                    className={`relative cursor-pointer p-6 rounded-xl border-2 transition-all transform hover:-translate-y-0.5 ${
+                      earningsFilter === 'all'
+                        ? 'bg-white/10 border-emerald-400 shadow-lg ring-2 ring-emerald-400/30'
+                        : 'bg-white/5 border-emerald-800/50 hover:bg-white/10 hover:border-emerald-600'
+                    }`}
+                  >
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-bold uppercase tracking-wider text-emerald-300 bg-emerald-950/80 px-2.5 py-1 rounded-md border border-emerald-700/50">
+                            Option 1
+                          </span>
+                          <span className="text-sm font-semibold text-emerald-200">All-Time Revenue</span>
+                        </div>
+                        <h3 className="text-3xl md:text-4xl font-extrabold text-white mt-3">
+                          RS {PAST_ALL_TIME_EARNINGS + businesses.filter(b => b.status === 'approved').reduce((acc, b) => acc + getBusinessPrice(b), 0)}
+                        </h3>
+                        <p className="text-xs text-emerald-200/80 mt-2 flex items-center gap-1.5">
+                          <CheckCircle className="w-3.5 h-3.5 text-emerald-400" />
+                          Includes RS {PAST_ALL_TIME_EARNINGS} past earnings + {businesses.filter(b => b.status === 'approved').length} Approved Listings
+                        </p>
+                      </div>
+                      <div className="p-3 bg-emerald-500/20 border border-emerald-400/30 rounded-xl">
+                        <Wallet className="w-7 h-7 text-emerald-300" />
+                      </div>
+                    </div>
+                    {earningsFilter === 'all' && (
+                      <div className="mt-4 pt-3 border-t border-emerald-700/50 flex items-center justify-between text-xs text-emerald-300 font-bold">
+                        <span>● Selected View Mode</span>
+                        <ArrowUpRight className="w-4 h-4" />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Option 2: Last Week Earnings */}
+                  <div
+                    onClick={() => setEarningsFilter('lastWeek')}
+                    className={`relative cursor-pointer p-6 rounded-xl border-2 transition-all transform hover:-translate-y-0.5 ${
+                      earningsFilter === 'lastWeek'
+                        ? 'bg-white/10 border-blue-400 shadow-lg ring-2 ring-blue-400/30'
+                        : 'bg-white/5 border-emerald-800/50 hover:bg-white/10 hover:border-blue-600'
+                    }`}
+                  >
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-bold uppercase tracking-wider text-blue-300 bg-blue-950/80 px-2.5 py-1 rounded-md border border-blue-700/50">
+                            Option 2
+                          </span>
+                          <span className="text-sm font-semibold text-blue-200">Last 7 Days (Last Week)</span>
+                        </div>
+                        <h3 className="text-3xl md:text-4xl font-extrabold text-white mt-3">
+                          RS {businesses.filter(b => {
+                            if (b.status !== 'approved') return false
+                            const d = parseTimestampDate(b.approvedAt) || parseTimestampDate(b.paymentSubmittedAt) || parseTimestampDate(b.updatedAt) || parseTimestampDate(b.createdAt)
+                            const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+                            return d && d.getTime() >= sevenDaysAgo.getTime()
+                          }).reduce((acc, b) => acc + getBusinessPrice(b), 0)}
+                        </h3>
+                        <p className="text-xs text-blue-200/80 mt-2 flex items-center gap-1.5">
+                          <Calendar className="w-3.5 h-3.5 text-blue-400" />
+                          Rolling 7-day total • {businesses.filter(b => {
+                            if (b.status !== 'approved') return false
+                            const d = parseTimestampDate(b.approvedAt) || parseTimestampDate(b.paymentSubmittedAt) || parseTimestampDate(b.updatedAt) || parseTimestampDate(b.createdAt)
+                            const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+                            return d && d.getTime() >= sevenDaysAgo.getTime()
+                          }).length} Recent Approvals
+                        </p>
+                      </div>
+                      <div className="p-3 bg-blue-500/20 border border-blue-400/30 rounded-xl">
+                        <TrendingUp className="w-7 h-7 text-blue-300" />
+                      </div>
+                    </div>
+                    {earningsFilter === 'lastWeek' && (
+                      <div className="mt-4 pt-3 border-t border-blue-700/50 flex items-center justify-between text-xs text-blue-300 font-bold">
+                        <span>● Selected View Mode</span>
+                        <ArrowUpRight className="w-4 h-4" />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Detailed Breakdown List Table */}
+              <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div className="p-6 border-b border-gray-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-900">
+                      {earningsFilter === 'all' ? 'All-Time Approved Earnings List' : 'Last 7 Days (Last Week) Earnings List'}
+                    </h3>
+                    <p className="text-sm text-gray-500">
+                      View all approved business listings with Business IDs, plan prices (RS 10/20/50), dates, and payment receipt screenshots.
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-2 bg-gray-100 p-1 rounded-xl border border-gray-200">
+                    <button
+                      onClick={() => setEarningsFilter('all')}
+                      className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-colors cursor-pointer ${
+                        earningsFilter === 'all'
+                          ? 'bg-white text-emerald-700 shadow-xs'
+                          : 'text-gray-600 hover:text-gray-900'
+                      }`}
+                    >
+                      All Time
+                    </button>
+                    <button
+                      onClick={() => setEarningsFilter('lastWeek')}
+                      className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-colors cursor-pointer ${
+                        earningsFilter === 'lastWeek'
+                          ? 'bg-white text-blue-700 shadow-xs'
+                          : 'text-gray-600 hover:text-gray-900'
+                      }`}
+                    >
+                      Last 7 Days
+                    </button>
+                  </div>
+                </div>
+
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead className="bg-gray-50 border-b border-gray-200">
+                      <tr>
+                        <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Business ID & Name</th>
+                        <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">City & Category</th>
+                        <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Selected Plan</th>
+                        <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Earned Amount</th>
+                        <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Approval Date</th>
+                        <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Receipt Screenshot</th>
+                        <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-200">
+                      {businesses
+                        .filter(b => {
+                          if (b.status !== 'approved') return false
+                          if (earningsFilter === 'lastWeek') {
+                            const d = parseTimestampDate(b.approvedAt) || parseTimestampDate(b.paymentSubmittedAt) || parseTimestampDate(b.updatedAt) || parseTimestampDate(b.createdAt)
+                            const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+                            return d && d.getTime() >= sevenDaysAgo.getTime()
+                          }
+                          return true
+                        })
+                        .map(b => {
+                          const appDate = parseTimestampDate(b.approvedAt) || parseTimestampDate(b.paymentSubmittedAt) || parseTimestampDate(b.updatedAt) || parseTimestampDate(b.createdAt)
+                          const price = getBusinessPrice(b)
+                          return (
+                            <tr key={b.id} className="hover:bg-emerald-50/40 transition-colors">
+                              <td className="px-6 py-4">
+                                <div className="text-sm font-bold text-gray-900">{b.businessName}</div>
+                                {b.businessId ? (
+                                  <span className="inline-block mt-1 px-2 py-0.5 text-[10px] font-mono font-bold bg-blue-50 text-blue-700 border border-blue-100 rounded">
+                                    ID: {b.businessId}
+                                  </span>
+                                ) : (
+                                  <span className="inline-block mt-1 px-2 py-0.5 text-[10px] font-mono text-gray-400 bg-gray-50 rounded">
+                                    Doc ID: {b.id.substring(0, 8)}...
+                                  </span>
+                                )}
+                              </td>
+                              <td className="px-6 py-4 text-xs text-gray-600">
+                                <div className="font-semibold text-gray-800">{b.city}</div>
+                                <div className="text-gray-500">{b.category}</div>
+                              </td>
+                              <td className="px-6 py-4">
+                                <span className="inline-block px-2.5 py-1 text-xs font-bold uppercase tracking-wider rounded bg-slate-100 text-slate-800 border border-slate-200">
+                                  {b.paymentPlan || 'Standard'} (RS {price})
+                                </span>
+                              </td>
+                              <td className="px-6 py-4">
+                                <span className="text-base font-extrabold text-emerald-600">
+                                  RS {price}
+                                </span>
+                              </td>
+                              <td className="px-6 py-4 text-xs text-gray-600">
+                                {appDate ? appDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'Recently Approved'}
+                              </td>
+                              <td className="px-6 py-4">
+                                {b.paymentScreenshotUrl ? (
+                                  <a
+                                    href={b.paymentScreenshotUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-1.5 text-xs text-blue-600 hover:text-blue-800 font-semibold bg-blue-50 hover:bg-blue-100 px-2.5 py-1.5 rounded-lg border border-blue-200 transition-colors cursor-pointer"
+                                  >
+                                    <Eye className="w-3.5 h-3.5 text-blue-600" />
+                                    View Receipt
+                                  </a>
+                                ) : (
+                                  <span className="text-xs text-gray-400 italic">No receipt file</span>
+                                )}
+                              </td>
+                              <td className="px-6 py-4">
+                                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-green-100 text-green-800">
+                                  <CheckCircle className="w-3 h-3 text-green-600" />
+                                  Approved & Live
+                                </span>
+                              </td>
+                            </tr>
+                          )
+                        })}
+                      {businesses.filter(b => {
+                        if (b.status !== 'approved') return false
+                        if (earningsFilter === 'lastWeek') {
+                          const d = parseTimestampDate(b.approvedAt) || parseTimestampDate(b.paymentSubmittedAt) || parseTimestampDate(b.updatedAt) || parseTimestampDate(b.createdAt)
+                          const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+                          return d && d.getTime() >= sevenDaysAgo.getTime()
+                        }
+                        return true
+                      }).length === 0 && (
+                        <tr>
+                          <td colSpan={7} className="px-6 py-12 text-center text-gray-500">
+                            No approved earnings records found for this filter.
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           )}
