@@ -8,7 +8,7 @@ import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import AdminLogin from '@/components/admin-login'
 import { db } from '@/lib/firebase'
-import { collection, query, orderBy, getDocs, doc, deleteDoc, updateDoc, onSnapshot } from 'firebase/firestore'
+import { collection, query, orderBy, getDocs, doc, deleteDoc, updateDoc, setDoc, onSnapshot } from 'firebase/firestore'
 import { MAIN_PAGES } from '@/lib/pages-config'
 
 interface Business {
@@ -40,6 +40,18 @@ interface Business {
   paymentPlanPrice?: number
 }
 
+interface EarningRecord {
+  id: string
+  businessId?: string
+  businessName: string
+  city?: string
+  category?: string
+  paymentPlan?: string
+  amount: number
+  approvedAt: any
+  paymentScreenshotUrl?: string
+}
+
 interface ContactForm {
   id: string
   name: string
@@ -49,7 +61,7 @@ interface ContactForm {
   timestamp: any
 }
 
-const PAST_ALL_TIME_EARNINGS = 300
+const PAST_ALL_TIME_EARNINGS = 310
 
 function getBusinessPrice(b: Business): number {
   if (typeof b.paymentPlanPrice === 'number' && b.paymentPlanPrice > 0) {
@@ -76,6 +88,7 @@ export default function AdminPage() {
   const router = useRouter()
   const [businesses, setBusinesses] = useState<Business[]>([])
   const [contacts, setContacts] = useState<ContactForm[]>([])
+  const [earningRecords, setEarningRecords] = useState<EarningRecord[]>([])
   const [loading, setLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedBusiness, setSelectedBusiness] = useState<Business | null>(null)
@@ -161,9 +174,27 @@ export default function AdminPage() {
         setLoading(false)
       })
 
+      // Set up real-time listener for earnings_records
+      const earningsQuery = query(
+        collection(db, 'earnings_records'),
+        orderBy('approvedAt', 'desc')
+      )
+      const unsubscribeEarnings = onSnapshot(earningsQuery, (snapshot) => {
+        const records = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        } as EarningRecord))
+        setEarningRecords(records)
+      }, (error) => {
+        console.error('Earnings records listener failed:', error)
+      })
+
       fetchContacts()
 
-      return () => unsubscribe()
+      return () => {
+        unsubscribe()
+        unsubscribeEarnings()
+      }
     } else {
       setIsAuthenticated(false)
       setCurrentUser(null)
@@ -266,10 +297,26 @@ export default function AdminPage() {
       const business = businesses.find(b => b.id === businessId)
       const businessRef = doc(db, 'businesses', businessId)
       const nowIso = new Date().toISOString()
+      
       await updateDoc(businessRef, { 
         status: 'approved',
         approvedAt: nowIso
       })
+
+      // Save permanent record to earnings_records collection
+      if (business) {
+        const earningRef = doc(collection(db, 'earnings_records'))
+        await setDoc(earningRef, {
+          businessId: business.businessId || business.id,
+          businessName: business.businessName,
+          city: business.city,
+          category: business.category,
+          paymentPlan: business.paymentPlan || 'standard',
+          amount: getBusinessPrice(business),
+          approvedAt: nowIso,
+          paymentScreenshotUrl: business.paymentScreenshotUrl || ''
+        })
+      }
       
       if (business?.slug) {
         fetch('/api/indexnow', {
@@ -785,11 +832,11 @@ export default function AdminPage() {
                           <span className="text-sm font-semibold text-emerald-200">All-Time Revenue</span>
                         </div>
                         <h3 className="text-3xl md:text-4xl font-extrabold text-white mt-3">
-                          RS {PAST_ALL_TIME_EARNINGS + businesses.filter(b => b.status === 'approved').reduce((acc, b) => acc + getBusinessPrice(b), 0)}
+                          RS {PAST_ALL_TIME_EARNINGS + earningRecords.reduce((acc, r) => acc + (r.amount || 10), 0)}
                         </h3>
                         <p className="text-xs text-emerald-200/80 mt-2 flex items-center gap-1.5">
                           <CheckCircle className="w-3.5 h-3.5 text-emerald-400" />
-                          Includes RS {PAST_ALL_TIME_EARNINGS} past earnings + {businesses.filter(b => b.status === 'approved').length} Approved Listings
+                          Permanent total • {earningRecords.length} Permanent Approval Records
                         </p>
                       </div>
                       <div className="p-3 bg-emerald-500/20 border border-emerald-400/30 rounded-xl">
@@ -822,18 +869,16 @@ export default function AdminPage() {
                           <span className="text-sm font-semibold text-blue-200">Last 7 Days (Last Week)</span>
                         </div>
                         <h3 className="text-3xl md:text-4xl font-extrabold text-white mt-3">
-                          RS {businesses.filter(b => {
-                            if (b.status !== 'approved') return false
-                            const d = parseTimestampDate(b.approvedAt) || parseTimestampDate(b.paymentSubmittedAt) || parseTimestampDate(b.updatedAt) || parseTimestampDate(b.createdAt)
+                          RS {earningRecords.filter(r => {
+                            const d = parseTimestampDate(r.approvedAt)
                             const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
                             return d && d.getTime() >= sevenDaysAgo.getTime()
-                          }).reduce((acc, b) => acc + getBusinessPrice(b), 0)}
+                          }).reduce((acc, r) => acc + (r.amount || 10), 0)}
                         </h3>
                         <p className="text-xs text-blue-200/80 mt-2 flex items-center gap-1.5">
                           <Calendar className="w-3.5 h-3.5 text-blue-400" />
-                          Rolling 7-day total • {businesses.filter(b => {
-                            if (b.status !== 'approved') return false
-                            const d = parseTimestampDate(b.approvedAt) || parseTimestampDate(b.paymentSubmittedAt) || parseTimestampDate(b.updatedAt) || parseTimestampDate(b.createdAt)
+                          Rolling 7-day total • {earningRecords.filter(r => {
+                            const d = parseTimestampDate(r.approvedAt)
                             const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
                             return d && d.getTime() >= sevenDaysAgo.getTime()
                           }).length} Recent Approvals
@@ -903,40 +948,39 @@ export default function AdminPage() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200">
-                      {businesses
-                        .filter(b => {
-                          if (b.status !== 'approved') return false
+                      {earningRecords
+                        .filter(r => {
                           if (earningsFilter === 'lastWeek') {
-                            const d = parseTimestampDate(b.approvedAt) || parseTimestampDate(b.paymentSubmittedAt) || parseTimestampDate(b.updatedAt) || parseTimestampDate(b.createdAt)
+                            const d = parseTimestampDate(r.approvedAt)
                             const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
                             return d && d.getTime() >= sevenDaysAgo.getTime()
                           }
                           return true
                         })
-                        .map(b => {
-                          const appDate = parseTimestampDate(b.approvedAt) || parseTimestampDate(b.paymentSubmittedAt) || parseTimestampDate(b.updatedAt) || parseTimestampDate(b.createdAt)
-                          const price = getBusinessPrice(b)
+                        .map(r => {
+                          const appDate = parseTimestampDate(r.approvedAt)
+                          const price = r.amount || 10
                           return (
-                            <tr key={b.id} className="hover:bg-emerald-50/40 transition-colors">
+                            <tr key={r.id} className="hover:bg-emerald-50/40 transition-colors">
                               <td className="px-6 py-4">
-                                <div className="text-sm font-bold text-gray-900">{b.businessName}</div>
-                                {b.businessId ? (
+                                <div className="text-sm font-bold text-gray-900">{r.businessName}</div>
+                                {r.businessId ? (
                                   <span className="inline-block mt-1 px-2 py-0.5 text-[10px] font-mono font-bold bg-blue-50 text-blue-700 border border-blue-100 rounded">
-                                    ID: {b.businessId}
+                                    ID: {r.businessId}
                                   </span>
                                 ) : (
                                   <span className="inline-block mt-1 px-2 py-0.5 text-[10px] font-mono text-gray-400 bg-gray-50 rounded">
-                                    Doc ID: {b.id.substring(0, 8)}...
+                                    Record ID: {r.id.substring(0, 8)}...
                                   </span>
                                 )}
                               </td>
                               <td className="px-6 py-4 text-xs text-gray-600">
-                                <div className="font-semibold text-gray-800">{b.city}</div>
-                                <div className="text-gray-500">{b.category}</div>
+                                <div className="font-semibold text-gray-800">{r.city || 'Pakistan'}</div>
+                                <div className="text-gray-500">{r.category || 'General'}</div>
                               </td>
                               <td className="px-6 py-4">
                                 <span className="inline-block px-2.5 py-1 text-xs font-bold uppercase tracking-wider rounded bg-slate-100 text-slate-800 border border-slate-200">
-                                  {b.paymentPlan || 'Standard'} (RS {price})
+                                  {r.paymentPlan || 'Standard'} (RS {price})
                                 </span>
                               </td>
                               <td className="px-6 py-4">
@@ -945,12 +989,12 @@ export default function AdminPage() {
                                 </span>
                               </td>
                               <td className="px-6 py-4 text-xs text-gray-600">
-                                {appDate ? appDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'Recently Approved'}
+                                {appDate ? appDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'Saved Earning'}
                               </td>
                               <td className="px-6 py-4">
-                                {b.paymentScreenshotUrl ? (
+                                {r.paymentScreenshotUrl ? (
                                   <a
-                                    href={b.paymentScreenshotUrl}
+                                    href={r.paymentScreenshotUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="inline-flex items-center gap-1.5 text-xs text-blue-600 hover:text-blue-800 font-semibold bg-blue-50 hover:bg-blue-100 px-2.5 py-1.5 rounded-lg border border-blue-200 transition-colors cursor-pointer"
@@ -965,16 +1009,15 @@ export default function AdminPage() {
                               <td className="px-6 py-4">
                                 <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-green-100 text-green-800">
                                   <CheckCircle className="w-3 h-3 text-green-600" />
-                                  Approved & Live
+                                  Approved & Saved
                                 </span>
                               </td>
                             </tr>
                           )
                         })}
-                      {businesses.filter(b => {
-                        if (b.status !== 'approved') return false
+                      {earningRecords.filter(r => {
                         if (earningsFilter === 'lastWeek') {
-                          const d = parseTimestampDate(b.approvedAt) || parseTimestampDate(b.paymentSubmittedAt) || parseTimestampDate(b.updatedAt) || parseTimestampDate(b.createdAt)
+                          const d = parseTimestampDate(r.approvedAt)
                           const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
                           return d && d.getTime() >= sevenDaysAgo.getTime()
                         }
@@ -982,7 +1025,7 @@ export default function AdminPage() {
                       }).length === 0 && (
                         <tr>
                           <td colSpan={7} className="px-6 py-12 text-center text-gray-500">
-                            No approved earnings records found for this filter.
+                            No earning records found for this filter.
                           </td>
                         </tr>
                       )}
