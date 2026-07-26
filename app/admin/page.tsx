@@ -38,6 +38,7 @@ interface Business {
   paymentSubmittedAt?: any
   paymentPlan?: 'standard' | 'express' | 'authority' | 'priority'
   paymentPlanPrice?: number
+  customerMessage?: string
 }
 
 interface EarningRecord {
@@ -614,6 +615,11 @@ export default function AdminPage() {
                                       Plan: {business.paymentPlan} (RS {business.paymentPlanPrice})
                                     </span>
                                   )}
+                                </div>
+                              )}
+                              {business.customerMessage && (
+                                <div className="mt-1.5 p-2 bg-amber-50/80 border border-amber-200/80 rounded-lg text-xs text-amber-900 font-medium max-w-xs">
+                                  <strong className="text-amber-800">💬 Customer Note:</strong> {business.customerMessage}
                                 </div>
                               )}
                             </div>

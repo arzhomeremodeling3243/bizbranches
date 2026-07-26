@@ -22,7 +22,7 @@ export async function generateStaticParams() {
   return params
 }
 
-export const dynamicParams = false
+export const dynamicParams = true
 
 const BASE_URL = 'https://www.pakbizbranhces.online'
 

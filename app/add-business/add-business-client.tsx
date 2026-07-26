@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { Loader2, AlertCircle, Upload, X, CheckCircle2, Eye, MessageCircle, Zap, Copy, Check, Sparkles, Smartphone, Landmark } from 'lucide-react'
+import { Loader2, AlertCircle, Upload, X, CheckCircle2, Eye, MessageCircle, Zap, Copy, Check, Sparkles, Smartphone, Landmark, HelpCircle } from 'lucide-react'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import CitySearchDropdown from '@/components/ui/city-search-dropdown'
@@ -71,7 +71,9 @@ export default function AddBussinessClient() {
   const [screenshotUploading, setScreenshotUploading] = useState(false)
   const [businessIdInput, setBusinessIdInput] = useState('')
   const [copiedField, setCopiedField] = useState<string | null>(null)
-  const [selectedPlan, setSelectedPlan] = useState<'standard' | 'express' | 'authority'>('standard')
+  const [selectedPlan, setSelectedPlan] = useState<'standard' | 'express' | 'authority'>('authority')
+  const [showWhyPayModal, setShowWhyPayModal] = useState(false)
+  const [customerMessage, setCustomerMessage] = useState('')
   const screenshotInputRef = useRef<HTMLInputElement>(null)
 
   // Web Audio chime synthesis
@@ -405,6 +407,7 @@ export default function AddBussinessClient() {
       setSubmittedDocId(docRef.id)
       setBusinessIdInput(uniqueBizId)
       setSubmittedSlug(businessData.slug)
+      setSelectedPlan('authority')
       setPaymentStep('details')
       setStatus('success')
       
@@ -521,12 +524,13 @@ export default function AddBussinessClient() {
       // Compress screenshot to keep Firestore document size small (with timeout safety)
       const compressedBase64 = await compressImage(screenshotPreview)
 
-      // Update Firestore document with screenshot URL (as compressed base64)
+      // Update Firestore document with screenshot URL (as compressed base64) and optional customer query
       await updateDoc(doc(db, 'businesses', businessDocId), {
         paymentScreenshotUrl: compressedBase64,
         paymentSubmittedAt: serverTimestamp(),
         paymentPlan: selectedPlan,
         paymentPlanPrice: selectedPlan === 'standard' ? 10 : selectedPlan === 'express' ? 20 : 50,
+        customerMessage: customerMessage.trim(),
         status: 'pending' // ensure status is pending for admin authorization
       })
 
@@ -682,7 +686,17 @@ export default function AddBussinessClient() {
 
                     {/* Plan Selector */}
                     <div className="mb-8 text-left max-w-md mx-auto">
-                      <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4 text-center">Select Setup & Indexing Plan</h3>
+                      <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider">Select Setup & Indexing Plan</h3>
+                        <button
+                          type="button"
+                          onClick={() => setShowWhyPayModal(true)}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl text-xs font-extrabold shadow-md hover:shadow-lg transition-all hover:scale-105 cursor-pointer animate-pulse"
+                        >
+                          <HelpCircle className="w-3.5 h-3.5 text-amber-300" />
+                          <span>Why pay this fee?</span>
+                        </button>
+                      </div>
                       <div className="space-y-4">
                         <label 
                           className={`flex items-start gap-4 p-4 rounded-2xl border-2 transition-all cursor-pointer ${
@@ -780,6 +794,19 @@ export default function AddBussinessClient() {
                           ⚠️ If you do not send the payment, your page will not be created and your business will remain invisible.
                         </p>
                       </div>
+
+                      {/* Why Pay This Fee Button */}
+                      <div className="mt-4 text-center">
+                        <button
+                          type="button"
+                          onClick={() => setShowWhyPayModal(true)}
+                          className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl text-xs font-bold shadow-md hover:shadow-lg transition-all hover:scale-105 cursor-pointer"
+                        >
+                          <HelpCircle className="w-4 h-4 text-amber-300" />
+                          <span>Why pay this fee?</span>
+                          <Sparkles className="w-3.5 h-3.5 text-amber-300 animate-pulse" />
+                        </button>
+                      </div>
                     </div>
 
                     {/* Payment Mode Selector */}
@@ -832,7 +859,17 @@ export default function AddBussinessClient() {
 
                       <div className="flex justify-between items-center border-b border-slate-200/60 pb-3">
                         <div>
-                          <span className="text-xs text-slate-400 block font-medium">Amount to Pay</span>
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs text-slate-400 font-medium">Amount to Pay</span>
+                            <button
+                              type="button"
+                              onClick={() => setShowWhyPayModal(true)}
+                              className="text-[11px] text-blue-600 hover:text-blue-800 font-bold underline flex items-center gap-0.5 cursor-pointer"
+                            >
+                              <HelpCircle className="w-3 h-3" />
+                              Why pay this fee?
+                            </button>
+                          </div>
                           <span className="font-bold text-blue-600 text-lg">
                             RS: {selectedPlan === 'standard' ? '10' : selectedPlan === 'express' ? '20' : '50'}
                           </span>
@@ -955,6 +992,24 @@ export default function AddBussinessClient() {
                             </div>
                           </div>
                         )}
+                      </div>
+
+                      {/* Optional Customer Message / Query Field */}
+                      <div>
+                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 flex items-center justify-between">
+                          <span>Optional Message / Queries</span>
+                          <span className="text-[10px] text-blue-600 font-normal uppercase">Optional</span>
+                        </label>
+                        <textarea
+                          rows={3}
+                          value={customerMessage}
+                          onChange={(e) => setCustomerMessage(e.target.value)}
+                          className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-slate-800 text-xs font-medium"
+                          placeholder="e.g., I paid RS 200 for 6 months homepage feature, or enter any message/query for admin..."
+                        />
+                        <p className="text-[11px] text-slate-500 mt-1.5 leading-relaxed">
+                          💡 Mention if you paid <strong>RS 200</strong> for 6 months homepage placement or have any specific questions.
+                        </p>
                       </div>
 
                       <div className="flex gap-4 pt-4">
@@ -1477,6 +1532,116 @@ export default function AddBussinessClient() {
           </div>
         </div>
       </main>
+
+      {/* Why Pay This Fee Full-Width Popup Modal */}
+      {showWhyPayModal && (
+        <div className="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-[9999] flex items-center justify-center p-3 sm:p-6 overflow-y-auto animate-fadeIn">
+          <div className="bg-white rounded-3xl w-full max-w-5xl max-h-[92vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-slate-100 relative text-left my-auto">
+            {/* Close Button */}
+            <button
+              type="button"
+              onClick={() => setShowWhyPayModal(false)}
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 p-2.5 text-slate-400 hover:text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-full transition-colors cursor-pointer z-10"
+              title="Close Popup"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            {/* Header */}
+            <div className="flex items-center gap-4 mb-6 pr-12">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center font-bold shadow-md shadow-blue-500/20 shrink-0">
+                <Sparkles className="w-6 h-6 text-amber-300" />
+              </div>
+              <div>
+                <h3 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">Why Pay This Fee?</h3>
+                <p className="text-xs sm:text-sm text-slate-500 font-semibold mt-0.5">
+                  Instant Homepage Listing & High Authority SEO Ranking Benefits
+                </p>
+              </div>
+            </div>
+
+            {/* High-Resolution Screenshot Image Card */}
+            <div className="my-5 border-2 border-slate-200/80 rounded-2xl overflow-hidden shadow-lg bg-slate-900/5">
+              <div className="bg-slate-100 px-4 py-2 border-b border-slate-200 flex items-center justify-between text-[11px] font-bold text-slate-600">
+                <span className="flex items-center gap-1.5">
+                  🔍 Verified Website Domain Authority & Page Authority SEO Report
+                </span>
+                <span className="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-mono text-[10px]">
+                  VERIFIED SEO METRICS
+                </span>
+              </div>
+              <img
+                src="/seo-dapa-report.png"
+                alt="Website Domain Authority & Page Authority SEO Report"
+                className="w-full h-auto object-contain max-h-[55vh] bg-white"
+              />
+            </div>
+
+            {/* Verified Metric Highlights */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 my-4">
+              <div className="bg-blue-50/70 border border-blue-100 p-3.5 rounded-2xl text-center">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-blue-600 block">Domain Authority (DA)</span>
+                <span className="text-2xl font-black text-slate-900">9</span>
+                <span className="text-[10px] text-slate-500 block font-medium">High Moz Authority score</span>
+              </div>
+
+              <div className="bg-indigo-50/70 border border-indigo-100 p-3.5 rounded-2xl text-center">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-indigo-600 block">Page Authority (PA)</span>
+                <span className="text-2xl font-black text-slate-900">33</span>
+                <span className="text-[10px] text-slate-500 block font-medium">Strong Page Ranking potential</span>
+              </div>
+
+              <div className="bg-amber-50/70 border border-amber-100 p-3.5 rounded-2xl text-center">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-amber-700 block">Homepage Visibility</span>
+                <span className="text-2xl font-black text-slate-900">7 Days</span>
+                <span className="text-[10px] text-slate-500 block font-medium">Featured on Homepage instantly</span>
+              </div>
+            </div>
+
+            {/* Explanatory Message Box */}
+            <div className="space-y-3.5 text-xs sm:text-sm text-slate-700 leading-relaxed bg-slate-50 p-5 rounded-2xl border border-slate-200/80">
+              <p className="font-semibold text-slate-900 text-sm sm:text-base">
+                🚀 If you pay this fee, your business will be added to this website <span className="text-blue-600 font-extrabold underline">instantly</span> and remain on the <span className="text-blue-600 font-extrabold underline">homepage for the next 7 days</span>!
+              </p>
+
+              <p className="text-slate-700 leading-relaxed">
+                📊 You can check the <strong className="text-slate-900">DA (Domain Authority)</strong> of the website which is <strong className="text-blue-600 font-extrabold">9</strong> and the <strong className="text-slate-900">PA (Page Authority)</strong> of the website which is <strong className="text-blue-600 font-extrabold">33</strong> (also see in the screenshot above, you can also verify using any SEO tool).
+              </p>
+
+              <div className="p-4 bg-emerald-50 border border-emerald-200/80 rounded-xl text-emerald-900 font-bold text-xs sm:text-sm leading-relaxed flex items-start gap-2.5">
+                <span className="text-lg shrink-0">💡</span>
+                <span>
+                  So send us <strong className="text-emerald-700 font-extrabold underline text-sm sm:text-base">50 rupees</strong> so your business will stay on the homepage for better results and ranking!
+                </span>
+              </div>
+
+              {/* 6 Months Featured Offer Box */}
+              <div className="p-4 bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200/90 rounded-xl text-amber-900 font-semibold text-xs sm:text-sm leading-relaxed flex items-start gap-3 shadow-sm">
+                <span className="text-xl shrink-0">🌟</span>
+                <div>
+                  <span className="text-orange-900 font-black text-xs sm:text-sm uppercase tracking-wider block mb-1">
+                    🔥 6-Month Homepage Featured Offer (RS: 200)
+                  </span>
+                  <span>
+                    Want your business to remain on the homepage for the next <strong>6 months</strong>? Pay <strong>RS 200</strong> per business! Simply mention that you paid 200 RS in the optional message field when submitting your payment screenshot.
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Action Button */}
+            <div className="mt-6 text-center">
+              <button
+                type="button"
+                onClick={() => setShowWhyPayModal(false)}
+                className="w-full py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-2xl font-black text-base transition-all shadow-xl shadow-blue-600/20 hover:scale-[1.01] cursor-pointer"
+              >
+                Got It, Proceed with Payment (RS: 50)
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <Footer />
     </>
   )

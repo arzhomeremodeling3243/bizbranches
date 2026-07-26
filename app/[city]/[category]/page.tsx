@@ -5,7 +5,7 @@ import React from 'react'
 
 export const dynamic = 'force-static'
 
-export const dynamicParams = false
+export const dynamicParams = true
 
 export async function generateStaticParams() {
   const params: { city: string; category: string }[] = []

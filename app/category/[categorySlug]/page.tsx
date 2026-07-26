@@ -14,7 +14,7 @@ export async function generateStaticParams() {
   }))
 }
 
-export const dynamicParams = false
+export const dynamicParams = true
 
 export async function generateMetadata(props: { params: Promise<{ categorySlug: string }> }): Promise<Metadata> {
   const params = await props.params;
@@ -42,7 +42,7 @@ export async function generateMetadata(props: { params: Promise<{ categorySlug: 
     }
   }
 
-  const url = `${BASE_URL}/categories/${params.categorySlug}/`
+  const url = `${BASE_URL}/${params.categorySlug}/`
   const keywordCluster = getCategoryKeywordCluster(params.categorySlug)
 
   return {

@@ -166,6 +166,26 @@ const nextConfig = {
         destination: 'https://www.pakbizbranhces.online/',
         permanent: true,
       },
+      {
+        source: '/developer',
+        destination: 'https://www.pakbizbranhces.online/',
+        permanent: true,
+      },
+      {
+        source: '/sitemap-areas.xml',
+        destination: 'https://www.pakbizbranhces.online/sitemap.xml',
+        permanent: true,
+      },
+      {
+        source: '/sitemap-services.xml',
+        destination: 'https://www.pakbizbranhces.online/sitemap.xml',
+        permanent: true,
+      },
+      {
+        source: '/sitemap-pages.xml',
+        destination: 'https://www.pakbizbranhces.online/sitemap.xml',
+        permanent: true,
+      },
     ]
   },
 }

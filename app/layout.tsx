@@ -5,7 +5,7 @@ import './globals.css'
 import AntiCopyWrapper from '@/components/anti-copy-wrapper'
 import FloatingWhatsAppButton from '@/components/floating-whatsapp-button'
 import ChatWidgetLoader from '@/components/chat-widget-loader'
-import { NativeAdLoader, SkyscraperAdLoader } from '@/components/ads/ads-loader'
+import { NativeAdLoader } from '@/components/ads/ads-loader'
 import BottomNav from '@/components/bottom-nav'
 
 const outfit = Outfit({
@@ -221,14 +221,6 @@ export default function RootLayout({
         <AntiCopyWrapper />
         <FloatingWhatsAppButton />
         <ChatWidgetLoader />
-
-        {/* Desktop Skyscraper Ads */}
-        <div className="fixed left-4 top-28 z-50 hidden xl:block">
-          <SkyscraperAdLoader />
-        </div>
-        <div className="fixed right-4 top-28 z-50 hidden xl:block">
-          <SkyscraperAdLoader />
-        </div>
 
         {children}
 

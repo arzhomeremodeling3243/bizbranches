@@ -14,7 +14,7 @@ export async function generateStaticParams() {
   }))
 }
 
-export const dynamicParams = false
+export const dynamicParams = true
 
 function findCityBySlug(slug: string): string | null {
   const normalized = slug.replace(/-/g, ' ').toLowerCase()
@@ -44,7 +44,7 @@ export async function generateMetadata(props: { params: Promise<{ city: string }
     description = description.substring(0, 152) + '...'
   }
 
-  const url = `${BASE_URL}/cities/${params.city}/`
+  const url = `${BASE_URL}/${params.city}/`
   const keywordCluster = getCityKeywordCluster(cityName)
 
   return {

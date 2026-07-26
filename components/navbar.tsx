@@ -8,11 +8,11 @@ import { Menu, X } from 'lucide-react'
 
 const navLinks = [
   { href: '/', label: 'Home' },
-  { href: '/categories', label: 'Categories' },
-  { href: '/blog', label: 'Blog' },
-  { href: '/add-business', label: 'Add Business' },
-  { href: '/about', label: 'About' },
-  { href: '/contact', label: 'Contact' },
+  { href: '/categories/', label: 'Categories' },
+  { href: '/blog/', label: 'Blog' },
+  { href: '/add-business/', label: 'Add Business' },
+  { href: '/about/', label: 'About' },
+  { href: '/contact/', label: 'Contact' },
 ]
 
 export default function Navbar() {
@@ -54,7 +54,7 @@ export default function Navbar() {
               </Link>
             ))}
             <Link
-              href="/add-business"
+              href="/add-business/"
               className="ml-2 px-4 py-2 rounded-lg bg-[#60a5fa] text-white text-sm font-semibold hover:bg-blue-400 transition-colors duration-200 cursor-pointer"
             >
               List Free
@@ -99,7 +99,7 @@ export default function Navbar() {
           ))}
           <Link
             id="mobile-nav-add-business"
-            href="/add-business"
+            href="/add-business/"
             onClick={() => setOpen(false)}
             className="mt-1 px-4 py-2 rounded-lg bg-[#60a5fa] text-white text-sm font-semibold text-center hover:bg-blue-400 transition-colors"
           >

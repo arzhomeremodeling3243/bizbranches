@@ -159,18 +159,6 @@ export async function GET() {
     })
   })
 
-  // 8. Location Pages
-  TOP_CITIES.forEach(city => {
-    const citySlug = city.toLowerCase().replace(/ /g, '-')
-    CATEGORIES.forEach(cat => {
-      urls.push({
-        loc: `${BASE_URL}/locations/${citySlug}/${cat.id}/`,
-        lastmod,
-        changefreq: 'weekly',
-        priority: '0.7'
-      })
-    })
-  })
 
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>

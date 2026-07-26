@@ -37,5 +37,5 @@ export function NativeAdLoader() {
 }
 
 export function SkyscraperAdLoader({ className }: { className?: string }) {
-  return <SkyscraperAdDynamic className={className} />
+  return null
 }

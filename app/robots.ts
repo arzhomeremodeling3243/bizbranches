@@ -14,6 +14,8 @@ export default function robots(): MetadataRoute.Robots {
           '/user/',
           '/add-bussiness',   // typo redirect — keep blocked
           '/search?',         // prevent crawling search result URLs with query params
+          '/*?cat=*',         // block query parameter URL variations
+          '/*?city=*',        // block query parameter URL variations
           '/*?sort=',         // block crawling sort parameter variations
           '/*?filter=',       // block crawling filter parameter variations
           '/*?page=*',        // block crawling duplicate paginated pages with params
@@ -40,6 +42,8 @@ export default function robots(): MetadataRoute.Robots {
           '/user/',
           '/add-bussiness',
           '/search?',
+          '/*?cat=*',
+          '/*?city=*',
           '/*?sort=',
           '/*?filter=',
           '/*?page=*',
@@ -56,6 +60,8 @@ export default function robots(): MetadataRoute.Robots {
           '/user/',
           '/add-bussiness',
           '/search?',
+          '/*?cat=*',
+          '/*?city=*',
           '/*?sort=',
           '/*?filter=',
           '/*?page=*',
