@@ -63,26 +63,22 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
-                var loaded = false;
-                function loadAdScript() {
-                  if (loaded) return;
-                  loaded = true;
-                  var s = document.createElement('script');
-                  s.dataset.zone = '11265640';
-                  s.src = 'https://nap5k.com/tag.min.js';
-                  var target = [document.documentElement, document.body].filter(Boolean).pop();
-                  if (target) target.appendChild(s);
-                  
-                  // Clean up listeners
-                  window.removeEventListener('scroll', loadAdScript);
-                  window.removeEventListener('pointerdown', loadAdScript);
-                  window.removeEventListener('touchstart', loadAdScript);
-                  window.removeEventListener('keydown', loadAdScript);
+                function loadMonetag() {
+                  var schedule = window.requestIdleCallback || function(cb) { setTimeout(cb, 1000); };
+                  schedule(function() {
+                    var s = document.createElement('script');
+                    s.dataset.zone = '11265640';
+                    s.src = 'https://nap5k.com/tag.min.js';
+                    s.async = true;
+                    var target = [document.documentElement, document.body].filter(Boolean).pop();
+                    if (target) target.appendChild(s);
+                  });
                 }
-                window.addEventListener('scroll', loadAdScript, { passive: true, once: true });
-                window.addEventListener('pointerdown', loadAdScript, { passive: true, once: true });
-                window.addEventListener('touchstart', loadAdScript, { passive: true, once: true });
-                window.addEventListener('keydown', loadAdScript, { once: true });
+                if (document.readyState === 'complete') {
+                  setTimeout(loadMonetag, 3500);
+                } else {
+                  window.addEventListener('load', function() { setTimeout(loadMonetag, 3500); }, { once: true });
+                }
               })();
             `
           }}
@@ -223,11 +219,6 @@ export default function RootLayout({
         <ChatWidgetLoader />
 
         {children}
-
-        {/* Global Bottom Native Ad */}
-        <div className="w-full max-w-7xl mx-auto px-4 my-8">
-          <NativeAdLoader />
-        </div>
 
         <BottomNav />
         <SpeedInsights />

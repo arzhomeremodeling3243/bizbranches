@@ -466,7 +466,7 @@ export default function BusinessDetailClient({ slug }: { slug: string }) {
                       Location
                     </h2>
                   </div>
-                  <div className="mt-4">
+                  <div className="mt-4 min-h-[300px] h-[300px] bg-slate-100">
                     <iframe
                       src={mapSrc}
                       width="100%"
@@ -476,7 +476,7 @@ export default function BusinessDetailClient({ slug }: { slug: string }) {
                       loading="lazy"
                       referrerPolicy="no-referrer-when-downgrade"
                       title={`Map of ${business.businessName}`}
-                      className="w-full"
+                      className="w-full h-[300px]"
                     />
                   </div>
                   <div className="p-4 text-sm text-gray-500">

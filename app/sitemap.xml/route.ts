@@ -143,23 +143,6 @@ export async function GET() {
     console.error('Error fetching businesses for sitemap.xml:', error)
   }
 
-  // 7. InDrive City Pages
-  const indriveCities = [
-    'karachi', 'lahore', 'islamabad', 'rawalpindi', 'faisalabad', 'multan', 'peshawar', 'quetta',
-    'gujranwala', 'sialkot', 'hyderabad', 'bahawalpur', 'sargodha', 'sukkur', 'gujrat', 'gwadar',
-    'vehari', 'abbottabad', 'mardan', 'khanewal', 'larkana', 'kasur', 'sheikhupura', 'okara',
-    'murree', 'mianwali', 'jhelum', 'sahiwal', 'jhang', 'rahim-yar-khan'
-  ]
-  indriveCities.forEach(city => {
-    urls.push({
-      loc: `${BASE_URL}/indrive-pakistan-${city}/`,
-      lastmod,
-      changefreq: 'weekly',
-      priority: '0.8'
-    })
-  })
-
-
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"

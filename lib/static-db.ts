@@ -81,24 +81,6 @@ export function getStaticBranches(businessName: string, excludeSlug: string): St
 }
 
 export const HIGH_PRIORITY_SLUGS = new Set<string>([
-  // 17 Software branches
-  "systemslimited-in-lahore",
-  "systemslimited-in-karachi",
-  "systemslimited-in-islamabad",
-  "systemslimited-in-faisalabad",
-  "systemslimited-in-multan",
-  "netsol-in-lahore",
-  "netsol-in-karachi",
-  "netsol-in-islamabad",
-  "10pearls-in-karachi",
-  "10pearls-in-lahore",
-  "10pearls-in-islamabad",
-  "arbisoft-in-lahore",
-  "arbisoft-in-karachi",
-  "arbisoft-in-islamabad",
-  "contour-software-in-karachi",
-  "contour-software-in-lahore",
-  "contour-software-in-islamabad",
   // 15 migrated businesses
   "amcorp-engineering-and-construction-pvt-ltd-karachi",
   "meskay-femtee-karachi",

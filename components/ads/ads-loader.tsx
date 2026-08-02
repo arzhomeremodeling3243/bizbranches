@@ -1,24 +1,5 @@
 'use client'
 
-// Client wrapper — ssr:false is only valid inside a Client Component.
-// Server pages import these wrappers instead of the ad components directly.
-import dynamic from 'next/dynamic'
-
-const BannerAdDynamic = dynamic(() => import('@/components/ads/banner-ad'), {
-  ssr: false,
-  loading: () => null,
-})
-
-const NativeAdDynamic = dynamic(() => import('@/components/ads/native-ad'), {
-  ssr: false,
-  loading: () => null,
-})
-
-const SkyscraperAdDynamic = dynamic(() => import('@/components/ads/skyscraper-ad'), {
-  ssr: false,
-  loading: () => null,
-})
-
 type BannerVariant = 'inline' | 'sidebar' | 'sticky-mobile'
 
 interface BannerAdLoaderProps {
@@ -27,13 +8,11 @@ interface BannerAdLoaderProps {
 }
 
 export function BannerAdLoader({ variant = 'inline', className }: BannerAdLoaderProps) {
-  // Since only the Native Ad script is provided, we map the banner placements
-  // to render NativeAdDynamic to make sure ads load and display properly.
-  return <NativeAdDynamic className={className} />
+  return null
 }
 
 export function NativeAdLoader() {
-  return <NativeAdDynamic />
+  return null
 }
 
 export function SkyscraperAdLoader({ className }: { className?: string }) {

@@ -55,11 +55,12 @@ export function initializeAntiCopy() {
     }
   })
 
-  // Show alert on dev tools open attempt
+  // Show alert on dev tools open attempt via debounced resize listener (prevents 500ms CPU layout thrashing)
   let devToolsOpen = false
   const threshold = 160
+  let resizeTimeout: any = null
 
-  setInterval(() => {
+  const checkDevTools = () => {
     if (window.outerHeight - window.innerHeight > threshold || 
         window.outerWidth - window.innerWidth > threshold) {
       if (!devToolsOpen) {
@@ -69,5 +70,10 @@ export function initializeAntiCopy() {
     } else {
       devToolsOpen = false
     }
-  }, 500)
+  }
+
+  window.addEventListener('resize', () => {
+    if (resizeTimeout) clearTimeout(resizeTimeout)
+    resizeTimeout = setTimeout(checkDevTools, 300)
+  }, { passive: true })
 }

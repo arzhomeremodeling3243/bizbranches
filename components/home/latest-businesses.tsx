@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { Building2, MapPin, Phone, MessageCircle, ArrowRight } from 'lucide-react'
 import { CATEGORIES } from '@/lib/data'
 import * as Icons from '@/components/ui/icons'
-import NativeAd from '@/components/ads/native-ad'
+import { NativeAdLoader as NativeAd } from '@/components/ads/ads-loader'
 
 interface Business {
   id: string
