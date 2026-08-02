@@ -183,6 +183,7 @@ export default function CatchAllPageClient({ slug }: { slug: string }) {
   const [businessesList, setBusinessesList] = useState<Business[]>([])
   const [similarBusinesses, setSimilarBusinesses] = useState<Business[]>([])
   const [branches, setBranches] = useState<Business[]>([])
+  const [mapLoaded, setMapLoaded] = useState(false)
 
   useEffect(() => {
     async function loadData() {
@@ -283,45 +284,49 @@ export default function CatchAllPageClient({ slug }: { slug: string }) {
         setBusiness(foundBiz)
         setViewType('business')
         
-        // Fetch similar businesses and other branches client-side
-        try {
-          // Similar businesses
-          const staticSimilar = getStaticSimilar(foundBiz.city, foundBiz.category, slug) as any as Business[]
-          const qSimilar = query(
-            collection(db, 'businesses'),
-            where('city', '==', foundBiz.city),
-            where('category', '==', foundBiz.category),
-            limit(5)
-          )
-          const simSnap = await getDocs(qSimilar)
-          const dynSimilar = simSnap.docs
-            .map(doc => ({ id: doc.id, ...doc.data() } as Business))
-            .filter(b => b.slug !== slug && (!b.status || LIVE_STATUSES.has(b.status.toLowerCase())))
-          const mergedSim = new Map<string, Business>()
-          staticSimilar.forEach(b => mergedSim.set(b.slug, b))
-          dynSimilar.forEach(b => mergedSim.set(b.slug, b))
-          setSimilarBusinesses(Array.from(mergedSim.values()).slice(0, 4))
-
-          // Branches
-          const staticBranches = getStaticBranches(foundBiz.businessName, slug) as any as Business[]
-          const qBranches = query(
-            collection(db, 'businesses'),
-            where('businessName', '==', foundBiz.businessName),
-            limit(10)
-          )
-          const brSnap = await getDocs(qBranches)
-          const dynBranches = brSnap.docs
-            .map(doc => ({ id: doc.id, ...doc.data() } as Business))
-            .filter(b => b.slug !== slug && (!b.status || LIVE_STATUSES.has(b.status.toLowerCase())))
-          const mergedBr = new Map<string, Business>()
-          staticBranches.forEach(b => mergedBr.set(b.slug, b))
-          dynBranches.forEach(b => mergedBr.set(b.slug, b))
-          setBranches(Array.from(mergedBr.values()))
-        } catch (err) {
-          console.error('Error loading related businesses:', err)
-        }
-        
+        // Immediately populate with static data so page paints instantly (LCP < 1.0s)
+        const staticSimilar = getStaticSimilar(foundBiz.city, foundBiz.category, slug) as any as Business[]
+        const staticBranches = getStaticBranches(foundBiz.businessName, slug) as any as Business[]
+        setSimilarBusinesses(staticSimilar.slice(0, 4))
+        setBranches(staticBranches)
         setLoading(false)
+
+        // Defer Firestore dynamic background enrichment without blocking initial paint
+        setTimeout(async () => {
+          try {
+            const qSimilar = query(
+              collection(db, 'businesses'),
+              where('city', '==', foundBiz.city),
+              where('category', '==', foundBiz.category),
+              limit(5)
+            )
+            const qBranches = query(
+              collection(db, 'businesses'),
+              where('businessName', '==', foundBiz.businessName),
+              limit(10)
+            )
+            const [simSnap, brSnap] = await Promise.all([getDocs(qSimilar), getDocs(qBranches)])
+            
+            const dynSimilar = simSnap.docs
+              .map(doc => ({ id: doc.id, ...doc.data() } as Business))
+              .filter(b => b.slug !== slug && (!b.status || LIVE_STATUSES.has(b.status.toLowerCase())))
+            const mergedSim = new Map<string, Business>()
+            staticSimilar.forEach(b => mergedSim.set(b.slug, b))
+            dynSimilar.forEach(b => mergedSim.set(b.slug, b))
+            setSimilarBusinesses(Array.from(mergedSim.values()).slice(0, 4))
+
+            const dynBranches = brSnap.docs
+              .map(doc => ({ id: doc.id, ...doc.data() } as Business))
+              .filter(b => b.slug !== slug && (!b.status || LIVE_STATUSES.has(b.status.toLowerCase())))
+            const mergedBr = new Map<string, Business>()
+            staticBranches.forEach(b => mergedBr.set(b.slug, b))
+            dynBranches.forEach(b => mergedBr.set(b.slug, b))
+            setBranches(Array.from(mergedBr.values()))
+          } catch (err) {
+            console.error('Error loading dynamic related businesses:', err)
+          }
+        }, 100)
+        
         return
       }
 
@@ -879,8 +884,19 @@ export default function CatchAllPageClient({ slug }: { slug: string }) {
                     <h3 className="font-bold text-[#0f2b3d] mb-4 flex items-center gap-2">
                       <MapPin className="w-5 h-5 text-[#60a5fa]" /> Location
                     </h3>
-                    <div className="rounded-xl overflow-hidden mb-4 border border-gray-100">
-                      <iframe src={mapSrc} width="100%" height="200" style={{ border: 0 }} allowFullScreen loading="lazy" title="Map Location" />
+                    <div className="rounded-xl overflow-hidden mb-4 border border-gray-100 min-h-[200px] bg-slate-50 relative flex items-center justify-center">
+                      {mapLoaded ? (
+                        <iframe src={mapSrc} width="100%" height="200" style={{ border: 0 }} allowFullScreen loading="lazy" title="Map Location" />
+                      ) : (
+                        <button
+                          onClick={() => setMapLoaded(true)}
+                          className="w-full h-[200px] flex flex-col items-center justify-center p-4 bg-gradient-to-br from-slate-50 to-blue-50/50 hover:bg-blue-50 transition-colors group cursor-pointer"
+                        >
+                          <MapPin className="w-8 h-8 text-[#60a5fa] group-hover:scale-110 transition-transform mb-2" />
+                          <span className="text-sm font-semibold text-gray-800">Load Interactive Google Map</span>
+                          <span className="text-xs text-gray-500 mt-1">Click to view location map</span>
+                        </button>
+                      )}
                     </div>
                     <p className="text-sm text-gray-600">{business.address}, {business.city}, Pakistan</p>
                   </div>

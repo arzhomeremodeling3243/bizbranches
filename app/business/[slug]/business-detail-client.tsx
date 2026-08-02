@@ -126,28 +126,32 @@ export default function BusinessDetailClient({ slug }: { slug: string }) {
       if (foundBiz) {
         setBusiness(foundBiz)
         
-        // Load similar businesses
-        try {
-          const staticSimilar = getStaticSimilar(foundBiz.city, foundBiz.category, slug) as any as Business[]
-          const qSimilar = query(
-            collection(db, 'businesses'),
-            where('city', '==', foundBiz.city),
-            where('category', '==', foundBiz.category),
-            limit(5)
-          )
-          const simSnap = await getDocs(qSimilar)
-          const dynSimilar = simSnap.docs
-            .map(doc => ({ id: doc.id, ...doc.data() } as Business))
-            .filter(b => b.slug !== slug && (!b.status || LIVE_STATUSES.has(b.status.toLowerCase())))
-          const mergedSim = new Map<string, Business>()
-          staticSimilar.forEach(b => mergedSim.set(b.slug, b))
-          dynSimilar.forEach(b => mergedSim.set(b.slug, b))
-          setSimilarBusinesses(Array.from(mergedSim.values()).slice(0, 4))
-        } catch (err) {
-          console.error('Error loading similar businesses:', err)
-        }
-        
+        // Immediately populate with static data so page paints instantly (LCP < 1.0s)
+        const staticSimilar = getStaticSimilar(foundBiz.city, foundBiz.category, slug) as any as Business[]
+        setSimilarBusinesses(staticSimilar.slice(0, 4))
         setLoading(false)
+
+        // Defer Firestore dynamic background query without blocking initial paint
+        setTimeout(async () => {
+          try {
+            const qSimilar = query(
+              collection(db, 'businesses'),
+              where('city', '==', foundBiz.city),
+              where('category', '==', foundBiz.category),
+              limit(5)
+            )
+            const simSnap = await getDocs(qSimilar)
+            const dynSimilar = simSnap.docs
+              .map(doc => ({ id: doc.id, ...doc.data() } as Business))
+              .filter(b => b.slug !== slug && (!b.status || LIVE_STATUSES.has(b.status.toLowerCase())))
+            const mergedSim = new Map<string, Business>()
+            staticSimilar.forEach(b => mergedSim.set(b.slug, b))
+            dynSimilar.forEach(b => mergedSim.set(b.slug, b))
+            setSimilarBusinesses(Array.from(mergedSim.values()).slice(0, 4))
+          } catch (err) {
+            console.error('Error loading dynamic similar businesses:', err)
+          }
+        }, 100)
       } else {
         setIs404(true)
         setLoading(false)
