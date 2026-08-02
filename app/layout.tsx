@@ -75,9 +75,9 @@ export default function RootLayout({
                   });
                 }
                 if (document.readyState === 'complete') {
-                  setTimeout(loadMonetag, 3500);
+                  setTimeout(loadMonetag, 8000);
                 } else {
-                  window.addEventListener('load', function() { setTimeout(loadMonetag, 3500); }, { once: true });
+                  window.addEventListener('load', function() { setTimeout(loadMonetag, 8000); }, { once: true });
                 }
               })();
             `
@@ -183,31 +183,6 @@ export default function RootLayout({
                   urlTemplate: 'https://www.pakbizbranhces.online/categories/?q={search_term_string}'
                 },
                 'query-input': 'required name=search_term_string'
-              }
-            }),
-          }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'LocalBusiness',
-              '@id': 'https://www.pakbizbranhces.online/#localbusiness',
-              name: 'PakBizBranches Business Directory',
-              url: 'https://www.pakbizbranhces.online/',
-              description: 'Free Pakistan business directory service connecting local businesses with customers',
-              address: {
-                '@type': 'PostalAddress',
-                streetAddress: 'Gulghast Colony, Urdu Bazar',
-                addressLocality: 'Multan',
-                addressRegion: 'Punjab',
-                addressCountry: 'PK'
-              },
-              serviceType: 'Business Directory Service',
-              areaServed: {
-                '@type': 'Country',
-                name: 'Pakistan'
               }
             }),
           }}

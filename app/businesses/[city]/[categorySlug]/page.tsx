@@ -93,7 +93,19 @@ export async function generateMetadata(props: { params: Promise<{ city: string; 
   }
 }
 
+import { getStaticCityCategory } from '@/lib/static-db'
+
 export default async function CityCategoryPage(props: { params: Promise<{ city: string; categorySlug: string }> }) {
   const params = await props.params;
-  return <CityCategoryListClient citySlug={params.city} categorySlug={params.categorySlug} />
+  const cityName = findCityBySlug(params.city)
+  const category = CATEGORIES.find(c => c.id === params.categorySlug)
+  const staticList = (cityName && category) ? getStaticCityCategory(cityName, category.id) : []
+
+  return (
+    <CityCategoryListClient
+      citySlug={params.city}
+      categorySlug={params.categorySlug}
+      initialBusinessesList={staticList as any[]}
+    />
+  )
 }

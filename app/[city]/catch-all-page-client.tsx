@@ -171,29 +171,54 @@ function generateDynamicAboutSection(business: Business, categoryName: string): 
   return parts.join(' ')
 }
 
-export default function CatchAllPageClient({ slug }: { slug: string }) {
-  const [viewType, setViewType] = useState<'city' | 'category' | 'business' | 'loading' | '404'>('loading')
-  const [loading, setLoading] = useState(true)
-  const [countdownDone, setCountdownDone] = useState(false)
+interface CatchAllPageClientProps {
+  slug: string
+  initialViewType?: 'city' | 'category' | 'business'
+  initialCityName?: string | null
+  initialCategory?: any
+  initialBusiness?: Business | null
+  initialBusinessesList?: Business[]
+  initialSimilarBusinesses?: Business[]
+  initialBranches?: Business[]
+}
+
+export default function CatchAllPageClient({
+  slug,
+  initialViewType,
+  initialCityName = null,
+  initialCategory = null,
+  initialBusiness = null,
+  initialBusinessesList = [],
+  initialSimilarBusinesses = [],
+  initialBranches = []
+}: CatchAllPageClientProps) {
+  const [viewType, setViewType] = useState<'city' | 'category' | 'business' | 'loading' | '404'>(
+    initialViewType || 'loading'
+  )
+  const [loading, setLoading] = useState(!initialViewType)
+  const [countdownDone, setCountdownDone] = useState(!!initialViewType)
   
   // Data States
-  const [cityName, setCityName] = useState<string | null>(null)
-  const [category, setCategory] = useState<any>(null)
-  const [business, setBusiness] = useState<Business | null>(null)
-  const [businessesList, setBusinessesList] = useState<Business[]>([])
-  const [similarBusinesses, setSimilarBusinesses] = useState<Business[]>([])
-  const [branches, setBranches] = useState<Business[]>([])
+  const [cityName, setCityName] = useState<string | null>(initialCityName)
+  const [category, setCategory] = useState<any>(initialCategory)
+  const [business, setBusiness] = useState<Business | null>(initialBusiness)
+  const [businessesList, setBusinessesList] = useState<Business[]>(initialBusinessesList)
+  const [similarBusinesses, setSimilarBusinesses] = useState<Business[]>(initialSimilarBusinesses)
+  const [branches, setBranches] = useState<Business[]>(initialBranches)
   const [mapLoaded, setMapLoaded] = useState(false)
 
   useEffect(() => {
     async function loadData() {
-      setLoading(true)
+      // If initialViewType is already set, we paint instantly without showing a skeleton!
+      if (!initialViewType) {
+        setLoading(true)
+      }
       
       // 1. Check if City View
-      const city = findCityBySlug(slug)
+      const city = initialCityName || findCityBySlug(slug)
       if (city) {
-        setCityName(city)
-        setViewType('city')
+        if (!cityName) setCityName(city)
+        if (viewType !== 'city') setViewType('city')
         try {
           const q = query(collection(db, 'businesses'), where('city', '==', city), limit(40))
           const snap = await getDocs(q)
@@ -203,19 +228,22 @@ export default function CatchAllPageClient({ slug }: { slug: string }) {
               const status = String((b as any).status ?? '').toLowerCase()
               return !status || LIVE_STATUSES.has(status)
             })
-          setBusinessesList(fetched)
+          if (fetched.length > 0) {
+            setBusinessesList(fetched)
+          }
         } catch (err) {
           console.error('Error fetching city businesses:', err)
         }
         setLoading(false)
+        setCountdownDone(true)
         return
       }
 
       // 2. Check if Category View
-      const cat = findCategoryBySlug(slug)
+      const cat = initialCategory || findCategoryBySlug(slug)
       if (cat) {
-        setCategory(cat)
-        setViewType('category')
+        if (!category) setCategory(cat)
+        if (viewType !== 'category') setViewType('category')
         try {
           const categoryValues = getPossibleCategoryValues(slug).slice(0, 5)
           const primaryQuery = query(collection(db, 'businesses'), where('categoryId', '==', slug), limit(60))
@@ -228,81 +256,92 @@ export default function CatchAllPageClient({ slug }: { slug: string }) {
             const status = String((b as any).status ?? '').toLowerCase()
             return !status || LIVE_STATUSES.has(status)
           }).slice(0, 40)
-          setBusinessesList(list)
+          if (list.length > 0) {
+            setBusinessesList(list)
+          }
         } catch (err) {
           console.error('Error fetching category businesses:', err)
         }
         setLoading(false)
+        setCountdownDone(true)
         return
       }
 
       // 3. Fallback: Business View (Try static first, then dynamic)
-      let foundBiz: Business | null = null
-      const staticBiz = findStaticBusinessBySlug(slug)
-      if (staticBiz) {
-        foundBiz = {
-          id: staticBiz.id,
-          businessName: staticBiz.businessName,
-          slug: staticBiz.slug,
-          city: staticBiz.city,
-          category: staticBiz.category,
-          categoryId: staticBiz.categoryId || staticBiz.category,
-          description: staticBiz.description,
-          phone: staticBiz.phone,
-          logoUrl: staticBiz.logoUrl,
-          status: staticBiz.status,
-          isFeatured: staticBiz.isFeatured || staticBiz.featured,
-          createdAt: staticBiz.createdAt,
-          rating: staticBiz.rating,
-          reviewCount: staticBiz.reviewCount,
-          websiteUrl: staticBiz.websiteUrl,
-          facebookPage: staticBiz.facebookPage,
-          address: staticBiz.address,
-          whatsapp: staticBiz.whatsapp,
-          email: staticBiz.email,
-          youtubeChannel: staticBiz.youtubeChannel,
-          subCategory: staticBiz.subCategory
-        } as Business
-      } else {
-        try {
-          const q = query(
-            collection(db, 'businesses'),
-            where('slug', '==', slug),
-            limit(1)
-          )
-          const querySnapshot = await getDocs(q)
-          if (!querySnapshot.empty) {
-            const doc = querySnapshot.docs[0]
-            foundBiz = { id: doc.id, ...doc.data() } as Business
+      let foundBiz: Business | null = initialBusiness
+      if (!foundBiz) {
+        const staticBiz = findStaticBusinessBySlug(slug)
+        if (staticBiz) {
+          foundBiz = {
+            id: staticBiz.id,
+            businessName: staticBiz.businessName,
+            slug: staticBiz.slug,
+            city: staticBiz.city,
+            category: staticBiz.category,
+            categoryId: staticBiz.categoryId || staticBiz.category,
+            description: staticBiz.description,
+            phone: staticBiz.phone,
+            logoUrl: staticBiz.logoUrl,
+            status: staticBiz.status,
+            isFeatured: staticBiz.isFeatured || staticBiz.featured,
+            createdAt: staticBiz.createdAt,
+            rating: staticBiz.rating,
+            reviewCount: staticBiz.reviewCount,
+            websiteUrl: staticBiz.websiteUrl,
+            facebookPage: staticBiz.facebookPage,
+            address: staticBiz.address,
+            whatsapp: staticBiz.whatsapp,
+            email: staticBiz.email,
+            youtubeChannel: staticBiz.youtubeChannel,
+            subCategory: staticBiz.subCategory
+          } as Business
+        } else {
+          try {
+            const q = query(
+              collection(db, 'businesses'),
+              where('slug', '==', slug),
+              limit(1)
+            )
+            const querySnapshot = await getDocs(q)
+            if (!querySnapshot.empty) {
+              const doc = querySnapshot.docs[0]
+              foundBiz = { id: doc.id, ...doc.data() } as Business
+            }
+          } catch (err) {
+            console.error('Error fetching dynamic business details:', err)
           }
-        } catch (err) {
-          console.error('Error fetching dynamic business details:', err)
         }
       }
 
       if (foundBiz) {
         setBusiness(foundBiz)
         setViewType('business')
-        
-        // Immediately populate with static data so page paints instantly (LCP < 1.0s)
-        const staticSimilar = getStaticSimilar(foundBiz.city, foundBiz.category, slug) as any as Business[]
-        const staticBranches = getStaticBranches(foundBiz.businessName, slug) as any as Business[]
-        setSimilarBusinesses(staticSimilar.slice(0, 4))
-        setBranches(staticBranches)
         setLoading(false)
+        setCountdownDone(true)
+        
+        // Populate static similar & branches if not yet populated
+        if (similarBusinesses.length === 0) {
+          const staticSimilar = getStaticSimilar(foundBiz.city, foundBiz.category, slug) as any as Business[]
+          setSimilarBusinesses(staticSimilar.slice(0, 4))
+        }
+        if (branches.length === 0) {
+          const staticBranches = getStaticBranches(foundBiz.businessName, slug) as any as Business[]
+          setBranches(staticBranches)
+        }
 
         // Defer Firestore dynamic background enrichment without blocking initial paint
+        const targetBiz = foundBiz
         setTimeout(async () => {
           try {
             const qSimilar = query(
               collection(db, 'businesses'),
-              where('city', '==', foundBiz.city),
-              where('category', '==', foundBiz.category),
+              where('city', '==', targetBiz.city),
+              where('category', '==', targetBiz.category),
               limit(5)
             )
             const qBranches = query(
               collection(db, 'businesses'),
-              where('businessName', '==', foundBiz.businessName),
+              where('businessName', '==', targetBiz.businessName),
               limit(10)
             )
             const [simSnap, brSnap] = await Promise.all([getDocs(qSimilar), getDocs(qBranches)])
@@ -311,17 +350,21 @@ export default function CatchAllPageClient({ slug }: { slug: string }) {
               .map(doc => ({ id: doc.id, ...doc.data() } as Business))
               .filter(b => b.slug !== slug && (!b.status || LIVE_STATUSES.has(b.status.toLowerCase())))
             const mergedSim = new Map<string, Business>()
-            staticSimilar.forEach(b => mergedSim.set(b.slug, b))
+            initialSimilarBusinesses.forEach(b => mergedSim.set(b.slug, b))
             dynSimilar.forEach(b => mergedSim.set(b.slug, b))
-            setSimilarBusinesses(Array.from(mergedSim.values()).slice(0, 4))
+            if (mergedSim.size > 0) {
+              setSimilarBusinesses(Array.from(mergedSim.values()).slice(0, 4))
+            }
 
             const dynBranches = brSnap.docs
               .map(doc => ({ id: doc.id, ...doc.data() } as Business))
               .filter(b => b.slug !== slug && (!b.status || LIVE_STATUSES.has(b.status.toLowerCase())))
             const mergedBr = new Map<string, Business>()
-            staticBranches.forEach(b => mergedBr.set(b.slug, b))
+            initialBranches.forEach(b => mergedBr.set(b.slug, b))
             dynBranches.forEach(b => mergedBr.set(b.slug, b))
-            setBranches(Array.from(mergedBr.values()))
+            if (mergedBr.size > 0) {
+              setBranches(Array.from(mergedBr.values()))
+            }
           } catch (err) {
             console.error('Error loading dynamic related businesses:', err)
           }
@@ -354,13 +397,14 @@ export default function CatchAllPageClient({ slug }: { slug: string }) {
       setBusiness(fallbackBiz)
       setViewType('business')
       setLoading(false)
+      setCountdownDone(true)
     }
 
     loadData()
   }, [slug])
 
-  // Loading skeleton state
-  if (loading || viewType === 'loading' || !countdownDone) {
+  // Loading skeleton state (only show skeleton if we have no pre-rendered data)
+  if ((loading || viewType === 'loading' || !countdownDone) && !business && !cityName && !category && businessesList.length === 0) {
     return (
       <>
         <Navbar />

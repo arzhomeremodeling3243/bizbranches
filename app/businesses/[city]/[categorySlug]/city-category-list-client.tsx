@@ -45,10 +45,20 @@ function findCityBySlug(slug: string): string | null {
   return CITIES.find(c => c.toLowerCase() === normalized) ?? null
 }
 
-export default function CityCategoryListClient({ citySlug, categorySlug }: { citySlug: string, categorySlug: string }) {
-  const [businesses, setBusinesses] = useState<Business[]>([])
-  const [loading, setLoading] = useState(true)
-  const [countdownDone, setCountdownDone] = useState(false)
+interface CityCategoryListClientProps {
+  citySlug: string
+  categorySlug: string
+  initialBusinessesList?: Business[]
+}
+
+export default function CityCategoryListClient({
+  citySlug,
+  categorySlug,
+  initialBusinessesList = []
+}: CityCategoryListClientProps) {
+  const [businesses, setBusinesses] = useState<Business[]>(initialBusinessesList)
+  const [loading, setLoading] = useState(false)
+  const [countdownDone, setCountdownDone] = useState(true)
 
   const cityName = findCityBySlug(citySlug)
   const category = CATEGORIES.find(c => c.id === categorySlug)

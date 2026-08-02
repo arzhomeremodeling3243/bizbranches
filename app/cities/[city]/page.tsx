@@ -76,7 +76,11 @@ export async function generateMetadata(props: { params: Promise<{ city: string }
   }
 }
 
+import { getStaticCity } from '@/lib/static-db'
+
 export default async function CityPage(props: { params: Promise<{ city: string }> }) {
   const params = await props.params;
-  return <CityClient citySlug={params.city} />
+  const cityName = findCityBySlug(params.city)
+  const staticList = cityName ? getStaticCity(cityName) : []
+  return <CityClient citySlug={params.city} initialBusinessesList={staticList as any[]} />
 }

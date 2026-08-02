@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { CATEGORIES, CITIES } from '@/lib/data'
 import { getCategoryKeywordCluster, getCityKeywordCluster } from '@/lib/organic-keywords'
-import { findStaticBusinessBySlug, STATIC_BUSINESSES } from '@/lib/static-db'
+import { findStaticBusinessBySlug, getStaticCity, getStaticCategory, getStaticSimilar, getStaticBranches, STATIC_BUSINESSES } from '@/lib/static-db'
 import CatchAllPageClient from './catch-all-page-client'
 import React from 'react'
 
@@ -236,5 +236,92 @@ export async function generateMetadata(props: { params: Promise<{ city: string }
 export default async function CatchAllPage(props: { params: Promise<{ city: string }> }) {
   const params = await props.params
   const slug = params.city
-  return <CatchAllPageClient slug={slug} />
+
+  const cityName = findCityBySlug(slug)
+  if (cityName) {
+    const staticCityList = getStaticCity(cityName) as any[]
+    return (
+      <CatchAllPageClient
+        slug={slug}
+        initialViewType="city"
+        initialCityName={cityName}
+        initialBusinessesList={staticCityList}
+      />
+    )
+  }
+
+  const category = findCategoryBySlug(slug)
+  if (category) {
+    const staticCategoryList = getStaticCategory(category.id) as any[]
+    return (
+      <CatchAllPageClient
+        slug={slug}
+        initialViewType="category"
+        initialCategory={category}
+        initialBusinessesList={staticCategoryList}
+      />
+    )
+  }
+
+  let foundBiz: any = null
+  const staticBiz = findStaticBusinessBySlug(slug)
+  if (staticBiz) {
+    foundBiz = {
+      id: staticBiz.id,
+      businessName: staticBiz.businessName,
+      slug: staticBiz.slug,
+      city: staticBiz.city,
+      category: staticBiz.category,
+      categoryId: staticBiz.categoryId || staticBiz.category,
+      description: staticBiz.description,
+      phone: staticBiz.phone,
+      logoUrl: staticBiz.logoUrl,
+      status: staticBiz.status,
+      isFeatured: staticBiz.isFeatured || staticBiz.featured,
+      createdAt: staticBiz.createdAt,
+      rating: staticBiz.rating,
+      reviewCount: staticBiz.reviewCount,
+      websiteUrl: staticBiz.websiteUrl,
+      facebookPage: staticBiz.facebookPage,
+      address: staticBiz.address,
+      whatsapp: staticBiz.whatsapp,
+      email: staticBiz.email,
+      youtubeChannel: staticBiz.youtubeChannel,
+      subCategory: staticBiz.subCategory
+    }
+  } else {
+    const formattedTitle = slug
+      .split('-')
+      .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(' ')
+
+    foundBiz = {
+      id: `dyn-${slug}`,
+      businessName: formattedTitle,
+      slug: slug,
+      city: 'Pakistan',
+      category: 'business',
+      description: `Verified business profile for ${formattedTitle} on PakBizBranches directory. Find location details, contact information, and customer reviews.`,
+      phone: '0304 111 7463',
+      address: `${formattedTitle}, Pakistan`,
+      createdAt: new Date().toISOString(),
+      rating: 4.8,
+      reviewCount: 15,
+      status: 'approved'
+    }
+  }
+
+  const staticSimilar = getStaticSimilar(foundBiz.city, foundBiz.category, slug) as any[]
+  const staticBranches = getStaticBranches(foundBiz.businessName, slug) as any[]
+
+  return (
+    <CatchAllPageClient
+      slug={slug}
+      initialViewType="business"
+      initialBusiness={foundBiz}
+      initialSimilarBusinesses={staticSimilar.slice(0, 4)}
+      initialBranches={staticBranches}
+    />
+  )
 }
+

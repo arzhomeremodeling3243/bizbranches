@@ -35,10 +35,15 @@ interface Business {
   reviewCount?: number
 }
 
-export default function CategoryClient({ categorySlug }: { categorySlug: string }) {
-  const [businesses, setBusinesses] = useState<Business[]>([])
-  const [loading, setLoading] = useState(true)
-  const [countdownDone, setCountdownDone] = useState(false)
+interface CategoryClientProps {
+  categorySlug: string
+  initialBusinessesList?: Business[]
+}
+
+export default function CategoryClient({ categorySlug, initialBusinessesList = [] }: CategoryClientProps) {
+  const [businesses, setBusinesses] = useState<Business[]>(initialBusinessesList)
+  const [loading, setLoading] = useState(false)
+  const [countdownDone, setCountdownDone] = useState(true)
 
   const category = CATEGORIES.find(c => c.id === categorySlug)
 

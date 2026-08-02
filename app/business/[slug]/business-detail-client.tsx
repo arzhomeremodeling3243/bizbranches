@@ -70,74 +70,89 @@ function renderDescriptionWithLinks(text: string) {
   return parts.length > 0 ? parts : text
 }
 
-export default function BusinessDetailClient({ slug }: { slug: string }) {
-  const [business, setBusiness] = useState<Business | null>(null)
-  const [similarBusinesses, setSimilarBusinesses] = useState<Business[]>([])
-  const [loading, setLoading] = useState(true)
-  const [countdownDone, setCountdownDone] = useState(false)
+interface BusinessDetailClientProps {
+  slug: string
+  initialBusiness?: Business | null
+  initialSimilarBusinesses?: Business[]
+}
+
+export default function BusinessDetailClient({
+  slug,
+  initialBusiness = null,
+  initialSimilarBusinesses = []
+}: BusinessDetailClientProps) {
+  const [business, setBusiness] = useState<Business | null>(initialBusiness)
+  const [similarBusinesses, setSimilarBusinesses] = useState<Business[]>(initialSimilarBusinesses)
+  const [loading, setLoading] = useState(!initialBusiness)
+  const [countdownDone, setCountdownDone] = useState(!!initialBusiness)
   const [is404, setIs404] = useState(false)
 
   useEffect(() => {
     async function loadBusinessDetails() {
-      setLoading(true)
+      if (!initialBusiness) {
+        setLoading(true)
+      }
       
-      let foundBiz: Business | null = null
-      const staticBiz = findStaticBusinessBySlug(slug)
-      
-      if (staticBiz) {
-        foundBiz = {
-          id: staticBiz.id,
-          businessName: staticBiz.businessName,
-          slug: staticBiz.slug,
-          city: staticBiz.city,
-          category: staticBiz.category,
-          categoryId: staticBiz.categoryId || staticBiz.category,
-          description: staticBiz.description,
-          phone: staticBiz.phone,
-          logoUrl: staticBiz.logoUrl,
-          status: staticBiz.status,
-          isFeatured: staticBiz.isFeatured || staticBiz.featured,
-          createdAt: staticBiz.createdAt,
-          websiteUrl: staticBiz.websiteUrl,
-          facebookPage: staticBiz.facebookPage,
-          address: staticBiz.address,
-          whatsapp: staticBiz.whatsapp,
-          email: staticBiz.email,
-          youtubeChannel: staticBiz.youtubeChannel,
-          subCategory: staticBiz.subCategory
-        } as unknown as Business
-      } else {
-        try {
-          const q = query(
-            collection(db, 'businesses'),
-            where('slug', '==', slug),
-            limit(1)
-          )
-          const querySnapshot = await getDocs(q)
-          if (!querySnapshot.empty) {
-            const doc = querySnapshot.docs[0]
-            foundBiz = { id: doc.id, ...doc.data() } as Business
+      let foundBiz: Business | null = initialBusiness
+      if (!foundBiz) {
+        const staticBiz = findStaticBusinessBySlug(slug)
+        if (staticBiz) {
+          foundBiz = {
+            id: staticBiz.id,
+            businessName: staticBiz.businessName,
+            slug: staticBiz.slug,
+            city: staticBiz.city,
+            category: staticBiz.category,
+            categoryId: staticBiz.categoryId || staticBiz.category,
+            description: staticBiz.description,
+            phone: staticBiz.phone,
+            logoUrl: staticBiz.logoUrl,
+            status: staticBiz.status,
+            isFeatured: staticBiz.isFeatured || staticBiz.featured,
+            createdAt: staticBiz.createdAt,
+            websiteUrl: staticBiz.websiteUrl,
+            facebookPage: staticBiz.facebookPage,
+            address: staticBiz.address,
+            whatsapp: staticBiz.whatsapp,
+            email: staticBiz.email,
+            youtubeChannel: staticBiz.youtubeChannel,
+            subCategory: staticBiz.subCategory
+          } as unknown as Business
+        } else {
+          try {
+            const q = query(
+              collection(db, 'businesses'),
+              where('slug', '==', slug),
+              limit(1)
+            )
+            const querySnapshot = await getDocs(q)
+            if (!querySnapshot.empty) {
+              const doc = querySnapshot.docs[0]
+              foundBiz = { id: doc.id, ...doc.data() } as Business
+            }
+          } catch (err) {
+            console.error('Error fetching details client-side:', err)
           }
-        } catch (err) {
-          console.error('Error fetching details client-side:', err)
         }
       }
 
       if (foundBiz) {
         setBusiness(foundBiz)
-        
-        // Immediately populate with static data so page paints instantly (LCP < 1.0s)
-        const staticSimilar = getStaticSimilar(foundBiz.city, foundBiz.category, slug) as any as Business[]
-        setSimilarBusinesses(staticSimilar.slice(0, 4))
         setLoading(false)
+        setCountdownDone(true)
+        
+        if (similarBusinesses.length === 0) {
+          const staticSimilar = getStaticSimilar(foundBiz.city, foundBiz.category, slug) as any as Business[]
+          setSimilarBusinesses(staticSimilar.slice(0, 4))
+        }
 
-        // Defer Firestore dynamic background query without blocking initial paint
+        const targetBiz = foundBiz
         setTimeout(async () => {
           try {
             const qSimilar = query(
               collection(db, 'businesses'),
-              where('city', '==', foundBiz.city),
-              where('category', '==', foundBiz.category),
+              where('city', '==', targetBiz.city),
+              where('category', '==', targetBiz.category),
               limit(5)
             )
             const simSnap = await getDocs(qSimilar)
@@ -145,9 +160,11 @@ export default function BusinessDetailClient({ slug }: { slug: string }) {
               .map(doc => ({ id: doc.id, ...doc.data() } as Business))
               .filter(b => b.slug !== slug && (!b.status || LIVE_STATUSES.has(b.status.toLowerCase())))
             const mergedSim = new Map<string, Business>()
-            staticSimilar.forEach(b => mergedSim.set(b.slug, b))
+            initialSimilarBusinesses.forEach(b => mergedSim.set(b.slug, b))
             dynSimilar.forEach(b => mergedSim.set(b.slug, b))
-            setSimilarBusinesses(Array.from(mergedSim.values()).slice(0, 4))
+            if (mergedSim.size > 0) {
+              setSimilarBusinesses(Array.from(mergedSim.values()).slice(0, 4))
+            }
           } catch (err) {
             console.error('Error loading dynamic similar businesses:', err)
           }
@@ -155,6 +172,7 @@ export default function BusinessDetailClient({ slug }: { slug: string }) {
       } else {
         setIs404(true)
         setLoading(false)
+        setCountdownDone(true)
       }
     }
 
@@ -165,7 +183,7 @@ export default function BusinessDetailClient({ slug }: { slug: string }) {
     notFound()
   }
 
-  if (loading || !business || !countdownDone) {
+  if (!business) {
     return (
       <>
         <Navbar />

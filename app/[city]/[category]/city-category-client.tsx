@@ -49,10 +49,20 @@ function findCategoryBySlug(slug: string) {
   return CATEGORIES.find(c => c.id === slug) ?? null
 }
 
-export default function CityCategoryClient({ citySlug, categorySlug }: { citySlug: string, categorySlug: string }) {
-  const [businesses, setBusinesses] = useState<Business[]>([])
-  const [loading, setLoading] = useState(true)
-  const [countdownDone, setCountdownDone] = useState(false)
+interface CityCategoryClientProps {
+  citySlug: string
+  categorySlug: string
+  initialBusinessesList?: Business[]
+}
+
+export default function CityCategoryClient({
+  citySlug,
+  categorySlug,
+  initialBusinessesList = []
+}: CityCategoryClientProps) {
+  const [businesses, setBusinesses] = useState<Business[]>(initialBusinessesList)
+  const [loading, setLoading] = useState(false)
+  const [countdownDone, setCountdownDone] = useState(true)
   
   const cityName = findCityBySlug(citySlug)
   const category = findCategoryBySlug(categorySlug)

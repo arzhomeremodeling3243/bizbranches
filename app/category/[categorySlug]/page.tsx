@@ -74,7 +74,10 @@ export async function generateMetadata(props: { params: Promise<{ categorySlug: 
   }
 }
 
+import { getStaticCategory } from '@/lib/static-db'
+
 export default async function CategoryPage(props: { params: Promise<{ categorySlug: string }> }) {
   const params = await props.params;
-  return <CategoryClient categorySlug={params.categorySlug} />
+  const staticList = getStaticCategory(params.categorySlug)
+  return <CategoryClient categorySlug={params.categorySlug} initialBusinessesList={staticList as any[]} />
 }
