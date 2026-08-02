@@ -691,11 +691,21 @@ export default function CatchAllPageClient({ slug }: { slug: string }) {
                   </div>
                   <p className="text-gray-600 text-lg leading-relaxed mb-8">{business.description}</p>
                   <div className="flex flex-wrap gap-4">
-                    <a href={`tel:${business.phone}`} className="inline-flex items-center gap-2 px-6 py-3 bg-[#0f2b3d] text-white rounded-xl font-semibold hover:bg-[#1a3f57] transition-colors shadow-sm">
+                    <a 
+                      href={`tel:${business.phone}`} 
+                      aria-label={`Call ${business.businessName} at ${business.phone}`}
+                      className="inline-flex items-center gap-2 px-6 py-3 bg-[#0f2b3d] text-white rounded-xl font-semibold hover:bg-[#1a3f57] transition-colors shadow-sm"
+                    >
                       <Phone className="w-4 h-4" /> Call Now
                     </a>
                     {whatsappUrl && (
-                      <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-xl font-semibold hover:bg-green-700 transition-colors shadow-sm">
+                      <a 
+                        href={whatsappUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        aria-label={`Send WhatsApp message to ${business.businessName}`}
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-xl font-semibold hover:bg-green-700 transition-colors shadow-sm"
+                      >
                         <MessageCircle className="w-4 h-4" /> WhatsApp
                       </a>
                     )}

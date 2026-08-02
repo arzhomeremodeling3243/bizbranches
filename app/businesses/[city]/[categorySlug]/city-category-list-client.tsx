@@ -14,18 +14,30 @@ import { BannerAdLoader, NativeAdLoader } from '@/components/ads/ads-loader'
 import CountdownLoader from '@/components/ui/countdown-loader'
 import React from 'react'
 import { getBusinessLogoUrl } from '@/lib/utils'
+import { getStaticCityCategory } from '@/lib/static-db'
 
 const BASE_URL = 'https://www.pakbizbranhces.online'
 
 interface Business {
   id: string
   businessName: string
-  slug: string
-  city: string
-  category: string
-  description: string
+  contactPerson?: string
+  email?: string
   phone: string
+  whatsapp?: string
+  city: string
+  address: string
+  category: string
+  subCategory?: string
+  description: string
   logoUrl?: string
+  websiteUrl?: string
+  facebookPage?: string
+  googleBusiness?: string
+  youtubeChannel?: string
+  createdAt: any
+  status: string
+  slug: string
 }
 
 function findCityBySlug(slug: string): string | null {
@@ -48,27 +60,38 @@ export default function CityCategoryListClient({ citySlug, categorySlug }: { cit
         return
       }
 
-      try {
-        const categoryValues = getPossibleCategoryValues(categorySlug).slice(0, 10)
-        const q = query(
-          collection(db, 'businesses'),
-          where('city', '==', cityName),
-          where('category', 'in', categoryValues),
-          limit(60)
-        )
-        const snap = await getDocs(q)
-        const list = snap.docs
-          .map(d => ({ id: d.id, ...d.data() } as Business))
-          .filter((business) => {
-            const status = String((business as any).status ?? '').toLowerCase()
-            return !status || LIVE_STATUSES.has(status)
-          })
-          .slice(0, 40)
-        setBusinesses(list)
-      } catch (err) {
-        console.error('Error fetching businesses:', err)
-      }
+      // Immediately populate with static data so page paints instantly (LCP < 1.0s)
+      const staticList = getStaticCityCategory(cityName, category.id) as any as Business[]
+      setBusinesses(staticList)
       setLoading(false)
+
+      // Defer Firestore dynamic background query without blocking initial paint
+      setTimeout(async () => {
+        try {
+          const categoryValues = getPossibleCategoryValues(categorySlug).slice(0, 10)
+          const q = query(
+            collection(db, 'businesses'),
+            where('city', '==', cityName),
+            where('category', 'in', categoryValues),
+            limit(60)
+          )
+          const snap = await getDocs(q)
+          const dynList = snap.docs
+            .map(d => ({ id: d.id, ...d.data() } as Business))
+            .filter((business) => {
+              const status = String((business as any).status ?? '').toLowerCase()
+              return !status || LIVE_STATUSES.has(status)
+            })
+            .slice(0, 40)
+
+          const merged = new Map<string, Business>()
+          staticList.forEach(b => merged.set(b.slug || b.id, b))
+          dynList.forEach(b => merged.set(b.slug || b.id, b))
+          setBusinesses(Array.from(merged.values()))
+        } catch (err) {
+          console.error('Error fetching dynamic businesses:', err)
+        }
+      }, 100)
     }
 
     loadBusinesses()

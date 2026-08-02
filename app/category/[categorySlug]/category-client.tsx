@@ -14,6 +14,7 @@ import { NativeAdLoader as NativeAd, BannerAdLoader as BannerAd } from '@/compon
 import CountdownLoader from '@/components/ui/countdown-loader'
 import React from 'react'
 import { getBusinessLogoUrl } from '@/lib/utils'
+import { getStaticCategory } from '@/lib/static-db'
 
 const BASE_URL = 'https://www.pakbizbranhces.online'
 
@@ -23,9 +24,15 @@ interface Business {
   slug: string
   city: string
   category: string
+  categoryId?: string
   description: string
   phone: string
+  address: string
   logoUrl?: string
+  status: string
+  createdAt: any
+  rating?: number
+  reviewCount?: number
 }
 
 export default function CategoryClient({ categorySlug }: { categorySlug: string }) {
@@ -42,42 +49,47 @@ export default function CategoryClient({ categorySlug }: { categorySlug: string 
         return
       }
 
-      try {
-        const categoryValues = getPossibleCategoryValues(categorySlug).slice(0, 5)
-        const primaryQuery = query(collection(db, 'businesses'), where('categoryId', '==', categorySlug), limit(60))
-        const fallbackQuery = query(collection(db, 'businesses'), where('category', 'in', categoryValues), limit(60))
-        
-        const [primarySnapshot, fallbackSnapshot] = await Promise.all([
-          getDocs(primaryQuery),
-          getDocs(fallbackQuery)
-        ])
-        
-        const merged = new Map<string, Business>()
-        
-        primarySnapshot.docs.forEach((doc) => {
-          const business = { id: doc.id, ...doc.data() } as Business
-          const status = String((business as any).status ?? '').toLowerCase()
-          if (!status || LIVE_STATUSES.has(status)) {
-            merged.set(doc.id, business)
-          }
-        })
-        
-        fallbackSnapshot.docs.forEach((doc) => {
-          if (!merged.has(doc.id)) {
-            const business = { id: doc.id, ...doc.data() } as Business
-            const status = String((business as any).status ?? '').toLowerCase()
-            if (!status || LIVE_STATUSES.has(status)) {
-              merged.set(doc.id, business)
-            }
-          }
-        })
-        
-        const list = Array.from(merged.values()).slice(0, 40)
-        setBusinesses(list)
-      } catch (err) {
-        console.error('Error fetching category businesses:', err)
-      }
+      // Immediately populate with static data so page paints instantly (LCP < 1.0s)
+      const staticList = getStaticCategory(category.id) as any as Business[]
+      setBusinesses(staticList)
       setLoading(false)
+
+      // Defer Firestore dynamic background query without blocking initial paint
+      setTimeout(async () => {
+        try {
+          const categoryValues = getPossibleCategoryValues(categorySlug).slice(0, 5)
+          const primaryQuery = query(collection(db, 'businesses'), where('categoryId', '==', categorySlug), limit(60))
+          const fallbackQuery = query(collection(db, 'businesses'), where('category', 'in', categoryValues), limit(60))
+          
+          const [primarySnapshot, fallbackSnapshot] = await Promise.all([
+            getDocs(primaryQuery),
+            getDocs(fallbackQuery)
+          ])
+          
+          const merged = new Map<string, Business>()
+          staticList.forEach(b => merged.set(b.slug || b.id, b))
+          
+          primarySnapshot.docs.forEach((doc) => {
+            const b = { id: doc.id, ...doc.data() } as Business
+            const status = String((b as any).status ?? '').toLowerCase()
+            if (!status || LIVE_STATUSES.has(status)) {
+              merged.set(b.slug || doc.id, b)
+            }
+          })
+          
+          fallbackSnapshot.docs.forEach((doc) => {
+            const b = { id: doc.id, ...doc.data() } as Business
+            const status = String((b as any).status ?? '').toLowerCase()
+            if (!merged.has(b.slug || doc.id) && (!status || LIVE_STATUSES.has(status))) {
+              merged.set(b.slug || doc.id, b)
+            }
+          })
+          
+          setBusinesses(Array.from(merged.values()).slice(0, 40))
+        } catch (err) {
+          console.error('Error fetching dynamic category businesses:', err)
+        }
+      }, 100)
     }
 
     loadCategoryBusinesses()
