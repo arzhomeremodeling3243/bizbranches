@@ -230,6 +230,8 @@ function CategoriesContent() {
                               src={business.logoUrl}
                               alt={`${business.businessName} logo`}
                               className="w-16 h-16 rounded-xl object-cover border border-gray-100 group-hover:shadow-lg transition-shadow"
+                              loading="lazy"
+                              decoding="async"
                             />
                             <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-[#60a5fa] rounded-full flex items-center justify-center">
                               <Star className="w-2 h-2 text-white fill-white" />

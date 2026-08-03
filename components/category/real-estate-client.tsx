@@ -200,6 +200,8 @@ function RealEstatePageContent() {
                           src={business.logoUrl}
                           alt={business.businessName}
                           className="w-16 h-16 rounded-xl object-cover"
+                          loading="lazy"
+                          decoding="async"
                         />
                       ) : (
                         <div className="w-16 h-16 bg-green-100 rounded-xl flex items-center justify-center">

@@ -75,32 +75,13 @@ export default function CityCategoryClient({
       }
 
       // Immediately populate with static data so page paints instantly (LCP < 1.0s)
-      const staticList = getStaticCityCategory(cityName, category.id) as any as Business[]
+      const staticList = initialBusinessesList.length > 0
+        ? initialBusinessesList
+        : (getStaticCityCategory(cityName, category.id) as any as Business[])
       setBusinesses(staticList)
       setLoading(false)
 
-      // Defer Firestore dynamic background query without blocking initial paint
-      setTimeout(async () => {
-        try {
-          const q = query(
-            collection(db, 'businesses'),
-            where('city', '==', cityName),
-            where('category', '==', category.id),
-            limit(40)
-          )
-          const snap = await getDocs(q)
-          const dynList = snap.docs
-            .map(doc => ({ id: doc.id, ...doc.data() } as Business))
-            .filter(b => !b.status || LIVE_STATUSES.has(b.status.toLowerCase()))
-          
-          const merged = new Map<string, Business>()
-          staticList.forEach(b => merged.set(b.slug || b.id, b))
-          dynList.forEach(b => merged.set(b.slug || b.id, b))
-          setBusinesses(Array.from(merged.values()))
-        } catch (err) {
-          console.error('Error fetching dynamic city-category businesses:', err)
-        }
-      }, 100)
+      if (staticList.length > 0) return
     }
 
     loadBusinesses()

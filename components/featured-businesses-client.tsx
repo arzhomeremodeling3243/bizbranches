@@ -198,6 +198,8 @@ export default function FeaturedBusinessesClient() {
                       src={business.logoUrl}
                       alt={`${business.businessName} logo`}
                       className="w-16 h-16 rounded-lg object-cover border-2 border-white shadow-sm"
+                      loading="lazy"
+                      decoding="async"
                     />
                   ) : (
                     <div 

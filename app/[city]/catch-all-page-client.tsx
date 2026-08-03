@@ -219,6 +219,11 @@ export default function CatchAllPageClient({
       if (city) {
         if (!cityName) setCityName(city)
         if (viewType !== 'city') setViewType('city')
+        if (initialBusinessesList && initialBusinessesList.length > 0) {
+          setLoading(false)
+          setCountdownDone(true)
+          return
+        }
         try {
           const q = query(collection(db, 'businesses'), where('city', '==', city), limit(40))
           const snap = await getDocs(q)
@@ -244,6 +249,11 @@ export default function CatchAllPageClient({
       if (cat) {
         if (!category) setCategory(cat)
         if (viewType !== 'category') setViewType('category')
+        if (initialBusinessesList && initialBusinessesList.length > 0) {
+          setLoading(false)
+          setCountdownDone(true)
+          return
+        }
         try {
           const categoryValues = getPossibleCategoryValues(slug).slice(0, 5)
           const primaryQuery = query(collection(db, 'businesses'), where('categoryId', '==', slug), limit(60))

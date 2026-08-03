@@ -6,8 +6,7 @@ import { HIGH_PRIORITY_SLUGS } from '@/lib/static-db'
 
 const BASE_URL = 'https://www.pakbizbranhces.online'
 
-export const dynamic = 'force-dynamic'
-export const revalidate = 0
+export const revalidate = 86400
 
 
 function getAbsoluteImageUrl(url: string): string {
@@ -162,7 +161,7 @@ ${urls.map(u => `  <url>
   return new NextResponse(xml, {
     headers: {
       'Content-Type': 'application/xml',
-      'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=59',
+      'Cache-Control': 'public, max-age=86400, s-maxage=86400, stale-while-revalidate=86400',
     },
   })
 }

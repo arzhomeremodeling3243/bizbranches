@@ -146,29 +146,31 @@ export default function BusinessDetailClient({
           setSimilarBusinesses(staticSimilar.slice(0, 4))
         }
 
-        const targetBiz = foundBiz
-        setTimeout(async () => {
-          try {
-            const qSimilar = query(
-              collection(db, 'businesses'),
-              where('city', '==', targetBiz.city),
-              where('category', '==', targetBiz.category),
-              limit(5)
-            )
-            const simSnap = await getDocs(qSimilar)
-            const dynSimilar = simSnap.docs
-              .map(doc => ({ id: doc.id, ...doc.data() } as Business))
-              .filter(b => b.slug !== slug && (!b.status || LIVE_STATUSES.has(b.status.toLowerCase())))
-            const mergedSim = new Map<string, Business>()
-            initialSimilarBusinesses.forEach(b => mergedSim.set(b.slug, b))
-            dynSimilar.forEach(b => mergedSim.set(b.slug, b))
-            if (mergedSim.size > 0) {
-              setSimilarBusinesses(Array.from(mergedSim.values()).slice(0, 4))
+        if (!initialSimilarBusinesses || initialSimilarBusinesses.length < 4) {
+          const targetBiz = foundBiz
+          setTimeout(async () => {
+            try {
+              const qSimilar = query(
+                collection(db, 'businesses'),
+                where('city', '==', targetBiz.city),
+                where('category', '==', targetBiz.category),
+                limit(5)
+              )
+              const simSnap = await getDocs(qSimilar)
+              const dynSimilar = simSnap.docs
+                .map(doc => ({ id: doc.id, ...doc.data() } as Business))
+                .filter(b => b.slug !== slug && (!b.status || LIVE_STATUSES.has(b.status.toLowerCase())))
+              const mergedSim = new Map<string, Business>()
+              initialSimilarBusinesses.forEach(b => mergedSim.set(b.slug, b))
+              dynSimilar.forEach(b => mergedSim.set(b.slug, b))
+              if (mergedSim.size > 0) {
+                setSimilarBusinesses(Array.from(mergedSim.values()).slice(0, 4))
+              }
+            } catch (err) {
+              console.error('Error loading dynamic similar businesses:', err)
             }
-          } catch (err) {
-            console.error('Error loading dynamic similar businesses:', err)
-          }
-        }, 100)
+          }, 100)
+        }
       } else {
         setIs404(true)
         setLoading(false)

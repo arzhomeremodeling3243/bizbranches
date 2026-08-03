@@ -175,6 +175,8 @@ function RestaurantsContent() {
                           src={business.logoUrl}
                           alt={business.businessName}
                           className="w-16 h-16 rounded-xl object-cover border border-gray-200"
+                          loading="lazy"
+                          decoding="async"
                         />
                       ) : (
                         <div className="w-16 h-16 rounded-xl bg-orange-100 flex items-center justify-center border border-gray-200">

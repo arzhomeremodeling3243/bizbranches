@@ -58,29 +58,23 @@ const nextConfig = {
   async headers() {
     return [
       {
-        // Immutable cache for hashed Next.js static chunks
-        source: '/_next/static/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-        ],
-      },
-      {
         // Long cache for public images/fonts/icons
         source: '/:path*\\.(png|jpg|jpeg|webp|avif|svg|ico|woff|woff2|ttf|otf)',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=86400, stale-while-revalidate=604800',
+            value: 'public, max-age=2592000, stale-while-revalidate=31536000',
           },
         ],
       },
       {
-        // ISR pages — allow CDN caching with stale-while-revalidate
+        // ISR pages — allow Vercel CDN Edge caching with stale-while-revalidate
         source: '/((?!_next|api).*)',
         headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=0, s-maxage=86400, stale-while-revalidate=86400',
+          },
           {
             key: 'X-Content-Type-Options',
             value: 'nosniff',

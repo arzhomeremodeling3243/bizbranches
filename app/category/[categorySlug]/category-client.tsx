@@ -59,42 +59,7 @@ export default function CategoryClient({ categorySlug, initialBusinessesList = [
       setBusinesses(staticList)
       setLoading(false)
 
-      // Defer Firestore dynamic background query without blocking initial paint
-      setTimeout(async () => {
-        try {
-          const categoryValues = getPossibleCategoryValues(categorySlug).slice(0, 5)
-          const primaryQuery = query(collection(db, 'businesses'), where('categoryId', '==', categorySlug), limit(60))
-          const fallbackQuery = query(collection(db, 'businesses'), where('category', 'in', categoryValues), limit(60))
-          
-          const [primarySnapshot, fallbackSnapshot] = await Promise.all([
-            getDocs(primaryQuery),
-            getDocs(fallbackQuery)
-          ])
-          
-          const merged = new Map<string, Business>()
-          staticList.forEach(b => merged.set(b.slug || b.id, b))
-          
-          primarySnapshot.docs.forEach((doc) => {
-            const b = { id: doc.id, ...doc.data() } as Business
-            const status = String((b as any).status ?? '').toLowerCase()
-            if (!status || LIVE_STATUSES.has(status)) {
-              merged.set(b.slug || doc.id, b)
-            }
-          })
-          
-          fallbackSnapshot.docs.forEach((doc) => {
-            const b = { id: doc.id, ...doc.data() } as Business
-            const status = String((b as any).status ?? '').toLowerCase()
-            if (!merged.has(b.slug || doc.id) && (!status || LIVE_STATUSES.has(status))) {
-              merged.set(b.slug || doc.id, b)
-            }
-          })
-          
-          setBusinesses(Array.from(merged.values()).slice(0, 40))
-        } catch (err) {
-          console.error('Error fetching dynamic category businesses:', err)
-        }
-      }, 100)
+      if (staticList.length > 0) return
     }
 
     loadCategoryBusinesses()
