@@ -86,9 +86,6 @@
        programmatic scroll and hurts TBT. Use CSS scroll-behavior only on
        specific containers that need it. */
   }
-  html {
-    scroll-behavior: smooth;
-  }
   body {
     @apply bg-background text-foreground font-sans antialiased;
   }

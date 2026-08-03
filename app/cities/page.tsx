@@ -2,6 +2,8 @@ import { Metadata } from 'next'
 import CitiesClient from './cities-client'
 import { ORGANIC_SEED_KEYWORDS } from '@/lib/organic-keywords'
 
+export const revalidate = 86400
+
 export const metadata: Metadata = {
   title: 'All Pakistan Cities Business Directory: Find Companies',
   description:

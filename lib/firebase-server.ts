@@ -58,7 +58,7 @@ function serializeTimestamp(timestamp: any): string {
 }
 
 // Helper: Wrap promise with timeout to prevent slow network hanging server renders
-function fetchWithTimeout<T>(promise: Promise<T>, ms: number = 2000): Promise<T> {
+function fetchWithTimeout<T>(promise: Promise<T>, ms: number = 500): Promise<T> {
   return new Promise((resolve, reject) => {
     const timer = setTimeout(() => reject(new Error('Firebase query timeout')), ms)
     promise.then(

@@ -2,6 +2,8 @@ import { Metadata } from 'next'
 import CategoriesClient from './categories-client'
 import { ORGANIC_SEED_KEYWORDS } from '@/lib/organic-keywords'
 
+export const revalidate = 86400
+
 export const metadata: Metadata = {
   title: 'Business Categories: Find Local Service Sectors',
   description:
