@@ -7,7 +7,7 @@ import React from 'react'
 
 export const dynamic = 'force-static'
 export const dynamicParams = true
-export const revalidate = 86400
+export const revalidate = 15552000 // 180 days ISR
 
 export async function generateStaticParams() {
   // Pre-render major cities

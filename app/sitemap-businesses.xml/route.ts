@@ -4,7 +4,7 @@ import { HIGH_PRIORITY_SLUGS } from '@/lib/static-db'
 
 const BASE_URL = 'https://www.pakbizbranhces.online'
 
-export const revalidate = 86400
+export const revalidate = 604800 // 7 days cache for business sitemap XML
 
 
 function getAbsoluteImageUrl(url: string): string {
@@ -42,7 +42,7 @@ ${businesses.map(biz => {
   return new NextResponse(xml, {
     headers: {
       'Content-Type': 'application/xml',
-      'Cache-Control': 'public, max-age=86400, s-maxage=86400, stale-while-revalidate=86400',
+      'Cache-Control': 'public, max-age=604800, s-maxage=604800, stale-while-revalidate=86400',
     },
   })
 }

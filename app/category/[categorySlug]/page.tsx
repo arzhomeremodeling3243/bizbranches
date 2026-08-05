@@ -7,6 +7,7 @@ import React from 'react'
 const BASE_URL = 'https://www.pakbizbranhces.online'
 
 export const dynamic = 'force-static'
+export const revalidate = 15552000 // 180 days ISR
 
 export async function generateStaticParams() {
   return CATEGORIES.map((c) => ({

@@ -36,8 +36,8 @@ const nextConfig = {
   images: {
     // Serve AVIF first (smallest), fall back to WebP
     formats: ['image/avif', 'image/webp'],
-    // Aggressive caching — business logos rarely change
-    minimumCacheTTL: 86400, // 24 hours
+    // Aggressive 1-year caching for images
+    minimumCacheTTL: 31536000,
     remotePatterns: [
       {
         protocol: 'https',
@@ -54,26 +54,26 @@ const nextConfig = {
     ],
   },
 
-  // ─── Cache-Control headers for static assets ────────────────────────────────
+  // ─── Cache-Control headers for static assets & Edge CDN ────────────────────────
   async headers() {
     return [
       {
-        // Long cache for public images/fonts/icons
+        // Immutable 1-year cache for static assets (images/fonts/icons)
         source: '/:path*\\.(png|jpg|jpeg|webp|avif|svg|ico|woff|woff2|ttf|otf)',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=2592000, stale-while-revalidate=31536000',
+            value: 'public, max-age=31536000, immutable',
           },
         ],
       },
       {
-        // ISR pages — allow Vercel CDN Edge caching with stale-while-revalidate
+        // 180-day Vercel Edge CDN caching for ISR HTML pages
         source: '/((?!_next|api).*)',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=0, s-maxage=86400, stale-while-revalidate=86400',
+            value: 'public, max-age=0, s-maxage=15552000, stale-while-revalidate=86400',
           },
           {
             key: 'X-Content-Type-Options',

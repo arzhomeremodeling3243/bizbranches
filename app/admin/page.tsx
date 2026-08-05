@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { Search, Edit2, Trash2, Eye, Users, Building2, Mail, Phone, Shield, LogOut, CheckCircle, XCircle, AlertCircle, Star, Settings, DollarSign, Calendar, TrendingUp, Wallet, Coins, ArrowUpRight } from 'lucide-react'
+import { Search, Edit2, Trash2, Eye, Users, Building2, Mail, Phone, Shield, LogOut, CheckCircle, XCircle, AlertCircle, Star, Settings, DollarSign, Calendar, TrendingUp, Wallet, Coins, ArrowUpRight, MessageSquare, MessageCircle, X, Check } from 'lucide-react'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import AdminLogin from '@/components/admin-login'
@@ -100,6 +100,30 @@ export default function AdminPage() {
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [currentUser, setCurrentUser] = useState<any>(null)
+  const [messageBiz, setMessageBiz] = useState<Business | null>(null)
+  const [messageNoteText, setMessageNoteText] = useState<string>('')
+  const [isSavingNote, setIsSavingNote] = useState<boolean>(false)
+  const [noteSavedSuccess, setNoteSavedSuccess] = useState<boolean>(false)
+
+  const handleSaveCustomerNote = async () => {
+    if (!messageBiz) return
+    setIsSavingNote(true)
+    try {
+      const bizRef = doc(db, 'businesses', messageBiz.id)
+      const updatedMsg = messageNoteText.trim()
+      await updateDoc(bizRef, {
+        customerMessage: updatedMsg
+      })
+      setNoteSavedSuccess(true)
+      setTimeout(() => setNoteSavedSuccess(false), 3000)
+      setBusinesses(prev => prev.map(b => b.id === messageBiz.id ? { ...b, customerMessage: updatedMsg } : b))
+      setMessageBiz(prev => prev ? { ...prev, customerMessage: updatedMsg } : null)
+    } catch (err) {
+      console.error('Error saving customer note:', err)
+    } finally {
+      setIsSavingNote(false)
+    }
+  }
 
   // Web Audio chime synthesis
   const playChime = () => {
@@ -617,10 +641,30 @@ export default function AdminPage() {
                                   )}
                                 </div>
                               )}
-                              {business.customerMessage && (
-                                <div className="mt-1.5 p-2 bg-amber-50/80 border border-amber-200/80 rounded-lg text-xs text-amber-900 font-medium max-w-xs">
-                                  <strong className="text-amber-800">💬 Customer Note:</strong> {business.customerMessage}
-                                </div>
+                              {business.customerMessage ? (
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    setMessageBiz(business)
+                                    setMessageNoteText(business.customerMessage || '')
+                                  }}
+                                  className="mt-1.5 p-2 bg-amber-50 hover:bg-amber-100/80 border border-amber-200 rounded-lg text-xs text-amber-900 font-medium max-w-xs text-left transition-colors cursor-pointer flex items-start gap-1.5"
+                                >
+                                  <MessageSquare className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
+                                  <span><strong className="text-amber-800">Customer Note:</strong> {business.customerMessage}</span>
+                                </button>
+                              ) : (
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    setMessageBiz(business)
+                                    setMessageNoteText('')
+                                  }}
+                                  className="mt-1 flex items-center gap-1 text-[11px] text-gray-400 hover:text-blue-600 font-medium cursor-pointer"
+                                >
+                                  <MessageSquare className="w-3 h-3" />
+                                  <span>+ Add Message Note</span>
+                                </button>
                               )}
                             </div>
                           </td>
@@ -679,23 +723,44 @@ export default function AdminPage() {
                             </button>
                           </td>
                           <td className="px-6 py-4 text-sm">
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-1.5">
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setMessageBiz(business)
+                                  setMessageNoteText(business.customerMessage || '')
+                                }}
+                                className={`p-1.5 rounded-lg transition-all cursor-pointer relative ${
+                                  business.customerMessage
+                                    ? 'bg-amber-100 text-amber-800 hover:bg-amber-200 border border-amber-300 shadow-xs'
+                                    : 'text-gray-500 hover:text-blue-600 hover:bg-blue-50'
+                                }`}
+                                title={business.customerMessage ? `Message: ${business.customerMessage}` : 'View / Send Customer Message'}
+                              >
+                                <MessageSquare className="w-4 h-4" />
+                                {business.customerMessage && (
+                                  <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-amber-500 rounded-full animate-ping"></span>
+                                )}
+                              </button>
                               <button
                                 onClick={() => handleEditBusiness(business)}
-                                className="text-blue-600 hover:text-blue-900 cursor-pointer"
+                                className="text-blue-600 hover:text-blue-900 cursor-pointer p-1.5 hover:bg-blue-50 rounded-lg transition-colors"
+                                title="Edit Business"
                               >
                                 <Edit2 className="w-4 h-4" />
                               </button>
                               <button
                                 onClick={() => setDeleteConfirm(business.id)}
-                                className="text-red-600 hover:text-red-900 cursor-pointer"
+                                className="text-red-600 hover:text-red-900 cursor-pointer p-1.5 hover:bg-red-50 rounded-lg transition-colors"
+                                title="Delete Business"
                               >
                                 <Trash2 className="w-4 h-4" />
                               </button>
                               <Link
                                 href={`/${business.slug || business.id}/`}
                                 target="_blank"
-                                className="text-gray-600 hover:text-gray-900 cursor-pointer"
+                                className="text-gray-600 hover:text-gray-900 cursor-pointer p-1.5 hover:bg-gray-100 rounded-lg transition-colors"
+                                title="View Live Page"
                               >
                                 <Eye className="w-4 h-4" />
                               </Link>
@@ -1172,6 +1237,130 @@ export default function AdminPage() {
                 >
                   Delete Business
                 </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Customer Message Box Modal */}
+        {messageBiz && (
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-fadeIn">
+            <div className="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl border border-slate-100">
+              {/* Header */}
+              <div className="bg-slate-900 text-white p-5 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-2xl bg-blue-600/30 border border-blue-400/30 flex items-center justify-center text-blue-400">
+                    <MessageSquare className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-extrabold text-base leading-tight">{messageBiz.businessName}</h3>
+                    <span className="text-xs text-slate-400 font-mono">
+                      ID: {messageBiz.businessId || messageBiz.id.substring(0, 8)}
+                    </span>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setMessageBiz(null)}
+                  className="p-1.5 rounded-full hover:bg-slate-800 text-slate-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="p-6 space-y-5">
+                {/* Contact Details Grid */}
+                <div className="grid grid-cols-2 gap-3 bg-slate-50 p-3.5 rounded-2xl border border-slate-100 text-xs">
+                  <div>
+                    <span className="text-slate-400 block font-medium">Contact Person</span>
+                    <span className="font-bold text-slate-800">{messageBiz.contactPerson || 'Not specified'}</span>
+                  </div>
+                  <div>
+                    <span className="text-slate-400 block font-medium">Phone Number</span>
+                    <span className="font-bold text-slate-800">{messageBiz.phone}</span>
+                  </div>
+                  <div>
+                    <span className="text-slate-400 block font-medium">City</span>
+                    <span className="font-bold text-slate-800">{messageBiz.city}</span>
+                  </div>
+                  <div>
+                    <span className="text-slate-400 block font-medium">Email Address</span>
+                    <span className="font-bold text-slate-800 truncate block">{messageBiz.email || 'N/A'}</span>
+                  </div>
+                </div>
+
+                {/* Message Input Box */}
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                    <MessageCircle className="w-4 h-4 text-blue-600" />
+                    <span>Customer Message Note</span>
+                  </label>
+                  <textarea
+                    value={messageNoteText}
+                    onChange={(e) => setMessageNoteText(e.target.value)}
+                    rows={4}
+                    placeholder="Type or view customer message..."
+                    className="w-full p-3.5 border-2 border-slate-200 rounded-2xl text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all leading-relaxed text-slate-800"
+                  />
+                  {noteSavedSuccess && (
+                    <p className="text-xs font-bold text-emerald-600 mt-1 flex items-center gap-1">
+                      <Check className="w-3.5 h-3.5 text-emerald-600" /> Message note updated successfully in database!
+                    </p>
+                  )}
+                </div>
+
+                {/* Direct Action Connect Buttons */}
+                <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-100">
+                  {messageBiz.phone && (
+                    <a
+                      href={`https://wa.me/${messageBiz.phone.replace(/[^0-9]/g, '')}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition-all shadow-xs cursor-pointer"
+                    >
+                      <MessageCircle className="w-4 h-4" />
+                      <span>WhatsApp Chat</span>
+                    </a>
+                  )}
+
+                  {messageBiz.phone && (
+                    <a
+                      href={`tel:${messageBiz.phone}`}
+                      className="inline-flex items-center gap-1.5 px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-colors cursor-pointer"
+                    >
+                      <Phone className="w-4 h-4" />
+                      <span>Call</span>
+                    </a>
+                  )}
+
+                  {messageBiz.email && (
+                    <a
+                      href={`mailto:${messageBiz.email}`}
+                      className="inline-flex items-center gap-1.5 px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-colors cursor-pointer"
+                    >
+                      <Mail className="w-4 h-4" />
+                      <span>Email</span>
+                    </a>
+                  )}
+                </div>
+
+                {/* Footer Buttons */}
+                <div className="flex justify-end gap-3 pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setMessageBiz(null)}
+                    className="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
+                  >
+                    Close
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleSaveCustomerNote}
+                    disabled={isSavingNote}
+                    className="inline-flex items-center gap-1.5 px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition-all shadow-xs cursor-pointer disabled:opacity-50"
+                  >
+                    {isSavingNote ? 'Saving...' : 'Save Note'}
+                  </button>
+                </div>
               </div>
             </div>
           </div>

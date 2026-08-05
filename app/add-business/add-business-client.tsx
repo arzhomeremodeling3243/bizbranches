@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { Loader2, AlertCircle, Upload, X, CheckCircle2, Eye, MessageCircle, Zap, Copy, Check, Sparkles, Smartphone, Landmark, HelpCircle } from 'lucide-react'
+import { Loader2, AlertCircle, Upload, X, CheckCircle2, Eye, MessageCircle, Zap, Copy, Check, Sparkles, Smartphone, Landmark, HelpCircle, AlertTriangle } from 'lucide-react'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import CitySearchDropdown from '@/components/ui/city-search-dropdown'
@@ -652,13 +652,35 @@ export default function AddBussinessClient() {
               <div className="p-8 md:p-12">
                 {paymentStep === 'details' && (
                   <div className="text-center animate-fadeIn">
-                    <div className="w-20 h-20 rounded-full bg-green-50 flex items-center justify-center mx-auto mb-6">
-                      <Sparkles className="w-10 h-10 text-green-500" />
+                    <div className="w-20 h-20 rounded-full bg-amber-50 border border-amber-100 flex items-center justify-center mx-auto mb-5 shadow-sm">
+                      <Sparkles className="w-10 h-10 text-amber-600 animate-pulse" />
                     </div>
-                    <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 mb-2">Business Registered!</h2>
-                    <p className="text-slate-600 mb-8 max-w-md mx-auto text-sm sm:text-base">
-                      Your listing info is saved. To publish and make your business page live on PakBizBranches, please complete the activation payment below.
+
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-xs font-black uppercase tracking-wider mb-3">
+                      ⚡ Final Step Required
+                    </div>
+
+                    <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 mb-2">
+                      Complete Payment & Make Your Business LIVE!
+                    </h2>
+                    <p className="text-slate-600 mb-6 max-w-lg mx-auto text-sm sm:text-base leading-relaxed font-medium">
+                      Aap ki business info save ho chuki hai. <strong className="text-red-600 font-extrabold">Is se pehle ke aap ka data & slot miss/expire ho jaye</strong>, abhi activation fee pay karke apne business ko instant <span className="text-blue-600 font-extrabold">LIVE</span> publish karein!
                     </p>
+
+                    {/* Urgency Alert Box */}
+                    <div className="bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-300/80 rounded-2xl p-4 mb-6 max-w-md mx-auto text-left shadow-sm">
+                      <div className="flex items-start gap-3">
+                        <div className="p-2 bg-amber-500 text-white rounded-xl shrink-0 mt-0.5 shadow-sm">
+                          <AlertTriangle className="w-5 h-5 animate-bounce" />
+                        </div>
+                        <div>
+                          <h4 className="font-extrabold text-amber-950 text-sm">⚠️ Urgent Notice — Don't Lose Your Slot!</h4>
+                          <p className="text-xs text-amber-900 mt-1 leading-relaxed font-semibold">
+                            Is se pehle ke aap ka business data miss ya expire ho jaye, neechay di gayi small activation fee abhi complete karein aur apne business ko customers ke liye <strong>LIVE</strong> karayein!
+                          </p>
+                        </div>
+                      </div>
+                    </div>
 
                     {/* Business ID Box */}
                     <div className="bg-blue-50/50 border border-blue-100 rounded-2xl p-5 mb-8 max-w-md mx-auto flex items-center justify-between">

@@ -1,8 +1,10 @@
+import { Suspense } from 'react'
 import { Metadata } from 'next'
 import CategoriesClient from './categories-client'
 import { ORGANIC_SEED_KEYWORDS } from '@/lib/organic-keywords'
 
-export const revalidate = 86400
+export const dynamic = 'force-static'
+export const revalidate = 15552000 // 180 days ISR
 
 export const metadata: Metadata = {
   title: 'Business Categories: Find Local Service Sectors',
@@ -24,5 +26,9 @@ export const metadata: Metadata = {
 }
 
 export default function CategoriesPage() {
-  return <CategoriesClient />
+  return (
+    <Suspense fallback={null}>
+      <CategoriesClient />
+    </Suspense>
+  )
 }

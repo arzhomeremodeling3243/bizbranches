@@ -2,7 +2,7 @@ import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import { Metadata } from 'next'
 import HeroSection from '@/components/home/hero-section'
-import dynamic from 'next/dynamic'
+import nextDynamic from 'next/dynamic'
 import { fetchLatestBusinesses, fetchFeaturedBusinesses } from '@/lib/firebase-server'
 import { CATEGORIES, CITIES } from '@/lib/data'
 import Link from 'next/link'
@@ -15,37 +15,37 @@ import AboutSection from '@/components/home/about-section'
 import StatsSection from '@/components/home/stats-section'
 
 // ─── Below-the-fold: dynamically imported to reduce initial JS bundle ────────
-const FeaturedBusinessesSection = dynamic(
+const FeaturedBusinessesSection = nextDynamic(
   () => import('@/components/featured-businesses-section'),
   { ssr: true }
 )
-const LatestBusinesses = dynamic(
+const LatestBusinesses = nextDynamic(
   () => import('@/components/home/latest-businesses'),
   { ssr: true }
 )
-const CategoriesGrid = dynamic(
+const CategoriesGrid = nextDynamic(
   () => import('@/components/home/categories-grid'),
   { ssr: true }
 )
-const CitiesGrid = dynamic(
+const CitiesGrid = nextDynamic(
   () => import('@/components/home/cities-grid'),
   { ssr: true }
 )
-const CTASection = dynamic(
+const CTASection = nextDynamic(
   () => import('@/components/home/cta-section'),
   { ssr: true }
 )
-const FAQSection = dynamic(
+const FAQSection = nextDynamic(
   () => import('@/components/home/faq-section'),
   { ssr: true }
 )
-const TrustSection = dynamic(
+const TrustSection = nextDynamic(
   () => import('@/components/home/trust-section'),
   { ssr: true }
 )
 
-// ISR: page is statically rendered and revalidated every 7 days (604800 seconds).
-export const revalidate = 604800
+export const dynamic = 'force-static'
+export const revalidate = 15552000 // 180 days ISR
 
 const BASE_URL = 'https://www.pakbizbranhces.online'
 
@@ -699,145 +699,7 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* Pricing Plans Section */}
-        <section className="py-16 bg-[#f8fafc] border-b border-gray-100" aria-labelledby="pricing-plans-heading">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <span className="px-3 py-1 text-[11px] font-bold tracking-wider text-blue-600 bg-blue-100 rounded-full uppercase">Transparent Pricing</span>
-              <h2 id="pricing-plans-heading" className="text-3xl font-bold text-[#0f2b3d] mt-3">
-                Simple Setup & Indexing Plans
-              </h2>
-              <p className="mt-4 text-gray-600 max-w-2xl mx-auto text-sm sm:text-base">
-                Promote your local business with our small one-time setup plans. No monthly subscriptions, no hidden charges.
-              </p>
-            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch max-w-6xl mx-auto">
-              {/* Card 1 */}
-              <div className="bg-white flex flex-col rounded-3xl p-6 border border-gray-200 transition-all hover:scale-[1.02] shadow-sm">
-                <div className="mb-6">
-                  <h3 className="text-lg font-extrabold text-slate-800">Standard Setup</h3>
-                  <div className="mt-4 flex items-baseline text-slate-900">
-                    <span className="text-base font-bold">₨</span>
-                    <span className="text-4xl font-black tracking-tight">10</span>
-                    <span className="text-slate-500 text-xs ml-1">/ one-time</span>
-                  </div>
-                </div>
-                <ul className="space-y-3 mb-8 flex-1">
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
-                    <span className="text-slate-600 text-xs font-semibold">Page created within 24 hours</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
-                    <span className="text-slate-600 text-xs font-semibold">Standard listing placement</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
-                    <span className="text-slate-600 text-xs font-semibold">Google index request submission</span>
-                  </li>
-                </ul>
-                <Link
-                  href="/add-business/"
-                  className="w-full py-3 bg-slate-800 hover:bg-slate-900 text-white rounded-xl font-bold text-center text-xs block transition-all shadow-sm"
-                >
-                  List Business
-                </Link>
-              </div>
-
-              {/* Card 2 */}
-              <div className="bg-white flex flex-col rounded-3xl p-6 border border-gray-200 transition-all hover:scale-[1.02] shadow-sm relative">
-                <div className="absolute -top-3 right-4 bg-blue-500 text-white text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider">
-                  Recommended
-                </div>
-                <div className="mb-6">
-                  <h3 className="text-lg font-extrabold text-slate-800">Express Setup</h3>
-                  <div className="mt-4 flex items-baseline text-slate-900">
-                    <span className="text-base font-bold">₨</span>
-                    <span className="text-4xl font-black tracking-tight">20</span>
-                    <span className="text-slate-500 text-xs ml-1">/ one-time</span>
-                  </div>
-                </div>
-                <ul className="space-y-3 mb-8 flex-1">
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
-                    <span className="text-slate-600 text-xs font-semibold">Page created within 3 hours</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
-                    <span className="text-slate-600 text-xs font-semibold">Featured placement on homepage</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
-                    <span className="text-slate-600 text-xs font-semibold">Guaranteed Google index request</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
-                    <span className="text-slate-600 text-xs font-semibold">Dedicated WhatsApp support</span>
-                  </li>
-                </ul>
-                <Link
-                  href="/add-business/"
-                  className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold text-center text-xs block transition-all shadow-sm"
-                >
-                  List Business
-                </Link>
-              </div>
-
-              {/* Card 3 */}
-              <div className="bg-gradient-to-br from-amber-50 to-orange-50 flex flex-col rounded-3xl p-6 border-2 border-orange-300 shadow-md ring-2 ring-orange-400/20 transition-all hover:scale-[1.02] relative">
-                <div className="absolute -top-3 right-4 bg-gradient-to-r from-orange-600 to-amber-500 text-white text-[9px] font-black px-3 py-0.5 rounded-full uppercase tracking-wider shadow-sm animate-pulse">
-                  Popular & Famous
-                </div>
-                <div className="mb-6">
-                  <h3 className="text-lg font-extrabold text-slate-800">SEO Authority</h3>
-                  <div className="mt-4 flex items-baseline text-slate-900">
-                    <span className="text-base font-bold">₨</span>
-                    <span className="text-4xl font-black tracking-tight">50</span>
-                    <span className="text-slate-500 text-xs ml-1">/ one-time</span>
-                  </div>
-                </div>
-                <ul className="space-y-3 mb-8 flex-1">
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-orange-600 shrink-0 mt-0.5" />
-                    <span className="text-slate-700 text-xs font-semibold">3000+ words page from simple data</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-orange-600 shrink-0 mt-0.5" />
-                    <span className="text-slate-700 text-xs font-semibold">Standard custom meta tags optimized</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-orange-600 shrink-0 mt-0.5" />
-                    <span className="text-slate-700 text-xs font-semibold">5+ quality backlinks built for your page</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-orange-600 shrink-0 mt-0.5" />
-                    <span className="text-slate-700 text-xs font-semibold">Guaranteed index within 48 hours</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-orange-600 shrink-0 mt-0.5" />
-                    <span className="text-slate-700 text-xs font-semibold">Free support & custom configurations</span>
-                  </li>
-                </ul>
-                <Link
-                  href="/add-business/"
-                  className="w-full py-3 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700 text-white rounded-xl font-bold text-center text-xs block transition-all shadow-sm"
-                >
-                  List Business
-                </Link>
-              </div>
-            </div>
-
-            <div className="text-center mt-8">
-              <Link
-                href="/pricing/"
-                className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0f2b3d] hover:underline"
-              >
-                View Detailed Plan Features & Payment Guide →
-              </Link>
-            </div>
-          </div>
-        </section>
 
         {/* Testimonials Section: Who Lists on PakBizBranches? Real Pakistani Businesses, Real Results */}
         <section className="py-16 bg-[#f8fafc] border-b border-gray-100" aria-labelledby="testimonials-heading">

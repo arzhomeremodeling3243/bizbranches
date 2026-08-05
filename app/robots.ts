@@ -21,9 +21,17 @@ export default function robots(): MetadataRoute.Robots {
           '/*?page=*',        // block crawling duplicate paginated pages with params
         ],
       },
-      // Block AI training bots from scraping business data
+      // Block AI scraping and training bots from consuming origin bandwidth
       {
         userAgent: 'GPTBot',
+        disallow: '/',
+      },
+      {
+        userAgent: 'Bytespider',
+        disallow: '/',
+      },
+      {
+        userAgent: 'ClaudeBot',
         disallow: '/',
       },
       {
