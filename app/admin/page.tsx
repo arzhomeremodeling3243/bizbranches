@@ -10,6 +10,7 @@ import AdminLogin from '@/components/admin-login'
 import { db } from '@/lib/firebase'
 import { collection, query, orderBy, getDocs, doc, deleteDoc, updateDoc, setDoc, onSnapshot } from 'firebase/firestore'
 import { MAIN_PAGES } from '@/lib/pages-config'
+import BusinessMessageModal from '@/components/admin/BusinessMessageModal'
 
 interface Business {
   id: string
@@ -104,6 +105,7 @@ export default function AdminPage() {
   const [messageNoteText, setMessageNoteText] = useState<string>('')
   const [isSavingNote, setIsSavingNote] = useState<boolean>(false)
   const [noteSavedSuccess, setNoteSavedSuccess] = useState<boolean>(false)
+  const [emailModalBiz, setEmailModalBiz] = useState<Business | null>(null)
 
   const handleSaveCustomerNote = async () => {
     if (!messageBiz) return
@@ -743,6 +745,14 @@ export default function AdminPage() {
                                 )}
                               </button>
                               <button
+                                type="button"
+                                onClick={() => setEmailModalBiz(business)}
+                                className="text-blue-600 hover:text-blue-900 cursor-pointer p-1.5 hover:bg-blue-50 rounded-lg transition-colors"
+                                title="Send Official Email to Business"
+                              >
+                                <Mail className="w-4 h-4" />
+                              </button>
+                              <button
                                 onClick={() => handleEditBusiness(business)}
                                 className="text-blue-600 hover:text-blue-900 cursor-pointer p-1.5 hover:bg-blue-50 rounded-lg transition-colors"
                                 title="Edit Business"
@@ -1333,13 +1343,16 @@ export default function AdminPage() {
                   )}
 
                   {messageBiz.email && (
-                    <a
-                      href={`mailto:${messageBiz.email}`}
-                      className="inline-flex items-center gap-1.5 px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-colors cursor-pointer"
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setEmailModalBiz(messageBiz)
+                      }}
+                      className="inline-flex items-center gap-1.5 px-3.5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition-all shadow-xs cursor-pointer"
                     >
                       <Mail className="w-4 h-4" />
-                      <span>Email</span>
-                    </a>
+                      <span>Send Official Email</span>
+                    </button>
                   )}
                 </div>
 
@@ -1365,6 +1378,13 @@ export default function AdminPage() {
             </div>
           </div>
         )}
+
+        {/* Business Message Email Modal */}
+        <BusinessMessageModal
+          isOpen={!!emailModalBiz}
+          onClose={() => setEmailModalBiz(null)}
+          business={emailModalBiz}
+        />
       </div>
   )
 }
