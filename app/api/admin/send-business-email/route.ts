@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { resend } from '@/lib/resend'
+import { getResendClient } from '@/lib/resend'
 import { db } from '@/lib/firebase'
 import { collection, addDoc, serverTimestamp, doc, getDoc } from 'firebase/firestore'
 
@@ -113,17 +113,11 @@ export async function POST(req: NextRequest) {
     let emailStatus = 'success'
     let errorMessage = null
 
-    const apiKey = process.env.RESEND_API_KEY
-    if (!apiKey || apiKey === 're_placeholder_key_for_build' || apiKey.startsWith('re_placeholder')) {
-      return NextResponse.json({
-        ok: false,
-        error: 'Resend API key is not configured. Please add a valid RESEND_API_KEY to your .env.local file.'
-      }, { status: 500 })
-    }
+    const activeResend = getResendClient()
 
     try {
       const fromSender = FROM_EMAIL.includes('<') ? FROM_EMAIL : `PakBizBranches <${FROM_EMAIL}>`
-      const sendRes = await resend.emails.send({
+      const sendRes = await activeResend.emails.send({
         from: fromSender,
         to: [cleanRecipient],
         subject: 'About Your Business Listing',
@@ -135,7 +129,7 @@ export async function POST(req: NextRequest) {
         emailStatus = 'error'
         const errMsg = sendRes.error.message || ''
         if (errMsg.toLowerCase().includes('api key') || sendRes.error.name === 'invalid_api_key') {
-          errorMessage = 'Your Resend API key (RESEND_API_KEY in .env.local) is invalid or expired. Please update it with a valid key from resend.com.'
+          errorMessage = 'The Resend API key is invalid or expired on resend.com. Please create a new key at https://resend.com/api-keys and update RESEND_API_KEY in Vercel or .env.local.'
         } else {
           errorMessage = errMsg
         }
@@ -146,7 +140,7 @@ export async function POST(req: NextRequest) {
       emailStatus = 'error'
       const errMsg = err?.message || String(err)
       if (errMsg.toLowerCase().includes('api key')) {
-        errorMessage = 'Your Resend API key (RESEND_API_KEY in .env.local) is invalid or expired. Please update it with a valid key from resend.com.'
+        errorMessage = 'The Resend API key is invalid or expired on resend.com. Please create a new key at https://resend.com/api-keys and update RESEND_API_KEY in Vercel or .env.local.'
       } else {
         errorMessage = errMsg
       }
