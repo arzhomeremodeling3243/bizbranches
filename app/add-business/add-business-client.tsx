@@ -1386,13 +1386,15 @@ export default function AddBussinessClient() {
                   </label>
                   <CitySearchDropdown
                     value={formData.city}
-                    onChange={(value) => handleInputChange({ 
-                      target: { name: 'city', value } 
-                    } as React.ChangeEvent<HTMLInputElement>)}
-                    placeholder="Select or type your city"
-                    className={`w-full ${
-                      errors.city ? 'border-red-500' : 'border-slate-300'
-                    }`}
+                    onChange={(selectedCity) => {
+                      setFormData(prev => ({ ...prev, city: selectedCity }))
+                      if (errors.city) {
+                        setErrors(prev => ({ ...prev, city: '' }))
+                      }
+                    }}
+                    placeholder="Search or select your city"
+                    className="w-full"
+                    inputClassName={errors.city ? 'border-red-500' : ''}
                   />
                   {errors.city && (
                     <p className="mt-1 text-sm text-red-600">{errors.city}</p>

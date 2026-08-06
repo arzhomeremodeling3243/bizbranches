@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { X, Send, Loader2, CheckCircle2, AlertCircle, Mail, Building2 } from 'lucide-react'
 
 interface BusinessMessageModalProps {
@@ -25,7 +25,23 @@ export default function BusinessMessageModal({
   const [isSending, setIsSending] = useState(false)
   const [toast, setToast] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
 
+  // Reset state whenever modal opens or business recipient changes
+  useEffect(() => {
+    if (isOpen) {
+      setMessage('')
+      setToast(null)
+      setIsSending(false)
+    }
+  }, [isOpen, business?.id])
+
   if (!isOpen || !business) return null
+
+  const handleCloseModal = () => {
+    setMessage('')
+    setToast(null)
+    setIsSending(false)
+    onClose()
+  }
 
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -94,7 +110,7 @@ export default function BusinessMessageModal({
           </div>
           <button
             type="button"
-            onClick={onClose}
+            onClick={handleCloseModal}
             disabled={isSending}
             className="p-1.5 rounded-full hover:bg-slate-800 text-slate-400 hover:text-white transition-colors cursor-pointer disabled:opacity-50"
           >
@@ -181,7 +197,7 @@ export default function BusinessMessageModal({
           <div className="flex justify-end gap-3 pt-2">
             <button
               type="button"
-              onClick={onClose}
+              onClick={handleCloseModal}
               disabled={isSending}
               className="px-4 py-2.5 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer disabled:opacity-50"
             >

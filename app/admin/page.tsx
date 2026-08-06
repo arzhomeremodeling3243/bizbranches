@@ -1346,7 +1346,9 @@ export default function AdminPage() {
                     <button
                       type="button"
                       onClick={() => {
-                        setEmailModalBiz(messageBiz)
+                        const targetBiz = messageBiz
+                        setMessageBiz(null)
+                        setEmailModalBiz(targetBiz)
                       }}
                       className="inline-flex items-center gap-1.5 px-3.5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition-all shadow-xs cursor-pointer"
                     >
@@ -1381,6 +1383,7 @@ export default function AdminPage() {
 
         {/* Business Message Email Modal */}
         <BusinessMessageModal
+          key={emailModalBiz?.id || 'email-modal'}
           isOpen={!!emailModalBiz}
           onClose={() => setEmailModalBiz(null)}
           business={emailModalBiz}
