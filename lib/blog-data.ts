@@ -520,8 +520,8 @@ export const BLOG_POSTS = [
       <h3>Step 6: Business Description</h3>
       <p>Write a compelling description of your business:</p>
       <ul>
-        <li>Minimum 300 characters</li>
-        <li>Maximum 500 characters</li>
+        <li>Minimum 500 characters</li>
+        <li>Maximum 2000 characters</li>
         <li>Describe your products, services, and unique selling points</li>
         <li>Include keywords customers might search for</li>
       </ul>

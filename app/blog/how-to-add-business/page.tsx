@@ -202,7 +202,7 @@ export default function BlogPage() {
                       <div className="flex items-center gap-3">
                         <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0" />
                         <div>
-                          <strong className="text-gray-800">Business Description:</strong> 500-1000 characters detailing your products, services, and unique value
+                          <strong className="text-gray-800">Business Description:</strong> 500-2000 characters detailing your products, services, and unique value
                         </div>
                       </div>
                       <div className="flex items-center gap-3">

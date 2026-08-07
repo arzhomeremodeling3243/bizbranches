@@ -17,8 +17,8 @@ import { BannerAdLoader, NativeAdLoader } from '@/components/ads/ads-loader'
 type Status = 'idle' | 'loading' | 'success' | 'error'
 
 const MAX_LOGO_MB = 2.5
-const MIN_DESCRIPTION_CHARS = 300
-const MAX_DESCRIPTION_CHARS = 500
+const MIN_DESCRIPTION_CHARS = 500
+const MAX_DESCRIPTION_CHARS = 2000
 
 // Sub-categories for each main category
 const SUB_CATEGORIES: Record<string, string[]> = {
