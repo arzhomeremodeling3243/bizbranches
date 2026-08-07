@@ -17,8 +17,8 @@ import { BannerAdLoader, NativeAdLoader } from '@/components/ads/ads-loader'
 type Status = 'idle' | 'loading' | 'success' | 'error'
 
 const MAX_LOGO_MB = 2.5
-const MIN_DESCRIPTION_CHARS = 500
-const MAX_DESCRIPTION_CHARS = 1000
+const MIN_DESCRIPTION_CHARS = 300
+const MAX_DESCRIPTION_CHARS = 500
 
 // Sub-categories for each main category
 const SUB_CATEGORIES: Record<string, string[]> = {
@@ -1258,6 +1258,7 @@ export default function AddBussinessClient() {
                     name="description"
                     value={formData.description}
                     onChange={handleInputChange}
+                    maxLength={MAX_DESCRIPTION_CHARS}
                     rows={6}
                     className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-none ${
                       errors.description ? 'border-red-500' : 'border-slate-300'
@@ -1268,7 +1269,7 @@ export default function AddBussinessClient() {
                     <p className="mt-1 text-sm text-red-600">{errors.description}</p>
                   )}
                   <p className="mt-1 text-xs text-slate-500">
-                    Minimum {MIN_DESCRIPTION_CHARS} characters required for better visibility
+                    Minimum {MIN_DESCRIPTION_CHARS} to maximum {MAX_DESCRIPTION_CHARS} characters required for better visibility
                   </p>
                 </div>
               </div>
