@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 import { CATEGORIES } from '@/lib/data'
 import { findStaticBusinessBySlug, getStaticSimilar, STATIC_BUSINESSES } from '@/lib/static-db'
 import BusinessDetailClient from './business-detail-client'
@@ -20,26 +21,16 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
   const params = await props.params;
   const slug = params.slug
 
-  let businessName = ''
-  let businessCity = 'Pakistan'
-  let businessCategory = 'Business'
-  let businessPhone = 'Contact'
-  let businessDescription = 'Verified business listing on PakBizBranches.'
-
   const staticBiz = findStaticBusinessBySlug(slug)
-  if (staticBiz) {
-    businessName = staticBiz.businessName
-    businessCity = staticBiz.city
-    businessCategory = staticBiz.category
-    businessPhone = staticBiz.phone
-    businessDescription = staticBiz.description || `Verified ${staticBiz.category} company in ${staticBiz.city}, Pakistan.`
-  } else {
-    // Dynamic fallback: extract details purely from the slug string for zero-execution compilation
-    businessName = slug
-      .split('-')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ')
+  if (!staticBiz) {
+    return { title: 'Business Not Found - PakBizBranches' }
   }
+
+  let businessName = staticBiz.businessName
+  let businessCity = staticBiz.city
+  let businessCategory = staticBiz.category
+  let businessPhone = staticBiz.phone
+  let businessDescription = staticBiz.description || `Verified ${staticBiz.category} company in ${staticBiz.city}, Pakistan.`
 
   const category = CATEGORIES.find(c => c.id === businessCategory)
   const categoryName = category?.name ?? businessCategory
@@ -152,52 +143,33 @@ export default async function BusinessPage(props: { params: Promise<{ slug: stri
   const params = await props.params;
   const slug = params.slug
 
-  let foundBiz: any = null
   const staticBiz = findStaticBusinessBySlug(slug)
-  if (staticBiz) {
-    foundBiz = {
-      id: staticBiz.id,
-      businessName: staticBiz.businessName,
-      slug: staticBiz.slug,
-      city: staticBiz.city,
-      category: staticBiz.category,
-      categoryId: staticBiz.categoryId || staticBiz.category,
-      description: staticBiz.description,
-      phone: staticBiz.phone,
-      logoUrl: staticBiz.logoUrl,
-      status: staticBiz.status,
-      isFeatured: staticBiz.isFeatured || staticBiz.featured,
-      createdAt: staticBiz.createdAt,
-      rating: staticBiz.rating,
-      reviewCount: staticBiz.reviewCount,
-      websiteUrl: staticBiz.websiteUrl,
-      facebookPage: staticBiz.facebookPage,
-      address: staticBiz.address,
-      whatsapp: staticBiz.whatsapp,
-      email: staticBiz.email,
-      youtubeChannel: staticBiz.youtubeChannel,
-      subCategory: staticBiz.subCategory
-    }
-  } else {
-    const formattedTitle = slug
-      .split('-')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ')
+  if (!staticBiz) {
+    notFound()
+  }
 
-    foundBiz = {
-      id: `dyn-${slug}`,
-      businessName: formattedTitle,
-      slug: slug,
-      city: 'Pakistan',
-      category: 'business',
-      description: `Verified details for ${formattedTitle} in Pakistan. Find location address, contact phone number, and timing details on PakBizBranches.`,
-      phone: '0304 111 7463',
-      address: `${formattedTitle}, Pakistan`,
-      createdAt: new Date().toISOString(),
-      rating: 4.8,
-      reviewCount: 15,
-      status: 'approved'
-    }
+  const foundBiz: any = {
+    id: staticBiz.id,
+    businessName: staticBiz.businessName,
+    slug: staticBiz.slug,
+    city: staticBiz.city,
+    category: staticBiz.category,
+    categoryId: staticBiz.categoryId || staticBiz.category,
+    description: staticBiz.description,
+    phone: staticBiz.phone,
+    logoUrl: staticBiz.logoUrl,
+    status: staticBiz.status,
+    isFeatured: staticBiz.isFeatured || staticBiz.featured,
+    createdAt: staticBiz.createdAt,
+    rating: staticBiz.rating,
+    reviewCount: staticBiz.reviewCount,
+    websiteUrl: staticBiz.websiteUrl,
+    facebookPage: staticBiz.facebookPage,
+    address: staticBiz.address,
+    whatsapp: staticBiz.whatsapp,
+    email: staticBiz.email,
+    youtubeChannel: staticBiz.youtubeChannel,
+    subCategory: staticBiz.subCategory
   }
 
   const staticSimilar = getStaticSimilar(foundBiz.city, foundBiz.category, slug) as any[]

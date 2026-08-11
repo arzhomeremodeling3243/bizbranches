@@ -1,7 +1,9 @@
 import { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 import { CATEGORIES } from '@/lib/data'
 import { getCategoryKeywordCluster } from '@/lib/organic-keywords'
 import CategoryClient from './category-client'
+import { getStaticCategory } from '@/lib/static-db'
 import React from 'react'
 
 const BASE_URL = 'https://www.pakbizbranhces.online'
@@ -75,10 +77,12 @@ export async function generateMetadata(props: { params: Promise<{ categorySlug: 
   }
 }
 
-import { getStaticCategory } from '@/lib/static-db'
-
 export default async function CategoryPage(props: { params: Promise<{ categorySlug: string }> }) {
   const params = await props.params;
+  const category = CATEGORIES.find(c => c.id === params.categorySlug)
+  if (!category) {
+    notFound()
+  }
   const staticList = getStaticCategory(params.categorySlug)
   return <CategoryClient categorySlug={params.categorySlug} initialBusinessesList={staticList as any[]} />
 }

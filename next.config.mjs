@@ -68,13 +68,8 @@ const nextConfig = {
         ],
       },
       {
-        // 180-day Vercel Edge CDN caching for ISR HTML pages
         source: '/((?!_next|api).*)',
         headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=0, s-maxage=15552000, stale-while-revalidate=86400',
-          },
           {
             key: 'X-Content-Type-Options',
             value: 'nosniff',

@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 import { CATEGORIES, CITIES } from '@/lib/data'
 import { getCategoryKeywordCluster, getCityKeywordCluster } from '@/lib/organic-keywords'
 import { findStaticBusinessBySlug, getStaticCity, getStaticCategory, getStaticSimilar, getStaticBranches, STATIC_BUSINESSES } from '@/lib/static-db'
@@ -290,35 +291,15 @@ export default async function CatchAllPage(props: { params: Promise<{ city: stri
       youtubeChannel: staticBiz.youtubeChannel,
       subCategory: staticBiz.subCategory
     }
-  } else {
-    const formattedTitle = slug
-      .split('-')
-      .map(w => w.charAt(0).toUpperCase() + w.slice(1))
-      .join(' ')
-
-    foundBiz = {
-      id: `dyn-${slug}`,
-      businessName: formattedTitle,
-      slug: slug,
-      city: 'Pakistan',
-      category: 'business',
-      description: `Verified business profile for ${formattedTitle} on PakBizBranches directory. Find location details, contact information, and customer reviews.`,
-      phone: '0304 111 7463',
-      address: `${formattedTitle}, Pakistan`,
-      createdAt: new Date().toISOString(),
-      rating: 4.8,
-      reviewCount: 15,
-      status: 'approved'
-    }
   }
 
-  const staticSimilar = getStaticSimilar(foundBiz.city, foundBiz.category, slug) as any[]
-  const staticBranches = getStaticBranches(foundBiz.businessName, slug) as any[]
+  const staticSimilar = foundBiz ? (getStaticSimilar(foundBiz.city, foundBiz.category, slug) as any[]) : []
+  const staticBranches = foundBiz ? (getStaticBranches(foundBiz.businessName, slug) as any[]) : []
 
   return (
     <CatchAllPageClient
       slug={slug}
-      initialViewType="business"
+      initialViewType={foundBiz ? "business" : undefined}
       initialBusiness={foundBiz}
       initialSimilarBusinesses={staticSimilar.slice(0, 4)}
       initialBranches={staticBranches}

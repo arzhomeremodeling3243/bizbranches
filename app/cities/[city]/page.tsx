@@ -1,7 +1,9 @@
 import { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 import { CITIES } from '@/lib/data'
 import { getCityKeywordCluster } from '@/lib/organic-keywords'
 import CityClient from './city-client'
+import { getStaticCity } from '@/lib/static-db'
 import React from 'react'
 
 const BASE_URL = 'https://www.pakbizbranhces.online'
@@ -77,11 +79,12 @@ export async function generateMetadata(props: { params: Promise<{ city: string }
   }
 }
 
-import { getStaticCity } from '@/lib/static-db'
-
 export default async function CityPage(props: { params: Promise<{ city: string }> }) {
   const params = await props.params;
   const cityName = findCityBySlug(params.city)
-  const staticList = cityName ? getStaticCity(cityName) : []
+  if (!cityName) {
+    notFound()
+  }
+  const staticList = getStaticCity(cityName)
   return <CityClient citySlug={params.city} initialBusinessesList={staticList as any[]} />
 }

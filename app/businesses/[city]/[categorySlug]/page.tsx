@@ -1,7 +1,9 @@
 import { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 import { CITIES, CATEGORIES, TOP_CITIES } from '@/lib/data'
 import { getCategoryKeywordCluster, getCityKeywordCluster } from '@/lib/organic-keywords'
 import CityCategoryListClient from './city-category-list-client'
+import { getStaticCityCategory } from '@/lib/static-db'
 import React from 'react'
 
 export const dynamic = 'force-static'
@@ -94,13 +96,16 @@ export async function generateMetadata(props: { params: Promise<{ city: string; 
   }
 }
 
-import { getStaticCityCategory } from '@/lib/static-db'
-
 export default async function CityCategoryPage(props: { params: Promise<{ city: string; categorySlug: string }> }) {
   const params = await props.params;
   const cityName = findCityBySlug(params.city)
   const category = CATEGORIES.find(c => c.id === params.categorySlug)
-  const staticList = (cityName && category) ? getStaticCityCategory(cityName, category.id) : []
+
+  if (!cityName || !category) {
+    notFound()
+  }
+
+  const staticList = getStaticCityCategory(cityName, category.id)
 
   return (
     <CityCategoryListClient

@@ -1,7 +1,6 @@
 // Server-side Firebase utilities with Timestamp serialization for client components
 // Optimized queries with proper filtering at database level and static caching fallback
 
-import { unstable_cache } from 'next/cache'
 import { db } from './firebase'
 import {
   collection,
@@ -71,8 +70,7 @@ function fetchWithTimeout<T>(promise: Promise<T>, ms: number = 500): Promise<T> 
 
 
 // Fetch latest businesses - merging static & dynamic
-export const fetchLatestBusinesses = unstable_cache(
-  async (count: number = 8): Promise<Business[]> => {
+export async function fetchLatestBusinesses(count: number = 8): Promise<Business[]> {
     try {
       const q = query(
         collection(db, 'businesses'),
@@ -134,14 +132,10 @@ export const fetchLatestBusinesses = unstable_cache(
       all.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
       return all.slice(0, count)
     }
-  },
-  ['fetchLatestBusinesses'],
-  { revalidate: 3600, tags: ['businesses'] }
-)
+}
 
 // Fetch featured businesses - merging static & dynamic
-export const fetchFeaturedBusinesses = unstable_cache(
-  async (count: number = 4): Promise<Business[]> => {
+export async function fetchFeaturedBusinesses(count: number = 4): Promise<Business[]> {
     try {
       const q = query(
         collection(db, 'businesses'),
@@ -204,17 +198,13 @@ export const fetchFeaturedBusinesses = unstable_cache(
       all.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
       return all.slice(0, count)
     }
-  },
-  ['fetchFeaturedBusinesses'],
-  { revalidate: 3600, tags: ['businesses'] }
-)
+}
 
 // Fetch businesses by category
-export const fetchCategoryBusinesses = unstable_cache(
-  async (
+export async function fetchCategoryBusinesses(
     categoryId: string,
     pageLimit: number = 20
-  ): Promise<Business[]> => {
+): Promise<Business[]> {
     try {
       const q = query(
         collection(db, 'businesses'),
@@ -279,17 +269,13 @@ export const fetchCategoryBusinesses = unstable_cache(
       all.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
       return all.slice(0, pageLimit)
     }
-  },
-  ['fetchCategoryBusinesses'],
-  { revalidate: 3600, tags: ['businesses'] }
-)
+}
 
 // Fetch businesses by city
-export const fetchCityBusinesses = unstable_cache(
-  async (
+export async function fetchCityBusinesses(
     city: string,
     pageLimit: number = 20
-  ): Promise<Business[]> => {
+): Promise<Business[]> {
     try {
       const q = query(
         collection(db, 'businesses'),
@@ -354,18 +340,14 @@ export const fetchCityBusinesses = unstable_cache(
       all.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
       return all.slice(0, pageLimit)
     }
-  },
-  ['fetchCityBusinesses'],
-  { revalidate: 3600, tags: ['businesses'] }
-)
+}
 
 // Fetch businesses by city and category
-export const fetchCityCategoryBusinesses = unstable_cache(
-  async (
+export async function fetchCityCategoryBusinesses(
     city: string,
     categoryId: string,
     pageLimit: number = 20
-  ): Promise<Business[]> => {
+): Promise<Business[]> {
     try {
       const q = query(
         collection(db, 'businesses'),
@@ -438,10 +420,7 @@ export const fetchCityCategoryBusinesses = unstable_cache(
       all.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
       return all.slice(0, pageLimit)
     }
-  },
-  ['fetchCityCategoryBusinesses'],
-  { revalidate: 3600, tags: ['businesses'] }
-)
+}
 
 // Fetch ALL approved businesses for sitemap
 export async function fetchAllBusinessesForSitemap(): Promise<{ slug: string, logoUrl?: string }[]> {
