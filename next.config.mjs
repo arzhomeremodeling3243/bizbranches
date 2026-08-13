@@ -38,6 +38,8 @@ const nextConfig = {
     formats: ['image/avif', 'image/webp'],
     // Aggressive 1-year caching for images
     minimumCacheTTL: 31536000,
+    // Disable Vercel runtime image optimization serverless origin proxy to eliminate Fast Origin Transfer bandwidth
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -58,7 +60,17 @@ const nextConfig = {
   async headers() {
     return [
       {
-        // Immutable 1-year cache for static assets (images/fonts/icons)
+        // Immutable 1-year Edge CDN cache for Next.js static build bundles (JS/CSS)
+        source: '/_next/static/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        // Immutable 1-year Edge CDN cache for static media assets (images/fonts/icons)
         source: '/:path*\\.(png|jpg|jpeg|webp|avif|svg|ico|woff|woff2|ttf|otf)',
         headers: [
           {
@@ -68,6 +80,7 @@ const nextConfig = {
         ],
       },
       {
+        // Edge CDN Cache-Control for HTML pages with stale-while-revalidate
         source: '/((?!_next|api).*)',
         headers: [
           {
@@ -77,6 +90,10 @@ const nextConfig = {
           {
             key: 'X-Frame-Options',
             value: 'SAMEORIGIN',
+          },
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=86400, s-maxage=15552000, stale-while-revalidate=86400',
           },
         ],
       },
