@@ -1,7 +1,7 @@
 const stats = [
-  { value: '15,000+', label: 'Verified Listings', icon: '🏢' },
-  { value: '120,000+', label: 'Monthly Visitors', icon: '👥' },
-  { value: '150+', label: 'Cities Covered', icon: '📍' },
+  { value: '600+', label: 'Verified Businesses Listed', icon: '🏢' },
+  { value: '150+', label: 'Pakistani Cities Covered', icon: '📍' },
+  { value: '100%', label: 'Free Listings Forever', icon: '⚡' },
 ]
 
 export default function StatsSection() {

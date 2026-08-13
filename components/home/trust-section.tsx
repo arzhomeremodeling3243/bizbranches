@@ -7,8 +7,8 @@ const features = [
     icon: <CheckCircle2 className="w-8 h-8 text-emerald-500" />
   },
   {
-    title: "Trusted by Thousands",
-    description: "Join over 15,000 businesses and thousands of daily users who trust PakBizBranches for local search.",
+    title: "Growing Local Network",
+    description: "Join hundreds of verified Pakistani businesses across 150+ cities using PakBizBranches for local customer discovery.",
     icon: <Users className="w-8 h-8 text-blue-500" />
   },
   {

@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { ArrowLeft, Phone, Mail, MapPin, MessageCircle, Building2, Globe, Facebook, Youtube, ExternalLink, Loader2 } from 'lucide-react'
+import { ArrowLeft, Phone, Mail, MapPin, MessageCircle, Building2, Globe, Facebook, Youtube, ExternalLink, Loader2, ShieldCheck, Share2, Copy, Check, X } from 'lucide-react'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import { db } from '@/lib/firebase'
@@ -86,6 +86,14 @@ export default function BusinessDetailClient({
   const [loading, setLoading] = useState(!initialBusiness)
   const [countdownDone, setCountdownDone] = useState(!!initialBusiness)
   const [is404, setIs404] = useState(false)
+
+  // Claim modal & share states
+  const [showClaimModal, setShowClaimModal] = useState(false)
+  const [claimName, setClaimName] = useState('')
+  const [claimPhone, setClaimPhone] = useState('')
+  const [claimNote, setClaimNote] = useState('')
+  const [claimSubmitted, setClaimSubmitted] = useState(false)
+  const [shareCopied, setShareCopied] = useState(false)
 
   useEffect(() => {
     async function loadBusinessDetails() {
@@ -411,6 +419,14 @@ export default function BusinessDetailClient({
                       Email
                     </a>
                   )}
+
+                  <button
+                    onClick={() => setShowClaimModal(true)}
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-amber-500 text-white rounded-xl font-semibold hover:bg-amber-600 transition-colors shadow-sm"
+                  >
+                    <ShieldCheck className="w-4 h-4" />
+                    Are you the owner? Claim Profile
+                  </button>
                 </div>
 
                 {/* Ad Placement */}
@@ -611,6 +627,70 @@ export default function BusinessDetailClient({
                     </div>
                   </div>
                 </div>
+
+                {/* Claim This Business Sidebar Banner */}
+                <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 border border-amber-200">
+                  <div className="flex items-center gap-3 mb-3">
+                    <ShieldCheck className="w-7 h-7 text-amber-600" />
+                    <h3 className="font-bold text-[#0f2b3d] text-base">Are you the owner?</h3>
+                  </div>
+                  <p className="text-xs text-gray-600 leading-relaxed mb-4">
+                    We&apos;ve created your free business profile. Claim it now to update your contact, photos, WhatsApp button and services.
+                  </p>
+                  <button
+                    onClick={() => setShowClaimModal(true)}
+                    className="w-full py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl text-sm transition-colors shadow-sm"
+                  >
+                    Claim This Profile Free
+                  </button>
+                </div>
+
+                {/* Share Business Profile */}
+                <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                  <h3 className="text-lg font-semibold text-[#0f2b3d] mb-3 flex items-center gap-2">
+                    <Share2 className="w-5 h-5 text-[#60a5fa]" />
+                    Share Profile
+                  </h3>
+                  <p className="text-xs text-gray-500 mb-4">
+                    Share this verified profile link with your customers or on social media.
+                  </p>
+                  <div className="space-y-2">
+                    <a
+                      href={`https://wa.me/?text=${encodeURIComponent(`Check out ${business.businessName} on PakBizBranches: https://www.pakbizbranhces.online/${slug}/`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full py-2.5 px-4 bg-green-50 hover:bg-green-100 text-green-700 rounded-xl font-medium text-xs flex items-center justify-center gap-2 transition-colors"
+                    >
+                      <MessageCircle className="w-4 h-4" /> Share on WhatsApp
+                    </a>
+                    <a
+                      href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://www.pakbizbranhces.online/${slug}/`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full py-2.5 px-4 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-xl font-medium text-xs flex items-center justify-center gap-2 transition-colors"
+                    >
+                      <Facebook className="w-4 h-4" /> Share on Facebook
+                    </a>
+                    <button
+                      onClick={() => {
+                        navigator.clipboard.writeText(`https://www.pakbizbranhces.online/${slug}/`)
+                        setShareCopied(true)
+                        setTimeout(() => setShareCopied(false), 2000)
+                      }}
+                      className="w-full py-2.5 px-4 bg-gray-50 hover:bg-gray-100 text-gray-700 rounded-xl font-medium text-xs flex items-center justify-center gap-2 transition-colors"
+                    >
+                      {shareCopied ? (
+                        <>
+                          <Check className="w-4 h-4 text-emerald-600" /> Copied Link!
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-4 h-4" /> Copy Profile Link
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -660,9 +740,110 @@ export default function BusinessDetailClient({
             )}
           </div>
         </section>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <BannerAdLoader variant="inline" />
-        </div>
+        {/* Claim Modal */}
+        {showClaimModal && (
+          <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+            <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl relative">
+              <button
+                onClick={() => setShowClaimModal(false)}
+                className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              {claimSubmitted ? (
+                <div className="text-center py-6">
+                  <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <ShieldCheck className="w-10 h-10" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-[#0f2b3d] mb-2">Claim Request Received!</h3>
+                  <p className="text-gray-600 text-sm mb-6">
+                    Thank you! Our verification team will review your ownership details and contact you at <strong>{claimPhone}</strong> via WhatsApp/Call to verify and grant access to your profile.
+                  </p>
+                  <button
+                    onClick={() => setShowClaimModal(false)}
+                    className="w-full py-3 bg-[#0f2b3d] text-white rounded-xl font-semibold text-sm hover:bg-[#1a3f57] transition-colors"
+                  >
+                    Close Window
+                  </button>
+                </div>
+              ) : (
+                <div>
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-12 h-12 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center shrink-0">
+                      <ShieldCheck className="w-7 h-7" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-[#0f2b3d]">Claim {business.businessName}</h3>
+                      <p className="text-xs text-gray-500">Free ownership verification for business profile</p>
+                    </div>
+                  </div>
+
+                  <p className="text-sm text-gray-600 mb-6 leading-relaxed">
+                    We&apos;ve created your basic business profile. Claim it for free to update your WhatsApp, photos, opening hours, services, and contact tools!
+                  </p>
+
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault()
+                      if (!claimName || !claimPhone) return
+                      setClaimSubmitted(true)
+                    }}
+                    className="space-y-4"
+                  >
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">
+                        Your Full Name / Owner Name *
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={claimName}
+                        onChange={(e) => setClaimName(e.target.value)}
+                        placeholder="e.g. Muhammad Ali"
+                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm outline-none focus:border-[#60a5fa]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">
+                        Phone / WhatsApp for Verification *
+                      </label>
+                      <input
+                        type="tel"
+                        required
+                        value={claimPhone}
+                        onChange={(e) => setClaimPhone(e.target.value)}
+                        placeholder="e.g. 0300 1234567"
+                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm outline-none focus:border-[#60a5fa]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">
+                        Ownership Note / Role (Optional)
+                      </label>
+                      <textarea
+                        rows={2}
+                        value={claimNote}
+                        onChange={(e) => setClaimNote(e.target.value)}
+                        placeholder="e.g. Owner of the shop / Manager"
+                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm outline-none focus:border-[#60a5fa]"
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="w-full py-3.5 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl text-sm transition-colors shadow-md"
+                    >
+                      Verify & Claim Profile Free
+                    </button>
+                  </form>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </main>
       <Footer />
     </>

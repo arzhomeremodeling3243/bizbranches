@@ -52,16 +52,16 @@ export const TOP_CITIES = [
 ]
 
 export const CATEGORIES = [
-  { id: 'restaurants', name: 'Restaurants & Food', icon: 'restaurant', count: 8420, color: '#f59e0b' },
-  { id: 'real-estate', name: 'Real Estate', icon: 'real-estate', count: 5210, color: '#10b981' },
-  { id: 'technology', name: 'Technology & IT', icon: 'technology', count: 4890, color: '#60a5fa' },
-  { id: 'healthcare', name: 'Healthcare & Medical', icon: 'healthcare', count: 6320, color: '#ef4444' },
-  { id: 'education', name: 'Education & Training', icon: 'education', count: 3780, color: '#8b5cf6' },
-  { id: 'retail', name: 'Retail & Shopping', icon: 'retail', count: 9100, color: '#ec4899' },
-  { id: 'construction', name: 'Construction', icon: 'construction', count: 2340, color: '#f97316' },
-  { id: 'automotive', name: 'Automotive', icon: 'automotive', count: 3560, color: '#14b8a6' },
-  { id: 'finance', name: 'Finance & Banking', icon: 'finance', count: 1890, color: '#6366f1' },
-  { id: 'travel', name: 'Travel & Tourism', icon: 'travel', count: 2670, color: '#0ea5e9' },
-  { id: 'beauty', name: 'Beauty & Wellness', icon: 'beauty', count: 4120, color: '#d946ef' },
-  { id: 'logistics', name: 'Logistics & Transport', icon: 'logistics', count: 1950, color: '#84cc16' },
+  { id: 'finance', name: 'Finance & Banking', icon: 'finance', count: 265, color: '#6366f1' },
+  { id: 'logistics', name: 'Logistics & Transport', icon: 'logistics', count: 69, color: '#84cc16' },
+  { id: 'technology', name: 'Technology & IT', icon: 'technology', count: 63, color: '#60a5fa' },
+  { id: 'retail', name: 'Retail & Shopping', icon: 'retail', count: 43, color: '#ec4899' },
+  { id: 'beauty', name: 'Beauty & Wellness', icon: 'beauty', count: 39, color: '#d946ef' },
+  { id: 'healthcare', name: 'Healthcare & Medical', icon: 'healthcare', count: 38, color: '#ef4444' },
+  { id: 'restaurants', name: 'Restaurants & Food', icon: 'restaurant', count: 30, color: '#f59e0b' },
+  { id: 'education', name: 'Education & Training', icon: 'education', count: 29, color: '#8b5cf6' },
+  { id: 'real-estate', name: 'Real Estate', icon: 'real-estate', count: 26, color: '#10b981' },
+  { id: 'construction', name: 'Construction', icon: 'construction', count: 25, color: '#f97316' },
+  { id: 'travel', name: 'Travel & Tourism', icon: 'travel', count: 25, color: '#0ea5e9' },
+  { id: 'automotive', name: 'Automotive', icon: 'automotive', count: 24, color: '#14b8a6' },
 ]

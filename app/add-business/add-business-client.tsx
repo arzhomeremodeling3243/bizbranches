@@ -17,7 +17,7 @@ import { BannerAdLoader, NativeAdLoader } from '@/components/ads/ads-loader'
 type Status = 'idle' | 'loading' | 'success' | 'error'
 
 const MAX_LOGO_MB = 2.5
-const MIN_DESCRIPTION_CHARS = 500
+const MIN_DESCRIPTION_CHARS = 0
 const MAX_DESCRIPTION_CHARS = 2000
 
 // Sub-categories for each main category
@@ -191,11 +191,7 @@ export default function AddBussinessClient() {
       newErrors.category = 'Please select a category'
     }
 
-    if (!formData.description.trim()) {
-      newErrors.description = 'Description is required'
-    } else if (formData.description.length < MIN_DESCRIPTION_CHARS) {
-      newErrors.description = `Description must be at least ${MIN_DESCRIPTION_CHARS} characters`
-    } else if (formData.description.length > MAX_DESCRIPTION_CHARS) {
+    if (formData.description.trim() && formData.description.length > MAX_DESCRIPTION_CHARS) {
       newErrors.description = `Description must not exceed ${MAX_DESCRIPTION_CHARS} characters`
     }
 
@@ -557,44 +553,50 @@ export default function AddBussinessClient() {
         <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-4">
-              Add Your Business to PakBizBranches
+            <h1 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-3">
+              Get Your Business Found Online — Free
             </h1>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-              List your business for free and reach thousands of customers across Pakistan. Join 12,000+ local services discovered every day.
+            <p className="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto">
+              Create a business profile with your phone, WhatsApp, location, services and photos. Help customers discover your business when searching by city and category.
             </p>
           </div>
 
-          {/* SEO Benefits Section */}
-          <section className="mb-10 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex gap-4 items-center">
-              <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
-                <Zap className="w-6 h-6 text-blue-600" />
+          {/* Your Free Profile Includes Checklist */}
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 mb-8 max-w-4xl mx-auto">
+            <h2 className="text-lg font-bold text-[#0f2b3d] mb-4 flex items-center gap-2">
+              <CheckCircle2 className="w-5 h-5 text-emerald-500" />
+              Your Free Business Profile Includes:
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-sm text-slate-700 font-medium">
+              <div className="flex items-center gap-2">
+                <span className="text-emerald-500 font-bold">✓</span> Google-friendly business page
               </div>
-              <div>
-                <h3 className="font-bold text-slate-800 text-sm">Boost Local SEO</h3>
-                <p className="text-xs text-slate-500">Get a high-quality local citation to rank better in Google Search.</p>
+              <div className="flex items-center gap-2">
+                <span className="text-emerald-500 font-bold">✓</span> Direct WhatsApp button
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-emerald-500 font-bold">✓</span> Click-to-call button
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-emerald-500 font-bold">✓</span> Business location & address
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-emerald-500 font-bold">✓</span> Photos & logo space
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-emerald-500 font-bold">✓</span> Services & opening hours
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-emerald-500 font-bold">✓</span> Website & social links
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-emerald-500 font-bold">✓</span> 100% Free, no monthly fee
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-emerald-500 font-bold">✓</span> Takes under 60 seconds
               </div>
             </div>
-            <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex gap-4 items-center">
-              <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center shrink-0">
-                <MessageCircle className="w-6 h-6 text-emerald-600" />
-              </div>
-              <div>
-                <h3 className="font-bold text-slate-800 text-sm">Direct Contact</h3>
-                <p className="text-xs text-slate-500">Enable WhatsApp and phone calls directly from potential customers.</p>
-              </div>
-            </div>
-            <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex gap-4 items-center">
-              <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center shrink-0">
-                <Eye className="w-6 h-6 text-purple-600" />
-              </div>
-              <div>
-                <h3 className="font-bold text-slate-800 text-sm">100% Free</h3>
-                <p className="text-xs text-slate-500">No registration or credit card required for standard listings.</p>
-              </div>
-            </div>
-          </section>
+          </div>
 
           {/* Form Layout */}
           <div className="max-w-4xl mx-auto">

@@ -59,7 +59,7 @@ export default function FeaturedBusinessesSection({ businesses }: FeaturedBusine
             Featured Businesses
           </h2>
           <p className="mt-3 text-slate-600 text-base sm:text-lg">
-            Discover premium businesses handpicked for quality and excellence
+            Verified local businesses &amp; service providers across Pakistan
           </p>
         </div>
 
