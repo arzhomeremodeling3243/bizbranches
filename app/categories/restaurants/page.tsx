@@ -3,7 +3,6 @@ import { Metadata } from 'next'
 import RestaurantsClient from './restaurants-client'
 
 export const dynamic = 'force-static'
-export const revalidate = 15552000 // 180 days ISR
 
 // Add metadata for SEO
 export const metadata: Metadata = {

@@ -7,7 +7,6 @@ import React from 'react'
 
 export const dynamic = 'force-static'
 export const dynamicParams = true
-export const revalidate = 15552000 // 180 days ISR
 
 export async function generateStaticParams() {
   const params: { city: string; category: string }[] = []

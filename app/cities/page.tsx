@@ -4,7 +4,6 @@ import CitiesClient from './cities-client'
 import { ORGANIC_SEED_KEYWORDS } from '@/lib/organic-keywords'
 
 export const dynamic = 'force-static'
-export const revalidate = 15552000 // 180 days ISR
 
 export const metadata: Metadata = {
   title: 'All Pakistan Cities Business Directory: Find Companies',

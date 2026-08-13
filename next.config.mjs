@@ -60,16 +60,6 @@ const nextConfig = {
   async headers() {
     return [
       {
-        // Immutable 1-year Edge CDN cache for Next.js static build bundles (JS/CSS)
-        source: '/_next/static/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-        ],
-      },
-      {
         // Immutable 1-year Edge CDN cache for static media assets (images/fonts/icons)
         source: '/:path*\\.(png|jpg|jpeg|webp|avif|svg|ico|woff|woff2|ttf|otf)',
         headers: [

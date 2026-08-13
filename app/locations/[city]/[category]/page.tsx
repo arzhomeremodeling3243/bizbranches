@@ -4,7 +4,6 @@ import { CITIES, CATEGORIES, TOP_CITIES } from '@/lib/data'
 import React from 'react'
 
 export const dynamic = 'force-static'
-export const revalidate = 15552000 // 180 days ISR
 
 export async function generateStaticParams() {
   const params: { city: string; category: string }[] = []

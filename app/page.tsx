@@ -45,7 +45,6 @@ const TrustSection = nextDynamic(
 )
 
 export const dynamic = 'force-static'
-export const revalidate = 15552000 // 180 days ISR
 
 const BASE_URL = 'https://www.pakbizbranhces.online'
 
