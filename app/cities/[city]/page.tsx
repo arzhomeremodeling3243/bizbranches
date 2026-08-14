@@ -16,7 +16,7 @@ export async function generateStaticParams() {
   }))
 }
 
-export const dynamicParams = true
+export const dynamicParams = false
 
 function findCityBySlug(slug: string): string | null {
   const normalized = slug.replace(/-/g, ' ').toLowerCase()
