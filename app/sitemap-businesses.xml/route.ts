@@ -4,6 +4,7 @@ import { HIGH_PRIORITY_SLUGS } from '@/lib/static-db'
 
 const BASE_URL = 'https://www.pakbizbranhces.online'
 
+export const dynamic = 'force-static'
 export const revalidate = 604800 // 7 days cache for business sitemap XML
 
 
