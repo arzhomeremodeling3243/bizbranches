@@ -14,7 +14,6 @@ import { BannerAdLoader, NativeAdLoader } from '@/components/ads/ads-loader'
 import CountdownLoader from '@/components/ui/countdown-loader'
 import React from 'react'
 import { getBusinessLogoUrl } from '@/lib/utils'
-import { getStaticCityCategory } from '@/lib/static-db'
 
 const BASE_URL = 'https://www.pakbizbranhces.online'
 
@@ -75,13 +74,10 @@ export default function CityCategoryClient({
       }
 
       // Immediately populate with static data so page paints instantly (LCP < 1.0s)
-      const staticList = initialBusinessesList.length > 0
-        ? initialBusinessesList
-        : (getStaticCityCategory(cityName, category.id) as any as Business[])
-      setBusinesses(staticList)
+      setBusinesses(initialBusinessesList)
       setLoading(false)
 
-      if (staticList.length > 0) return
+      if (initialBusinessesList.length > 0) return
     }
 
     loadBusinesses()

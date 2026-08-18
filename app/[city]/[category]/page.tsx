@@ -1,8 +1,8 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { CITIES, CATEGORIES } from '@/lib/data'
+import { CITIES, CATEGORIES, TOP_CITIES } from '@/lib/data'
 import CityCategoryClient from './city-category-client'
-import { getStaticCityCategory } from '@/lib/static-db'
+import { getStaticCityCategory, STATIC_BUSINESSES } from '@/lib/static-db'
 import React from 'react'
 
 export const dynamic = 'force-static'
@@ -11,7 +11,8 @@ export const dynamicParams = false
 export async function generateStaticParams() {
   const params: { city: string; category: string }[] = []
 
-  CITIES.forEach(city => {
+  // Pre-render top 20 metropolitan cities for all categories
+  TOP_CITIES.forEach(city => {
     const citySlug = city.toLowerCase().replace(/\s+/g, '-')
     CATEGORIES.forEach(cat => {
       params.push({
@@ -19,6 +20,20 @@ export async function generateStaticParams() {
         category: cat.id
       })
     })
+  })
+
+  // Pre-render any additional city-category pairs that exist in STATIC_BUSINESSES
+  STATIC_BUSINESSES.forEach(b => {
+    if (b.city) {
+      const citySlug = b.city.toLowerCase().replace(/\s+/g, '-')
+      const catId = (b.categoryId || b.category || '').toLowerCase()
+      if (citySlug && catId) {
+        const exists = params.some(p => p.city === citySlug && p.category === catId)
+        if (!exists) {
+          params.push({ city: citySlug, category: catId })
+        }
+      }
+    }
   })
 
   return params

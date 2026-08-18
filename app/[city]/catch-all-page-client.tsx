@@ -16,7 +16,6 @@ import { CATEGORIES, CITIES } from '@/lib/data'
 import { LIVE_STATUSES, getPossibleCategoryValues } from '@/lib/category-mappings'
 import { generateCategoryContent, generateCityContent, CITY_INFO } from '@/lib/seo-content'
 import { getCategoryKeywordCluster, getCityKeywordCluster } from '@/lib/organic-keywords'
-import { findStaticBusinessBySlug, getStaticSimilar, getStaticBranches } from '@/lib/static-db'
 import { BannerAdLoader, NativeAdLoader } from '@/components/ads/ads-loader'
 import { getBusinessLogoUrl } from '@/lib/utils'
 
@@ -277,49 +276,22 @@ export default function CatchAllPageClient({
         return
       }
 
-      // 3. Fallback: Business View (Try static first, then dynamic)
+      // 3. Fallback: Business View (Try dynamic Firestore if initialBusiness was not provided)
       let foundBiz: Business | null = initialBusiness
       if (!foundBiz) {
-        const staticBiz = findStaticBusinessBySlug(slug)
-        if (staticBiz) {
-          foundBiz = {
-            id: staticBiz.id,
-            businessName: staticBiz.businessName,
-            slug: staticBiz.slug,
-            city: staticBiz.city,
-            category: staticBiz.category,
-            categoryId: staticBiz.categoryId || staticBiz.category,
-            description: staticBiz.description,
-            phone: staticBiz.phone,
-            logoUrl: staticBiz.logoUrl,
-            status: staticBiz.status,
-            isFeatured: staticBiz.isFeatured || staticBiz.featured,
-            createdAt: staticBiz.createdAt,
-            rating: staticBiz.rating,
-            reviewCount: staticBiz.reviewCount,
-            websiteUrl: staticBiz.websiteUrl,
-            facebookPage: staticBiz.facebookPage,
-            address: staticBiz.address,
-            whatsapp: staticBiz.whatsapp,
-            email: staticBiz.email,
-            youtubeChannel: staticBiz.youtubeChannel,
-            subCategory: staticBiz.subCategory
-          } as Business
-        } else {
-          try {
-            const q = query(
-              collection(db, 'businesses'),
-              where('slug', '==', slug),
-              limit(1)
-            )
-            const querySnapshot = await getDocs(q)
-            if (!querySnapshot.empty) {
-              const doc = querySnapshot.docs[0]
-              foundBiz = { id: doc.id, ...doc.data() } as Business
-            }
-          } catch (err) {
-            console.error('Error fetching dynamic business details:', err)
+        try {
+          const q = query(
+            collection(db, 'businesses'),
+            where('slug', '==', slug),
+            limit(1)
+          )
+          const querySnapshot = await getDocs(q)
+          if (!querySnapshot.empty) {
+            const doc = querySnapshot.docs[0]
+            foundBiz = { id: doc.id, ...doc.data() } as Business
           }
+        } catch (err) {
+          console.error('Error fetching dynamic business details:', err)
         }
       }
 
@@ -328,16 +300,6 @@ export default function CatchAllPageClient({
         setViewType('business')
         setLoading(false)
         setCountdownDone(true)
-        
-        // Populate static similar & branches if not yet populated
-        if (similarBusinesses.length === 0) {
-          const staticSimilar = getStaticSimilar(foundBiz.city, foundBiz.category, slug) as any as Business[]
-          setSimilarBusinesses(staticSimilar.slice(0, 4))
-        }
-        if (branches.length === 0) {
-          const staticBranches = getStaticBranches(foundBiz.businessName, slug) as any as Business[]
-          setBranches(staticBranches)
-        }
 
         // Defer Firestore dynamic background enrichment without blocking initial paint
         const targetBiz = foundBiz
