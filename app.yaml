@@ -2,3 +2,6 @@ kind: wasmer.io/App.v0
 owner: arzhomeremodeling3243
 name: bizbranches
 package: .
+domains:
+  - pakbizbranhces.online
+  - www.pakbizbranhces.online
