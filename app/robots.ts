@@ -22,21 +22,24 @@ export default function robots(): MetadataRoute.Robots {
           '/*?page=*',        // block crawling duplicate paginated pages with params
         ],
       },
-      // Block AI scraping and training bots from consuming origin bandwidth
+      // Block AI scraping, training bots, and aggressive SEO crawlers from consuming compute
       {
-        userAgent: 'GPTBot',
-        disallow: '/',
-      },
-      {
-        userAgent: 'Bytespider',
-        disallow: '/',
-      },
-      {
-        userAgent: 'ClaudeBot',
-        disallow: '/',
-      },
-      {
-        userAgent: 'CCBot',
+        userAgent: [
+          'GPTBot',
+          'Bytespider',
+          'ClaudeBot',
+          'CCBot',
+          'anthropic-ai',
+          'Amazonbot',
+          'Applebot-Extended',
+          'SemrushBot',
+          'AhrefsBot',
+          'DotBot',
+          'MJ12bot',
+          'DataForSeoBot',
+          'meta-externalagent',
+          'FacebookBot',
+        ],
         disallow: '/',
       },
       // Explicitly allow AI search/answer citation crawlers

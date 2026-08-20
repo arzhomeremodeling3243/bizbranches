@@ -5,3 +5,6 @@ package: .
 domains:
   - pakbizbranhces.online
   - www.pakbizbranhces.online
+capabilities:
+  cdn_cache:
+    enabled: true

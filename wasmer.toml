@@ -12,3 +12,6 @@ source = "wasmer/static-web-server-accelerated"
 
 [app.env]
 SERVER_ROOT = "/out"
+SERVER_COMPRESSION = "true"
+SERVER_CACHE_CONTROL_HEADERS = "true"
+SERVER_PAGE_FALLBACK = "/out/404.html"

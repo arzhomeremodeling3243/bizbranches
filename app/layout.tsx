@@ -1,7 +1,5 @@
 import type { Metadata } from 'next'
 import { Outfit } from 'next/font/google'
-import { SpeedInsights } from "@vercel/speed-insights/next"
-import { Analytics } from "@vercel/analytics/next"
 import './globals.css'
 import AntiCopyWrapper from '@/components/anti-copy-wrapper'
 import FloatingWhatsAppButton from '@/components/floating-whatsapp-button'
@@ -11,8 +9,9 @@ import BottomNav from '@/components/bottom-nav'
 
 const outfit = Outfit({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
+  weight: ['400', '600', '700'],
   display: 'swap',
+  preload: true,
   variable: '--font-sans',
 })
 
@@ -60,64 +59,44 @@ export default function RootLayout({
   return (
     <html lang="en" className={outfit.variable}>
       <head>
+        {/* Third-party monetization & analytics deferred strictly to first user interaction to maximize Speed Index and FCP */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
-                function loadMonetag() {
-                  var schedule = window.requestIdleCallback || function(cb) { setTimeout(cb, 1000); };
-                  schedule(function() {
-                    var s = document.createElement('script');
-                    s.dataset.zone = '11265640';
-                    s.src = 'https://nap5k.com/tag.min.js';
-                    s.async = true;
-                    var target = [document.documentElement, document.body].filter(Boolean).pop();
-                    if (target) target.appendChild(s);
+                var loaded = false;
+                function loadDeferredScripts() {
+                  if (loaded) return;
+                  loaded = true;
+                  ['scroll', 'pointerdown', 'touchstart', 'keydown'].forEach(function(e) {
+                    window.removeEventListener(e, loadDeferredScripts);
                   });
-                }
-                if (document.readyState === 'complete') {
-                  setTimeout(loadMonetag, 8000);
-                } else {
-                  window.addEventListener('load', function() { setTimeout(loadMonetag, 8000); }, { once: true });
-                }
-              })();
-            `
-          }}
-        />
 
-        <meta name="google-site-verification" content="D2TTC8ZWjbjA3wgOFcyrfBnFkjC3TAiCG7E6wDxDGK4" />
-        <meta name="ahrefs-site-verification" content="22e1275092fa85b1" />
-        <link rel="alternate" hrefLang="en-PK" href="https://www.pakbizbranhces.online/" />
-        <link rel="alternate" hrefLang="x-default" href="https://www.pakbizbranhces.online/" />
+                  // Load Monetag Ads
+                  try {
+                    var s1 = document.createElement('script');
+                    s1.dataset.zone = '11265640';
+                    s1.src = 'https://nap5k.com/tag.min.js';
+                    s1.async = true;
+                    document.body.appendChild(s1);
+                  } catch(e) {}
 
-        {/* Preconnect to Firebase (Firestore data) and Google APIs */}
-        <link rel="preconnect" href="https://firebasestorage.googleapis.com" />
-        <link rel="dns-prefetch" href="https://firebasestorage.googleapis.com" />
-        <link rel="preconnect" href="https://www.googletagmanager.com" />
-        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-        <link rel="dns-prefetch" href="https://wa.me" />
+                  // Load Google Analytics
+                  try {
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('js', new Date());
+                    gtag('config', 'G-H1R80X5ZVE', { send_page_view: true });
+                    var s2 = document.createElement('script');
+                    s2.src = 'https://www.googletagmanager.com/gtag/js?id=G-H1R80X5ZVE';
+                    s2.async = true;
+                    document.head.appendChild(s2);
+                  } catch(e) {}
+                }
 
-        {/* Google Analytics — loaded after page is interactive to avoid TBT */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-H1R80X5ZVE', { send_page_view: true });
-              // Defer GA script load until after LCP
-              (function() {
-                function loadGA() {
-                  var s = document.createElement('script');
-                  s.src = 'https://www.googletagmanager.com/gtag/js?id=G-H1R80X5ZVE';
-                  s.async = true;
-                  document.head.appendChild(s);
-                }
-                if (document.readyState === 'complete') {
-                  setTimeout(loadGA, 3000);
-                } else {
-                  window.addEventListener('load', function() { setTimeout(loadGA, 3000); }, { once: true });
-                }
+                ['scroll', 'pointerdown', 'touchstart', 'keydown'].forEach(function(e) {
+                  window.addEventListener(e, loadDeferredScripts, { once: true, passive: true });
+                });
               })();
             `,
           }}
@@ -197,8 +176,6 @@ export default function RootLayout({
         {children}
 
         <BottomNav />
-        <SpeedInsights />
-        <Analytics />
       </body>
     </html>
   )
