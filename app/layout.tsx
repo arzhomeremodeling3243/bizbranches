@@ -63,7 +63,19 @@ export default function RootLayout({
     <html lang="en" className={outfit.variable}>
       <head>
         <meta name="google-site-verification" content="D2TTC8ZWjbjA3wgOFcyrfBnFkjC3TAiCG7E6wDxDGK4" />
-        {/* Third-party monetization & analytics deferred strictly to first user interaction to maximize Speed Index and FCP */}
+        {/* Google tag (gtag.js) */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-K7W77H2LD6" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-K7W77H2LD6');
+            `,
+          }}
+        />
+        {/* Monetag Ads deferred strictly to first user interaction to maximize Speed Index and FCP */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -83,18 +95,6 @@ export default function RootLayout({
                     s1.src = 'https://nap5k.com/tag.min.js';
                     s1.async = true;
                     document.body.appendChild(s1);
-                  } catch(e) {}
-
-                  // Load Google Analytics
-                  try {
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){dataLayer.push(arguments);}
-                    gtag('js', new Date());
-                    gtag('config', 'G-H1R80X5ZVE', { send_page_view: true });
-                    var s2 = document.createElement('script');
-                    s2.src = 'https://www.googletagmanager.com/gtag/js?id=G-H1R80X5ZVE';
-                    s2.async = true;
-                    document.head.appendChild(s2);
                   } catch(e) {}
                 }
 

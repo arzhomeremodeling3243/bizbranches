@@ -10,6 +10,16 @@ export const dynamic = 'force-static'
 export const revalidate = 604800 // 7 days cache for sitemap XML
 
 
+function escapeXml(unsafe: string): string {
+  if (!unsafe) return ''
+  return unsafe
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;')
+}
+
 function getAbsoluteImageUrl(url: string): string {
   if (!url) return ''
   if (url.startsWith('http://') || url.startsWith('https://')) {
@@ -148,20 +158,20 @@ export async function GET() {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 ${urls.map(u => `  <url>
-    <loc>${u.loc}</loc>
-    <lastmod>${u.lastmod}</lastmod>
-    <changefreq>${u.changefreq}</changefreq>
-    <priority>${u.priority}</priority>${u.image ? `
+    <loc>${escapeXml(u.loc)}</loc>
+    <lastmod>${escapeXml(u.lastmod)}</lastmod>
+    <changefreq>${escapeXml(u.changefreq)}</changefreq>
+    <priority>${escapeXml(u.priority)}</priority>${u.image ? `
     <image:image>
-      <image:loc>${u.image.loc}</image:loc>
-      <image:title>${u.image.title}</image:title>
+      <image:loc>${escapeXml(u.image.loc)}</image:loc>
+      <image:title>${escapeXml(u.image.title)}</image:title>
     </image:image>` : ''}
   </url>`).join('\n')}
 </urlset>`
 
   return new NextResponse(xml, {
     headers: {
-      'Content-Type': 'application/xml',
+      'Content-Type': 'application/xml; charset=utf-8',
       'Cache-Control': 'public, max-age=604800, s-maxage=604800, stale-while-revalidate=86400',
     },
   })

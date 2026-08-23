@@ -8,6 +8,16 @@ export const dynamic = 'force-static'
 export const revalidate = 604800 // 7 days cache for business sitemap XML
 
 
+function escapeXml(unsafe: string): string {
+  if (!unsafe) return ''
+  return unsafe
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;')
+}
+
 function getAbsoluteImageUrl(url: string): string {
   if (!url) return ''
   if (url.startsWith('http://') || url.startsWith('https://')) {
@@ -28,22 +38,23 @@ export async function GET() {
 ${businesses.map(biz => {
   const isHighPriority = HIGH_PRIORITY_SLUGS.has(biz.slug)
   const imageXml = biz.logoUrl ? `\n    <image:image>
-      <image:loc>${getAbsoluteImageUrl(biz.logoUrl)}</image:loc>
-      <image:title>${biz.slug.replace(/-/g, ' ')}</image:title>
+      <image:loc>${escapeXml(getAbsoluteImageUrl(biz.logoUrl))}</image:loc>
+      <image:title>${escapeXml(biz.slug.replace(/-/g, ' '))}</image:title>
     </image:image>` : ''
   return `  <url>
-    <loc>${BASE_URL}/${biz.slug}/</loc>
-    <lastmod>${lastmod}</lastmod>
+    <loc>${escapeXml(`${BASE_URL}/${biz.slug}/`)}</loc>
+    <lastmod>${escapeXml(lastmod)}</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>${isHighPriority ? '0.90' : '0.75'}</priority>${imageXml}
+    <priority>${escapeXml(isHighPriority ? '0.90' : '0.75')}</priority>${imageXml}
   </url>`
 }).join('\n')}
 </urlset>`
 
   return new NextResponse(xml, {
     headers: {
-      'Content-Type': 'application/xml',
+      'Content-Type': 'application/xml; charset=utf-8',
       'Cache-Control': 'public, max-age=604800, s-maxage=604800, stale-while-revalidate=86400',
     },
   })
 }
+
