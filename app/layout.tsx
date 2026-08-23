@@ -51,6 +51,9 @@ export const metadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true },
   },
+  verification: {
+    google: 'D2TTC8ZWjbjA3wgOFcyrfBnFkjC3TAiCG7E6wDxDGK4',
+  },
 }
 
 export default function RootLayout({
@@ -59,6 +62,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={outfit.variable}>
       <head>
+        <meta name="google-site-verification" content="D2TTC8ZWjbjA3wgOFcyrfBnFkjC3TAiCG7E6wDxDGK4" />
         {/* Third-party monetization & analytics deferred strictly to first user interaction to maximize Speed Index and FCP */}
         <script
           dangerouslySetInnerHTML={{
