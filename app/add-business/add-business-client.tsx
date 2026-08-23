@@ -1147,7 +1147,7 @@ export default function AddBussinessClient() {
                     Contact via WhatsApp
                   </a>
                   <Link
-                    href="/featured-businesses"
+                    href="/featured-businesses/"
                     className="inline-flex items-center gap-2 px-6 py-2.5 bg-white border-2 border-green-500 text-green-700 rounded-lg font-semibold text-sm hover:bg-green-50 transition-colors"
                   >
                     See Featured Businesses

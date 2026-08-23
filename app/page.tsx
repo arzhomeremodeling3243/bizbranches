@@ -141,77 +141,6 @@ export default async function HomePage() {
     }))
   }
 
-  // Testimonials and Aggregate Rating Schema
-  const reviewsSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    'name': 'PakBizBranches',
-    'image': 'https://www.pakbizbranhces.online/logo.png',
-    'description': 'Pakistan Free Business Directory: Search Local Services. List your business free on PakBizBranches.',
-    'brand': {
-      '@type': 'Brand',
-      'name': 'PakBizBranches'
-    },
-    'aggregateRating': {
-      '@type': 'AggregateRating',
-      'ratingValue': '4.8',
-      'reviewCount': '3'
-    },
-    'review': [
-      {
-        '@type': 'Review',
-        'author': {
-          '@type': 'Person',
-          'name': 'Muhammad Usman Butt'
-        },
-        'reviewRating': {
-          '@type': 'Rating',
-          'ratingValue': '5',
-          'bestRating': '5'
-        },
-        'reviewBody': 'I listed my auto spare parts shop here and felt surprised when customers actually called. Within the first month, I got 4 to 6 new customer calls per week. They specifically told me they found my shop on this directory. Yeh service sach mein kaam ayi.',
-        'itemReviewed': {
-          '@type': 'Product',
-          'name': 'PakBizBranches'
-        }
-      },
-      {
-        '@type': 'Review',
-        'author': {
-          '@type': 'Person',
-          'name': 'Sana Fatima'
-        },
-        'reviewRating': {
-          '@type': 'Rating',
-          'ratingValue': '5',
-          'bestRating': '5'
-        },
-        'reviewBody': 'Before listing on this directory, my home catering service had no online presence. I did not expect a free platform to work, but I got my first three orders from outside my friend circle within two weeks. I appreciate how this site helps small home businesses grow.',
-        'itemReviewed': {
-          '@type': 'Product',
-          'name': 'PakBizBranches'
-        }
-      },
-      {
-        '@type': 'Review',
-        'author': {
-          '@type': 'Person',
-          'name': 'Farhan Ahmed Siddiqui'
-        },
-        'reviewRating': {
-          '@type': 'Rating',
-          'ratingValue': '4',
-          'bestRating': '5'
-        },
-        'reviewBody': 'The WhatsApp contact button on my listing is now my primary source for new business inquiries. I get 8 to 12 WhatsApp messages every week from potential clients in Karachi. This free listing saved my solar company from paying for expensive online advertisements.',
-        'itemReviewed': {
-          '@type': 'Product',
-          'name': 'PakBizBranches'
-        }
-      }
-    ]
-  }
-
   // Recently Added Businesses ItemList Schema
   const recentlyAddedSchema = {
     '@context': 'https://schema.org',
@@ -234,10 +163,6 @@ export default async function HomePage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewsSchema) }}
       />
       <script
         type="application/ld+json"

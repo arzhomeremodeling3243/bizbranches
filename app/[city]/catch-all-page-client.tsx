@@ -552,8 +552,6 @@ export default function CatchAllPageClient({
 
     const cityDetails = CITY_INFO[business.city]
     const province = cityDetails?.province ?? 'Punjab'
-    const ratingValue = business.rating || 4.8
-    const reviewCount = business.reviewCount || 12
 
     const finalLogoUrl = getBusinessLogoUrl(business.logoUrl, business.businessName, business.slug)
 
@@ -578,13 +576,15 @@ export default function CatchAllPageClient({
       ...(businessCategory && { knowsAbout: businessCategory.name }),
       ...(finalLogoUrl && { image: finalLogoUrl, logo: finalLogoUrl }),
       ...(sameAs.length > 0 && { sameAs }),
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: String(ratingValue),
-        reviewCount: String(reviewCount),
-        bestRating: '5',
-        worstRating: '1'
-      }
+      ...(business.rating && business.reviewCount && business.reviewCount > 0 ? {
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          ratingValue: String(business.rating),
+          reviewCount: String(business.reviewCount),
+          bestRating: '5',
+          worstRating: '1'
+        }
+      } : {})
     }
 
     const breadcrumbSchema = {
@@ -932,7 +932,7 @@ export default function CatchAllPageClient({
                   <div className="bg-[#0f2b3d] rounded-2xl p-6 text-white">
                     <h3 className="font-bold mb-2">Claim this listing?</h3>
                     <p className="text-sm text-white/70 mb-4">Is this your business? Contact us to verify and enhance your listing.</p>
-                    <Link href="/contact" className="block text-center py-2.5 bg-[#60a5fa] text-white rounded-xl text-sm font-bold hover:bg-blue-400 transition-colors">
+                    <Link href="/contact/" className="block text-center py-2.5 bg-[#60a5fa] text-white rounded-xl text-sm font-bold hover:bg-blue-400 transition-colors">
                       Contact Support
                     </Link>
                   </div>

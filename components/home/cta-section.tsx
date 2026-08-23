@@ -34,13 +34,13 @@ export default function CTASection() {
 
         <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
           <Link
-            href="/add-business"
+            href="/add-business/"
             className="px-8 py-4 bg-[#60a5fa] hover:bg-blue-400 text-white font-bold rounded-xl transition-colors duration-200 text-base shadow-lg"
           >
             Add Your Business – It&apos;s Free
           </Link>
           <Link
-            href="/categories"
+            href="/categories/"
             className="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-xl transition-colors duration-200 text-base border border-white/20"
           >
             Browse Businesses

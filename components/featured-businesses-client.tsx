@@ -173,7 +173,7 @@ export default function FeaturedBusinessesClient() {
               : 'Be the first to feature your business!'}
           </p>
           <Link
-            href="/categories"
+            href="/categories/"
             className="inline-flex items-center gap-2 px-6 py-2.5 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
           >
             Browse All Businesses

@@ -173,7 +173,7 @@ export default function FeaturedBusinessesSection({ businesses }: FeaturedBusine
 
         <div className="text-center mt-12">
           <Link
-            href="/featured-businesses"
+            href="/featured-businesses/"
             className="inline-flex items-center gap-2 px-8 py-3.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-semibold text-sm hover:from-amber-600 hover:to-orange-600 transition-all duration-200 shadow-lg hover:shadow-xl"
           >
             View All Featured Businesses

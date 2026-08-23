@@ -52,7 +52,7 @@ export default function BlogPage() {
                 Back to Homepage
               </Link>
               <Link
-                href="/add-business"
+                href="/add-business/"
                 className="px-6 py-2 bg-white/10 text-white border border-white/30 rounded-lg font-semibold hover:bg-white/20 transition-colors inline-flex items-center justify-center"
               >
                 List Your Business
@@ -138,7 +138,7 @@ export default function BlogPage() {
                 Join thousands of Pakistani businesses and reach more customers. It's completely free!
               </p>
               <Link
-                href="/add-business"
+                href="/add-business/"
                 className="inline-flex items-center gap-2 bg-[#60a5fa] hover:bg-blue-600 text-white font-semibold px-8 py-4 rounded-xl transition-colors duration-200 text-lg"
               >
                 Add Your Business Free

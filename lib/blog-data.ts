@@ -14,13 +14,13 @@ export const BLOG_POSTS = [
       <p>This guide explains how to find <strong>restaurants in Karachi</strong> by cuisine, area, budget, and occasion, while showing how PakBizBranches makes local restaurant discovery easy.</p>
 
       <div class="bg-blue-50 p-5 rounded-2xl border border-blue-100 my-6">
-        <p class="text-blue-900 font-medium">🍽️ <strong>Looking for broader food guides or other cities?</strong> Read our national guide to <a href="/blog/restaurants-in-pakistan" class="text-blue-600 hover:underline font-bold">Restaurants in Pakistan 2026</a>.</p>
+        <p class="text-blue-900 font-medium">🍽️ <strong>Looking for broader food guides or other cities?</strong> Read our national guide to <a href="/blog/restaurants-in-pakistan/" class="text-blue-600 hover:underline font-bold">Restaurants in Pakistan 2026</a>.</p>
       </div>
 
       <h2>Restaurants in Karachi by Cuisine</h2>
 
       <h3>1. Pakistani &amp; Desi Restaurants in Karachi</h3>
-      <p>Pakistani restaurants are available throughout Karachi, offering traditional dishes and regional favorites including Karahi, Biryani, Nihari, Haleem, and freshly baked Naan. Check out <a href="/category/restaurants" class="text-blue-600 hover:underline font-medium">Pakistani Restaurants in Karachi</a>.</p>
+      <p>Pakistani restaurants are available throughout Karachi, offering traditional dishes and regional favorites including Karahi, Biryani, Nihari, Haleem, and freshly baked Naan. Check out <a href="/restaurants/" class="text-blue-600 hover:underline font-medium">Pakistani Restaurants in Karachi</a>.</p>
 
       <h3>2. Biryani Restaurants in Karachi</h3>
       <p>Biryani is central to Karachi's culinary identity. From famous spots on Burns Road to local hubs in Nazimabad, Clifton, and DHA, options include Chicken Biryani, Beef Biryani, and Mutton Biryani.</p>
@@ -36,10 +36,10 @@ export const BLOG_POSTS = [
 
       <h2>Restaurants by Key Karachi Neighborhoods</h2>
       <ul>
-        <li><a href="/cities/karachi" class="text-blue-600 hover:underline font-medium"><strong>Restaurants in Clifton Karachi:</strong></a> Boat Basin, Block 4, and seaside dining spots.</li>
-        <li><a href="/cities/karachi" class="text-blue-600 hover:underline font-medium"><strong>Restaurants in DHA Karachi:</strong></a> Phases 2, 5, 6 (Bukhari &amp; Seher commercial), and Phase 8 (Do Darya sea view restaurants).</li>
-        <li><a href="/cities/karachi" class="text-blue-600 hover:underline font-medium"><strong>Restaurants in Gulshan-e-Iqbal &amp; Johar:</strong></a> Bustling commercial streets with family dining and BBQ places.</li>
-        <li><a href="/cities/karachi" class="text-blue-600 hover:underline font-medium"><strong>Restaurants in North Nazimabad &amp; Hussainabad:</strong></a> Iconic late-night food hubs and street food streets.</li>
+        <li><a href="/karachi/" class="text-blue-600 hover:underline font-medium"><strong>Restaurants in Clifton Karachi:</strong></a> Boat Basin, Block 4, and seaside dining spots.</li>
+        <li><a href="/karachi/" class="text-blue-600 hover:underline font-medium"><strong>Restaurants in DHA Karachi:</strong></a> Phases 2, 5, 6 (Bukhari &amp; Seher commercial), and Phase 8 (Do Darya sea view restaurants).</li>
+        <li><a href="/karachi/" class="text-blue-600 hover:underline font-medium"><strong>Restaurants in Gulshan-e-Iqbal &amp; Johar:</strong></a> Bustling commercial streets with family dining and BBQ places.</li>
+        <li><a href="/karachi/" class="text-blue-600 hover:underline font-medium"><strong>Restaurants in North Nazimabad &amp; Hussainabad:</strong></a> Iconic late-night food hubs and street food streets.</li>
       </ul>
 
       <h2>How to Choose a Restaurant in Karachi</h2>
@@ -56,7 +56,7 @@ export const BLOG_POSTS = [
       <div class="bg-blue-50 border-l-4 border-blue-500 p-5 my-6 rounded-2xl">
         <h4 class="font-bold text-blue-900 text-base mb-2">💡 Do You Own a Restaurant or Café in Karachi?</h4>
         <p class="text-blue-800 text-sm mb-3">List your Karachi restaurant free on PakBizBranches to help thousands of local food lovers find your address, menu, and contact details.</p>
-        <a href="/add-business" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#60a5fa] hover:bg-blue-600 text-white font-bold rounded-xl text-xs transition-colors">
+        <a href="/add-business/" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#60a5fa] hover:bg-blue-600 text-white font-bold rounded-xl text-xs transition-colors">
           List Your Karachi Business Free →
         </a>
       </div>
@@ -66,7 +66,7 @@ export const BLOG_POSTS = [
       <p>Clifton, DHA (Boat Basin &amp; Do Darya), Burns Road, Hussainabad, and Sindhi Muslim Commercial Society (SMCHS) are widely famous for their food hubs.</p>
 
       <h3>Where can I find verified Karachi restaurant contacts?</h3>
-      <p>Explore the <a href="/category/restaurants" class="text-blue-600 hover:underline font-medium">Restaurants Category on PakBizBranches</a> to find verified addresses, contact numbers, and menu links for Karachi businesses.</p>
+      <p>Explore the <a href="/restaurants/" class="text-blue-600 hover:underline font-medium">Restaurants Category on PakBizBranches</a> to find verified addresses, contact numbers, and menu links for Karachi businesses.</p>
     `,
     author: "PakBizBranches Editorial Team",
     date: "August 13, 2026",
@@ -91,7 +91,7 @@ export const BLOG_POSTS = [
       <p>This guide explains how to find <strong>restaurants in Pakistan</strong>, the major types of dining establishments available, popular cuisines, key food cities, restaurant choices for different occasions, and what customers should consider before visiting.</p>
 
       <div class="bg-blue-50 p-5 rounded-2xl border border-blue-100 my-6">
-        <p class="text-blue-900 font-medium">🍽️ <strong>Looking to discover restaurants, jobs, or higher education?</strong> Explore our companion guides to <a href="/blog/jobs-in-pakistan" class="text-blue-600 hover:underline font-bold">Jobs in Pakistan 2026</a> and <a href="/blog/universities-in-pakistan" class="text-blue-600 hover:underline font-bold">Universities in Pakistan</a>.</p>
+        <p class="text-blue-900 font-medium">🍽️ <strong>Looking to discover restaurants, jobs, or higher education?</strong> Explore our companion guides to <a href="/blog/jobs-in-pakistan/" class="text-blue-600 hover:underline font-bold">Jobs in Pakistan 2026</a> and <a href="/blog/universities-in-pakistan/" class="text-blue-600 hover:underline font-bold">Universities in Pakistan</a>.</p>
       </div>
 
       <h2>What Types of Restaurants Are Available in Pakistan?</h2>
@@ -111,7 +111,7 @@ export const BLOG_POSTS = [
 
       <h2>Restaurants in Major Pakistani Cities</h2>
       <h3>1. Restaurants in Karachi</h3>
-      <p>Karachi is Pakistan's largest food market with a legendary culinary scene. From famous Biryani and Burns Road street food to sea-facing fine dining in Clifton and DHA, Karachi offers unparalleled variety. Explore <a href="/category/restaurants" class="text-blue-600 hover:underline font-medium">Verified Restaurants &amp; Food Outlets in Karachi</a>.</p>
+      <p>Karachi is Pakistan's largest food market with a legendary culinary scene. From famous Biryani and Burns Road street food to sea-facing fine dining in Clifton and DHA, Karachi offers unparalleled variety. Explore <a href="/restaurants/" class="text-blue-600 hover:underline font-medium">Verified Restaurants &amp; Food Outlets in Karachi</a>.</p>
 
       <h3>2. Restaurants in Lahore</h3>
       <p>Lahore is famous for its passion for food. Key dining hubs include Gulberg, MM Alam Road, DHA Phases 5 &amp; 6, and the historic Food Street near Badshahi Mosque. Explore desi BBQ, Karahi, cafés, and bakeries.</p>
@@ -142,7 +142,7 @@ export const BLOG_POSTS = [
       <div class="bg-blue-50 border-l-4 border-blue-500 p-5 my-6 rounded-2xl">
         <h4 class="font-bold text-blue-900 text-base mb-2">💡 Are You a Restaurant, Café, or Food Business Owner in Pakistan?</h4>
         <p class="text-blue-800 text-sm mb-3">List your restaurant, bakery, or catering service free on PakBizBranches to help thousands of local food lovers discover your menu and contact details.</p>
-        <a href="/add-business" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#60a5fa] hover:bg-blue-600 text-white font-bold rounded-xl text-xs transition-colors">
+        <a href="/add-business/" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#60a5fa] hover:bg-blue-600 text-white font-bold rounded-xl text-xs transition-colors">
           List Your Restaurant Free on PakBizBranches →
         </a>
       </div>
@@ -152,7 +152,7 @@ export const BLOG_POSTS = [
       <p>Karachi, Lahore, and Islamabad all offer world-class culinary scenes. Karachi is famous for Biryani, seafood, and international cuisines, Lahore is renowned for Karahi, BBQ, and street food, while Islamabad offers scenic fine dining and international cafés.</p>
 
       <h3>Where can I find verified restaurants near me?</h3>
-      <p>Explore the <a href="/category/restaurants" class="text-blue-600 hover:underline font-medium">Restaurants &amp; Food Category on PakBizBranches</a> to find verified food places, opening hours, menus, and contact numbers across 150+ Pakistani cities.</p>
+      <p>Explore the <a href="/restaurants/" class="text-blue-600 hover:underline font-medium">Restaurants &amp; Food Category on PakBizBranches</a> to find verified food places, opening hours, menus, and contact numbers across 150+ Pakistani cities.</p>
     `,
     author: "PakBizBranches Editorial Team",
     date: "August 13, 2026",
@@ -177,7 +177,7 @@ export const BLOG_POSTS = [
       <p>However, choosing the right university is not simply about finding a list of famous names. A strong computer science program should match your career goals, academic interests, budget, and preferred learning environment.</p>
 
       <div class="bg-blue-50 p-5 rounded-2xl border border-blue-100 my-6">
-        <p class="text-blue-900 font-medium">🎓 <strong>Looking for general higher education guidance or tech careers?</strong> Read our pillar guides to <a href="/blog/universities-in-pakistan" class="text-blue-600 hover:underline font-bold">Universities in Pakistan 2026</a> and <a href="/blog/it-jobs-in-pakistan" class="text-blue-600 hover:underline font-bold">IT Jobs for Fresh Graduates</a>.</p>
+        <p class="text-blue-900 font-medium">🎓 <strong>Looking for general higher education guidance or tech careers?</strong> Read our pillar guides to <a href="/blog/universities-in-pakistan/" class="text-blue-600 hover:underline font-bold">Universities in Pakistan 2026</a> and <a href="/blog/it-jobs-in-pakistan/" class="text-blue-600 hover:underline font-bold">IT Jobs for Fresh Graduates</a>.</p>
       </div>
 
       <h2>Computer Science vs. IT vs. Software Engineering</h2>
@@ -204,9 +204,9 @@ export const BLOG_POSTS = [
 
       <h2>Computer Science Universities in Major Cities</h2>
       <ul>
-        <li><a href="/cities/karachi" class="text-blue-600 hover:underline font-medium"><strong>Computer Science Universities in Karachi:</strong></a> Karachi provides access to top tech institutes and software houses across Clifton, Shahrah-e-Faisal, and DHA. Explore <a href="/category/technology" class="text-blue-600 hover:underline font-medium">Verified Tech Companies in Karachi</a>.</li>
-        <li><a href="/cities/lahore" class="text-blue-600 hover:underline font-medium"><strong>Computer Science Universities in Lahore:</strong></a> Lahore hosts renowned IT universities near Arfa Software Technology Park, Gulberg, and Johar Town.</li>
-        <li><a href="/cities/islamabad" class="text-blue-600 hover:underline font-medium"><strong>Computer Science Universities in Islamabad &amp; Rawalpindi:</strong></a> Islamabad twin cities host top-ranked national universities for computer science, software engineering, and AI research.</li>
+        <li><a href="/karachi/" class="text-blue-600 hover:underline font-medium"><strong>Computer Science Universities in Karachi:</strong></a> Karachi provides access to top tech institutes and software houses across Clifton, Shahrah-e-Faisal, and DHA. Explore <a href="/technology/" class="text-blue-600 hover:underline font-medium">Verified Tech Companies in Karachi</a>.</li>
+        <li><a href="/lahore/" class="text-blue-600 hover:underline font-medium"><strong>Computer Science Universities in Lahore:</strong></a> Lahore hosts renowned IT universities near Arfa Software Technology Park, Gulberg, and Johar Town.</li>
+        <li><a href="/islamabad/" class="text-blue-600 hover:underline font-medium"><strong>Computer Science Universities in Islamabad &amp; Rawalpindi:</strong></a> Islamabad twin cities host top-ranked national universities for computer science, software engineering, and AI research.</li>
       </ul>
 
       <h2>Essential Skills to Learn Alongside Your CS Degree</h2>
@@ -221,7 +221,7 @@ export const BLOG_POSTS = [
       <h2>Careers After a Computer Science Degree</h2>
       <p>Graduates can pursue diverse technical paths: Software Engineer, Web Developer, Mobile App Developer, Data Analyst, AI/ML Engineer, Cybersecurity Specialist, DevOps Engineer, QA Analyst, or Product Associate.</p>
 
-      <p>For detailed entry-level guidance and job searching tips, explore our guide to <a href="/blog/it-jobs-in-pakistan" class="text-blue-600 hover:underline font-bold">IT Jobs in Pakistan for Fresh Graduates</a>.</p>
+      <p>For detailed entry-level guidance and job searching tips, explore our guide to <a href="/blog/it-jobs-in-pakistan/" class="text-blue-600 hover:underline font-bold">IT Jobs in Pakistan for Fresh Graduates</a>.</p>
 
       <h2>Discover Education &amp; Technology Providers on PakBizBranches</h2>
       <p>Whether you are searching for computer science universities, coding bootcamps, or IT training institutes, <a href="/" class="text-blue-600 hover:underline font-medium">PakBizBranches</a> links students, education providers, and tech employers across Pakistan.</p>
@@ -229,7 +229,7 @@ export const BLOG_POSTS = [
       <div class="bg-blue-50 border-l-4 border-blue-500 p-5 my-6 rounded-2xl">
         <h4 class="font-bold text-blue-900 text-base mb-2">💡 Are You a Computer Institute, Academy, or IT Company?</h4>
         <p class="text-blue-800 text-sm mb-3">List your academy, software house, or educational institution free on PakBizBranches to reach prospective students and clients.</p>
-        <a href="/add-business" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#60a5fa] hover:bg-blue-600 text-white font-bold rounded-xl text-xs transition-colors">
+        <a href="/add-business/" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#60a5fa] hover:bg-blue-600 text-white font-bold rounded-xl text-xs transition-colors">
           List Your Tech / Educational Business Free →
         </a>
       </div>
@@ -239,7 +239,7 @@ export const BLOG_POSTS = [
       <p>Computer Science offers broader foundations in computing theory, algorithms, and data structures. Software Engineering focuses specifically on practical software development processes, testing, and architecture.</p>
 
       <h3>Where can I find verified educational institutes and tech businesses?</h3>
-      <p>Explore the <a href="/category/education" class="text-blue-600 hover:underline font-medium">Education Category</a> and <a href="/category/technology" class="text-blue-600 hover:underline font-medium">Technology Category on PakBizBranches</a>.</p>
+      <p>Explore the <a href="/education/" class="text-blue-600 hover:underline font-medium">Education Category</a> and <a href="/technology/" class="text-blue-600 hover:underline font-medium">Technology Category on PakBizBranches</a>.</p>
     `,
     author: "PakBizBranches Editorial Team",
     date: "August 13, 2026",
@@ -264,7 +264,7 @@ export const BLOG_POSTS = [
       <p>Pakistan has universities and degree-awarding institutions offering programs ranging from computer science and engineering to medicine, business, law, education, and the arts. The <a href="https://www.hec.gov.pk/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline font-medium">Higher Education Commission (HEC)</a> maintains official information about recognized higher education institutions in Pakistan.</p>
 
       <div class="bg-blue-50 p-5 rounded-2xl border border-blue-100 my-6">
-        <p class="text-blue-900 font-medium">🎓 <strong>Planning your career post-graduation?</strong> Read our companion guides to <a href="/blog/jobs-in-pakistan" class="text-blue-600 hover:underline font-bold">Jobs in Pakistan 2026</a> and <a href="/blog/it-jobs-in-pakistan" class="text-blue-600 hover:underline font-bold">IT Jobs for Fresh Graduates</a> to explore career paths and software house opportunities across Pakistan.</p>
+        <p class="text-blue-900 font-medium">🎓 <strong>Planning your career post-graduation?</strong> Read our companion guides to <a href="/blog/jobs-in-pakistan/" class="text-blue-600 hover:underline font-bold">Jobs in Pakistan 2026</a> and <a href="/blog/it-jobs-in-pakistan/" class="text-blue-600 hover:underline font-bold">IT Jobs for Fresh Graduates</a> to explore career paths and software house opportunities across Pakistan.</p>
       </div>
 
       <h2>Universities in Pakistan: What Should Students Consider?</h2>
@@ -295,9 +295,9 @@ export const BLOG_POSTS = [
       <p>Location is a critical consideration when choosing an educational institution:</p>
 
       <ul>
-        <li><a href="/cities/karachi" class="text-blue-600 hover:underline font-medium"><strong>Universities in Karachi:</strong></a> Karachi offers leading institutions in computer science, medicine, business administration, accounting, and engineering. Studying in Karachi gives students direct access to Pakistan's commercial capital and extensive corporate internship opportunities. Explore <a href="/category/education" class="text-blue-600 hover:underline font-medium">Verified Educational Institutes in Karachi</a>.</li>
-        <li><a href="/cities/lahore" class="text-blue-600 hover:underline font-medium"><strong>Universities in Lahore:</strong></a> Lahore is renowned as Pakistan's historic education hub, housing top engineering colleges, software technology institutes, medical universities, and law academies.</li>
-        <li><a href="/cities/islamabad" class="text-blue-600 hover:underline font-medium"><strong>Universities in Islamabad &amp; Rawalpindi:</strong></a> The twin cities offer top-ranked national universities for computer science, international relations, engineering, business management, and research studies.</li>
+        <li><a href="/karachi/" class="text-blue-600 hover:underline font-medium"><strong>Universities in Karachi:</strong></a> Karachi offers leading institutions in computer science, medicine, business administration, accounting, and engineering. Studying in Karachi gives students direct access to Pakistan's commercial capital and extensive corporate internship opportunities. Explore <a href="/education/" class="text-blue-600 hover:underline font-medium">Verified Educational Institutes in Karachi</a>.</li>
+        <li><a href="/lahore/" class="text-blue-600 hover:underline font-medium"><strong>Universities in Lahore:</strong></a> Lahore is renowned as Pakistan's historic education hub, housing top engineering colleges, software technology institutes, medical universities, and law academies.</li>
+        <li><a href="/islamabad/" class="text-blue-600 hover:underline font-medium"><strong>Universities in Islamabad &amp; Rawalpindi:</strong></a> The twin cities offer top-ranked national universities for computer science, international relations, engineering, business management, and research studies.</li>
       </ul>
 
       <h2>Popular Degree Programs in Pakistan</h2>
@@ -328,7 +328,7 @@ export const BLOG_POSTS = [
       <div class="bg-blue-50 border-l-4 border-blue-500 p-5 my-6 rounded-2xl">
         <h4 class="font-bold text-blue-900 text-base mb-2">💡 Are You an Educational Institution or Training Academy in Pakistan?</h4>
         <p class="text-blue-800 text-sm mb-3">List your university, college, school, or coaching academy on PakBizBranches for free to help prospective students discover your courses and contact details.</p>
-        <a href="/add-business" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#60a5fa] hover:bg-blue-600 text-white font-bold rounded-xl text-xs transition-colors">
+        <a href="/add-business/" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#60a5fa] hover:bg-blue-600 text-white font-bold rounded-xl text-xs transition-colors">
           List Your Educational Institution Free →
         </a>
       </div>
@@ -341,7 +341,7 @@ export const BLOG_POSTS = [
       <p>Karachi, Lahore, Islamabad, Rawalpindi, Peshawar, and Multan all host top higher education institutions. The best city depends on your chosen discipline, living preferences, and budget.</p>
 
       <h3>Where can I find verified educational institutions?</h3>
-      <p>Browse the <a href="/category/education" class="text-blue-600 hover:underline font-medium">Education Category on PakBizBranches</a> to find verified universities, colleges, academies, and professional training centers across Pakistan.</p>
+      <p>Browse the <a href="/education/" class="text-blue-600 hover:underline font-medium">Education Category on PakBizBranches</a> to find verified universities, colleges, academies, and professional training centers across Pakistan.</p>
     `,
     author: "PakBizBranches Editorial Team",
     date: "August 13, 2026",
@@ -366,7 +366,7 @@ export const BLOG_POSTS = [
       <p>This guide explains how to find <strong>IT jobs in Pakistan</strong>, which technology careers are available, what skills employers look for, how fresh graduates can enter the industry, where to search for opportunities and how professionals can make themselves easier for companies to discover.</p>
 
       <div class="bg-blue-50 p-5 rounded-2xl border border-blue-100 my-6">
-        <p class="text-blue-900 font-medium">💡 <strong>Exploring opportunities outside technology?</strong> Read our comprehensive pillar guide to <a href="/blog/jobs-in-pakistan" class="text-blue-600 hover:underline font-bold">Jobs in Pakistan 2026</a> covering government, private, healthcare, banking, and graduate career paths.</p>
+        <p class="text-blue-900 font-medium">💡 <strong>Exploring opportunities outside technology?</strong> Read our comprehensive pillar guide to <a href="/blog/jobs-in-pakistan/" class="text-blue-600 hover:underline font-bold">Jobs in Pakistan 2026</a> covering government, private, healthcare, banking, and graduate career paths.</p>
       </div>
 
       <h2>What Types of IT Jobs Are Available in Pakistan?</h2>
@@ -428,9 +428,9 @@ export const BLOG_POSTS = [
       <h2>IT Opportunities in Major Pakistani Cities</h2>
       <p>Pakistan's main technology hubs offer distinct advantages:</p>
       <ul>
-        <li><a href="/cities/karachi" class="text-blue-600 hover:underline font-medium"><strong>IT Jobs in Karachi:</strong></a> Search for software developer jobs in Karachi, web developer jobs, QA engineers, and tech startups in Clifton, Shahrah-e-Faisal, and DHA. Explore <a href="/category/technology" class="text-blue-600 hover:underline font-medium">Verified Tech Companies in Karachi</a>.</li>
-        <li><a href="/cities/lahore" class="text-blue-600 hover:underline font-medium"><strong>IT Jobs in Lahore:</strong></a> Lahore boasts a massive ecosystem of software houses in Gulberg, Johar Town, and Arfa Software Technology Park. Look for junior developer jobs and IT internships in Lahore.</li>
-        <li><a href="/cities/islamabad" class="text-blue-600 hover:underline font-medium"><strong>IT Jobs in Islamabad &amp; Rawalpindi:</strong></a> Find government tech roles, telecommunications positions, and software houses across Blue Area and I-8 Sector.</li>
+        <li><a href="/karachi/" class="text-blue-600 hover:underline font-medium"><strong>IT Jobs in Karachi:</strong></a> Search for software developer jobs in Karachi, web developer jobs, QA engineers, and tech startups in Clifton, Shahrah-e-Faisal, and DHA. Explore <a href="/technology/" class="text-blue-600 hover:underline font-medium">Verified Tech Companies in Karachi</a>.</li>
+        <li><a href="/lahore/" class="text-blue-600 hover:underline font-medium"><strong>IT Jobs in Lahore:</strong></a> Lahore boasts a massive ecosystem of software houses in Gulberg, Johar Town, and Arfa Software Technology Park. Look for junior developer jobs and IT internships in Lahore.</li>
+        <li><a href="/islamabad/" class="text-blue-600 hover:underline font-medium"><strong>IT Jobs in Islamabad &amp; Rawalpindi:</strong></a> Find government tech roles, telecommunications positions, and software houses across Blue Area and I-8 Sector.</li>
       </ul>
 
       <h2>How Fresh Graduates Can Land Their First IT Job</h2>
@@ -448,7 +448,7 @@ export const BLOG_POSTS = [
       <div class="bg-blue-50 border-l-4 border-blue-500 p-5 my-6 rounded-2xl">
         <h4 class="font-bold text-blue-900 text-base mb-2">💡 Are You an IT Company or Software House in Pakistan?</h4>
         <p class="text-blue-800 text-sm mb-3">Promote your technology company, showcase your services, and attract prospective clients and talent across 150+ Pakistani cities.</p>
-        <a href="/add-business" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#60a5fa] hover:bg-blue-600 text-white font-bold rounded-xl text-xs transition-colors">
+        <a href="/add-business/" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#60a5fa] hover:bg-blue-600 text-white font-bold rounded-xl text-xs transition-colors">
           List Your Tech Business Free on PakBizBranches →
         </a>
       </div>
@@ -461,7 +461,7 @@ export const BLOG_POSTS = [
       <p>Yes. While many companies prefer a CS/IT degree, a strong portfolio, verified projects, and demonstrable technical skills can earn you opportunities in web development, design, digital marketing, and QA.</p>
 
       <h3>Where can I find verified tech businesses and software houses?</h3>
-      <p>Browse the <a href="/category/technology" class="text-blue-600 hover:underline font-medium">Technology &amp; IT Category on PakBizBranches</a> to find verified software companies, IT service providers, and digital agencies across Pakistan.</p>
+      <p>Browse the <a href="/technology/" class="text-blue-600 hover:underline font-medium">Technology &amp; IT Category on PakBizBranches</a> to find verified software companies, IT service providers, and digital agencies across Pakistan.</p>
     `,
     author: "PakBizBranches Editorial Team",
     date: "August 13, 2026",
@@ -484,7 +484,7 @@ export const BLOG_POSTS = [
       <p>This guide explains how to find <strong>jobs in Pakistan</strong>, what types of jobs are available, where fresh graduates can start their careers, how to search for opportunities in major Pakistani cities, and what applicants should check before applying.</p>
       
       <div class="bg-blue-50 p-5 rounded-2xl border border-blue-100 my-6">
-        <p class="text-blue-900 font-medium">🚀 <strong>Looking specifically for Technology &amp; Software Careers?</strong> Read our dedicated guide to <a href="/blog/it-jobs-in-pakistan" class="text-blue-600 hover:underline font-bold">IT Jobs in Pakistan for Fresh Graduates</a> detailing skills, software houses, internships, and remote tech roles.</p>
+        <p class="text-blue-900 font-medium">🚀 <strong>Looking specifically for Technology &amp; Software Careers?</strong> Read our dedicated guide to <a href="/blog/it-jobs-in-pakistan/" class="text-blue-600 hover:underline font-bold">IT Jobs in Pakistan for Fresh Graduates</a> detailing skills, software houses, internships, and remote tech roles.</p>
       </div>
 
       <p>For government employment, the <a href="https://njp.gov.pk/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline font-medium">National Jobs Portal</a> is an important official source. Its current platform allows candidates to search government opportunities by job title, keyword and location and reports hundreds of active positions across more than 200 departments.</p>
@@ -579,9 +579,9 @@ export const BLOG_POSTS = [
       <h2>Jobs in Major Pakistani Cities</h2>
       <p>When searching locally, combine the profession, experience level, and city rather than using only a broad jobs keyword:</p>
       <ul>
-        <li><a href="/cities/karachi" class="text-blue-600 hover:underline font-medium"><strong>Jobs in Karachi:</strong></a> Search for IT jobs in Karachi, banking jobs in Karachi, teaching jobs in Karachi, or healthcare jobs in Karachi.</li>
-        <li><a href="/cities/lahore" class="text-blue-600 hover:underline font-medium"><strong>Jobs in Lahore:</strong></a> Explore software jobs in Lahore, marketing jobs in Lahore, accounting jobs in Lahore, or fresh graduate jobs in Lahore.</li>
-        <li><a href="/cities/islamabad" class="text-blue-600 hover:underline font-medium"><strong>Jobs in Islamabad &amp; Rawalpindi:</strong></a> Look for IT jobs in Islamabad, government jobs in Islamabad, software jobs in Islamabad, or internships in Rawalpindi.</li>
+        <li><a href="/karachi/" class="text-blue-600 hover:underline font-medium"><strong>Jobs in Karachi:</strong></a> Search for IT jobs in Karachi, banking jobs in Karachi, teaching jobs in Karachi, or healthcare jobs in Karachi.</li>
+        <li><a href="/lahore/" class="text-blue-600 hover:underline font-medium"><strong>Jobs in Lahore:</strong></a> Explore software jobs in Lahore, marketing jobs in Lahore, accounting jobs in Lahore, or fresh graduate jobs in Lahore.</li>
+        <li><a href="/islamabad/" class="text-blue-600 hover:underline font-medium"><strong>Jobs in Islamabad &amp; Rawalpindi:</strong></a> Look for IT jobs in Islamabad, government jobs in Islamabad, software jobs in Islamabad, or internships in Rawalpindi.</li>
       </ul>
 
       <h2>How to Find Jobs in Pakistan: A Clear Strategy</h2>
@@ -599,7 +599,7 @@ export const BLOG_POSTS = [
       <div class="bg-blue-50 border-l-4 border-blue-500 p-5 my-6 rounded-2xl">
         <h4 class="font-bold text-blue-900 text-base mb-2">💡 Are You a Business Owner or Hiring Company in Pakistan?</h4>
         <p class="text-blue-800 text-sm mb-3">Make your company discoverable to thousands of job seekers and local customers across 150+ Pakistani cities.</p>
-        <a href="/add-business" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#60a5fa] hover:bg-blue-600 text-white font-bold rounded-xl text-xs transition-colors">
+        <a href="/add-business/" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#60a5fa] hover:bg-blue-600 text-white font-bold rounded-xl text-xs transition-colors">
           List Your Business Free on PakBizBranches →
         </a>
       </div>
@@ -668,7 +668,7 @@ export const BLOG_POSTS = [
 
       <div class="bg-blue-50 border-l-4 border-blue-500 p-4 my-6 rounded">
         <h4 class="font-bold text-blue-800 mb-2">💡 Pro Tip for Pakistan SMEs</h4>
-        <p class="text-blue-700">Are you registered with the Lahore Chamber of Commerce (LCCI) or Karachi Chamber of Commerce (KCCI)? Make sure to list your business on <a href="/add-business" class="underline font-semibold">PakBizBranches</a> to build trusted local citations today!</p>
+        <p class="text-blue-700">Are you registered with the Lahore Chamber of Commerce (LCCI) or Karachi Chamber of Commerce (KCCI)? Make sure to list your business on <a href="/add-business/" class="underline font-semibold">PakBizBranches</a> to build trusted local citations today!</p>
       </div>
     `,
     author: "Alex Rivers",
@@ -706,7 +706,7 @@ export const BLOG_POSTS = [
       
       <div class="bg-blue-50 border-l-4 border-blue-500 p-4 my-6 rounded">
         <h4 class="font-bold text-blue-800 mb-2">💡 Pro Tip for Business Owners</h4>
-        <p class="text-blue-700">Are you a travel agency booking tours to Mushkpuri or Naran? Or a tech company looking for visibility? <a href="/add-business" class="underline font-semibold">List your business on PakBizBranches</a> today for free!</p>
+        <p class="text-blue-700">Are you a travel agency booking tours to Mushkpuri or Naran? Or a tech company looking for visibility? <a href="/add-business/" class="underline font-semibold">List your business on PakBizBranches</a> today for free!</p>
       </div>
     `,
     author: "Alex Rivers",
@@ -787,7 +787,7 @@ export const BLOG_POSTS = [
       
       <div class="bg-blue-50 border-l-4 border-blue-500 p-4 my-6 rounded">
         <h4 class="font-bold text-blue-800 mb-2">💡 Pro Tip: Build Your Online Presence</h4>
-        <p class="text-blue-700"><a href="/add-business" class="underline font-semibold">List your software development business on PakBizBranches</a> today. Get visibility among local clients seeking Pakistan-based development expertise. It's free and takes just 5 minutes!</p>
+        <p class="text-blue-700"><a href="/add-business/" class="underline font-semibold">List your software development business on PakBizBranches</a> today. Get visibility among local clients seeking Pakistan-based development expertise. It's free and takes just 5 minutes!</p>
       </div>
       
       <h2>Common Challenges and Solutions</h2>
@@ -894,7 +894,7 @@ export const BLOG_POSTS = [
       
       <div class="bg-blue-50 border-l-4 border-blue-500 p-4 my-6 rounded">
         <h4 class="font-bold text-blue-800 mb-2">💡 Pro Tip: List Your Karachi Business Today</h4>
-        <p class="text-blue-700">Ready to connect with thousands of Karachi customers? <a href="/add-business" class="underline font-semibold">Add your business to Pakistan's best directory</a> and start getting discovered immediately. Free listing takes just 5 minutes!</p>
+        <p class="text-blue-700">Ready to connect with thousands of Karachi customers? <a href="/add-business/" class="underline font-semibold">Add your business to Pakistan's best directory</a> and start getting discovered immediately. Free listing takes just 5 minutes!</p>
       </div>
       
       <h2>Karachi's Business Future</h2>
@@ -977,7 +977,7 @@ export const BLOG_POSTS = [
       
       <div class="bg-green-50 border-l-4 border-green-500 p-4 my-6 rounded">
         <h4 class="font-bold text-green-800 mb-2">💡 Pro Tip: Start Your Business Journey</h4>
-        <p class="text-green-700">Ready to tap into these growing sectors? <a href="/add-business" class="underline font-semibold">List your business on PakBizBranches</a> and connect with thousands of potential customers across Pakistan. It's completely free and takes just 5 minutes!</p>
+        <p class="text-green-700">Ready to tap into these growing sectors? <a href="/add-business/" class="underline font-semibold">List your business on PakBizBranches</a> and connect with thousands of potential customers across Pakistan. It's completely free and takes just 5 minutes!</p>
       </div>
       
       <h2>How to Get Started in These Sectors</h2>
@@ -1024,7 +1024,7 @@ export const BLOG_POSTS = [
       <h2>Benefits for Pakistani Small Businesses</h2>
       
       <h3>1. Increased Online Visibility</h3>
-      <p>When you <strong>promote business Pakistan</strong> through local directories like our <a href="/categories">comprehensive business directory</a>, your business becomes discoverable to thousands of potential customers actively searching for products and services in your area. This increased visibility is crucial for small businesses competing with larger companies.</p>
+      <p>When you <strong>promote business Pakistan</strong> through local directories like our <a href="/categories/">comprehensive business directory</a>, your business becomes discoverable to thousands of potential customers actively searching for products and services in your area. This increased visibility is crucial for small businesses competing with larger companies.</p>
       
       <h3>2. Targeted Local Traffic</h3>
       <p>Local directories attract customers specifically looking for businesses in their vicinity. This means higher conversion rates as visitors are already interested in local services and are more likely to become paying customers.</p>
@@ -1040,7 +1040,7 @@ export const BLOG_POSTS = [
       
       <div class="bg-blue-50 border-l-4 border-blue-500 p-4 my-6 rounded">
         <h4 class="font-bold text-blue-800 mb-2">💡 Pro Tip: Get Listed Instantly</h4>
-        <p class="text-blue-700">Ready to solve your visibility problem? <a href="/add-business" class="underline font-semibold">Add your business to our directory right now</a> - it's completely free and takes less than 5 minutes. No registration required!</p>
+        <p class="text-blue-700">Ready to solve your visibility problem? <a href="/add-business/" class="underline font-semibold">Add your business to our directory right now</a> - it's completely free and takes less than 5 minutes. No registration required!</p>
       </div>
       
       <h2>How to Maximize Directory Benefits</h2>
@@ -1071,11 +1071,11 @@ export const BLOG_POSTS = [
       <p>Many Pakistani small businesses have experienced significant growth through strategic directory listings. From local restaurants in Lahore to retail shops in Karachi, businesses across Pakistan are leveraging these platforms to reach more customers and increase revenue.</p>
       
       <h2>Getting Started - Solve Your Visibility Problem Today</h2>
-      <p>Ready to stop losing customers to your competitors? Start by exploring our <a href="/categories">categories page</a> to find relevant categories for your business, then visit our <a href="/add-business">add business page</a> to create your free listing.</p>
+      <p>Ready to stop losing customers to your competitors? Start by exploring our <a href="/categories/">categories page</a> to find relevant categories for your business, then visit our <a href="/add-business/">add business page</a> to create your free listing.</p>
       
       <div class="bg-green-50 border-l-4 border-green-500 p-4 my-6 rounded">
         <h4 class="font-bold text-green-800 mb-2">🚀 Developer's Note</h4>
-        <p class="text-green-700">I built this business directory using Next.js 16 and Firebase to ensure lightning-fast performance for Pakistani users. The entire system processes thousands of business listings without any slowdown, and all data is secured with Firebase's enterprise-grade security. I specifically designed the <a href="/add-business">business submission form</a> to be incredibly simple - no registration required, instant approval, and your business goes live immediately. This approach eliminates the biggest friction point that prevents 80% of Pakistani businesses from getting listed online.</p>
+        <p class="text-green-700">I built this business directory using Next.js 16 and Firebase to ensure lightning-fast performance for Pakistani users. The entire system processes thousands of business listings without any slowdown, and all data is secured with Firebase's enterprise-grade security. I specifically designed the <a href="/add-business/">business submission form</a> to be incredibly simple - no registration required, instant approval, and your business goes live immediately. This approach eliminates the biggest friction point that prevents 80% of Pakistani businesses from getting listed online.</p>
       </div>
       
       <h2>Conclusion</h2>
@@ -1114,13 +1114,13 @@ export const BLOG_POSTS = [
       
       <div class="bg-blue-50 border-l-4 border-blue-500 p-4 my-6 rounded">
         <h4 class="font-bold text-blue-800 mb-2">💡 Pro Tip: Start Right Now</h4>
-        <p class="text-blue-700">Ready to solve your online visibility problem? <a href="/add-business" class="underline font-semibold">Add your business to our directory right now</a> - it's completely free and takes less than 5 minutes. No registration required!</p>
+        <p class="text-blue-700">Ready to solve your online visibility problem? <a href="/add-business/" class="underline font-semibold">Add your business to our directory right now</a> - it's completely free and takes less than 5 minutes. No registration required!</p>
       </div>
       
       <h2>Step-by-Step Guide to Add Your Business</h2>
       
       <h3>Step 1: Visit Our Add Business Page</h3>
-      <p>Navigate to our <a href="/add-business">Add Business page</a> to start the registration process. This page is designed to be user-friendly and intuitive - no confusing menus or hidden buttons.</p>
+      <p>Navigate to our <a href="/add-business/">Add Business page</a> to start the registration process. This page is designed to be user-friendly and intuitive - no confusing menus or hidden buttons.</p>
       
       <h3>Step 2: Fill in Basic Business Information</h3>
       <p>Start by providing your basic business details:</p>
@@ -1147,7 +1147,7 @@ export const BLOG_POSTS = [
       </ul>
       
       <h3>Step 5: Business Category</h3>
-      <p>Select the most appropriate category for your business from our <a href="/categories">12 main categories</a>:</p>
+      <p>Select the most appropriate category for your business from our <a href="/categories/">12 main categories</a>:</p>
       <ul>
         <li>Choose from Restaurants, Real Estate, Technology, Healthcare, and more</li>
         <li>Select relevant sub-category if applicable</li>
@@ -1240,7 +1240,7 @@ export const BLOG_POSTS = [
       <h2>Start Growing Your Business Today!</h2>
       <p>Don't miss this opportunity to expand your customer base and grow your business online. With thousands of customers searching for local businesses daily, now is the perfect time to list your business on PakBizBranches.</p>
       
-      <p><a href="/add-business" class="btn btn-primary">Add Your Business Now - It's Free!</a></p>
+      <p><a href="/add-business/" class="btn btn-primary">Add Your Business Now - It's Free!</a></p>
       
       <h2>Need Help?</h2>
       <p>If you need assistance with your business listing, our support team is here to help. Contact us at admin@pakbizbranhces.online.</p>
@@ -1292,7 +1292,7 @@ export const BLOG_POSTS = [
       <p>With thousands of new housing projects and commercial developments underway, construction services and interior design studios are in huge demand. Specialising in modern, affordable interiors for residential properties can set you apart in this competitive market.</p>
 
       <h2>Get Started Today</h2>
-      <p>Whatever sector you choose, start by listing your business on PakBizBranches to get instant visibility among Karachi's customers. It's free, fast, and effective. <a href="/add-business">Add your business now</a>.</p>
+      <p>Whatever sector you choose, start by listing your business on PakBizBranches to get instant visibility among Karachi's customers. It's free, fast, and effective. <a href="/add-business/">Add your business now</a>.</p>
     `,
     author: "Alex Rivers",
     date: "March 17, 2026",
@@ -1388,7 +1388,7 @@ export const BLOG_POSTS = [
       
       <div class="bg-blue-50 border-l-4 border-blue-500 p-4 my-6 rounded">
         <h4 class="font-bold text-blue-800 mb-2">💡 Pro Tip: See for Yourself</h4>
-        <p class="text-blue-700">Stop comparing and start growing. <a href="/add-business" class="underline font-semibold">Add your business to PakBizBranches today</a> and experience the difference immediately.</p>
+        <p class="text-blue-700">Stop comparing and start growing. <a href="/add-business/" class="underline font-semibold">Add your business to PakBizBranches today</a> and experience the difference immediately.</p>
       </div>
       
       <h2>Real Results from Real Businesses</h2>

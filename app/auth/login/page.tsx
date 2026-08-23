@@ -32,7 +32,10 @@ export default function LoginPage() {
           <div className="mt-8 text-center text-sm text-slate-600">
             <p>
               Don&apos;t have an account?{' '}
-              <Link href="/auth/signup" className="text-blue-600 hover:text-blue-700 font-semibold">
+              <Link
+                href="/auth/signup/"
+                className="font-medium text-[#60a5fa] hover:text-blue-600"
+              >
                 Sign up
               </Link>
             </p>

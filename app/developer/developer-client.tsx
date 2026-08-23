@@ -279,28 +279,28 @@ export default function DeveloperClient() {
                   Quick Links
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <a href="/categories" className="flex items-center gap-3 p-4 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors">
+                  <a href="/categories/" className="flex items-center gap-3 p-4 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors">
                     <Globe className="w-5 h-5 text-blue-600" />
                     <div>
                       <h4 className="font-medium text-gray-900">Browse Categories</h4>
                       <p className="text-sm text-gray-600">View all business categories</p>
                     </div>
                   </a>
-                  <a href="/add-business" className="flex items-center gap-3 p-4 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors">
+                  <a href="/add-business/" className="flex items-center gap-3 p-4 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors">
                     <Package className="w-5 h-5 text-green-600" />
                     <div>
                       <h4 className="font-medium text-gray-900">Add Business</h4>
                       <p className="text-sm text-gray-600">Submit new business listing</p>
                     </div>
                   </a>
-                  <a href="/contact" className="flex items-center gap-3 p-4 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors">
+                  <a href="/contact/" className="flex items-center gap-3 p-4 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors">
                     <Mail className="w-5 h-5 text-purple-600" />
                     <div>
                       <h4 className="font-medium text-gray-900">Contact Support</h4>
                       <p className="text-sm text-gray-600">Get help and support</p>
                     </div>
                   </a>
-                  <a href="/priority" className="flex items-center gap-3 p-4 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors">
+                  <a href="/priority/" className="flex items-center gap-3 p-4 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors">
                     <Zap className="w-5 h-5 text-yellow-600" />
                     <div>
                       <h4 className="font-medium text-gray-900">Priority Listing</h4>

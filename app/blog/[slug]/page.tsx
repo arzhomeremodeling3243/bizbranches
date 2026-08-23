@@ -121,7 +121,7 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
             <ol className="flex items-center gap-2 text-sm text-gray-600">
               <li><Link href="/" className="hover:text-[#60a5fa] transition-colors">Home</Link></li>
               <li><ChevronRight className="w-4 h-4 text-gray-400" /></li>
-              <li><Link href="/blog" className="hover:text-[#60a5fa] transition-colors">Blog</Link></li>
+              <li><Link href="/blog/" className="hover:text-[#60a5fa] transition-colors">Blog</Link></li>
               <li><ChevronRight className="w-4 h-4 text-gray-400" /></li>
               <li className="text-gray-900 font-medium truncate max-w-xs">{post.title}</li>
             </ol>
@@ -216,7 +216,7 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
             <p className="text-white/80 mb-8 text-lg">Join thousands of businesses already listed on PakBizBranches. Get discovered by local customers searching for your services.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                href="/add-business"
+                href="/add-business/"
                 className="px-8 py-3 bg-[#60a5fa] text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors shadow-lg"
               >
                 Add Your Business Free
@@ -233,7 +233,7 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
           {/* Navigation Footer */}
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link
-              href="/blog"
+              href="/blog/"
               className="inline-flex items-center gap-2 px-6 py-3 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors font-medium text-gray-700 shadow-sm"
             >
               <ArrowLeft className="w-4 h-4" />
@@ -248,7 +248,7 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
             </Link>
             <span className="text-gray-400 hidden sm:block">•</span>
             <Link
-              href="/categories"
+              href="/categories/"
               className="inline-flex items-center gap-2 px-6 py-3 text-[#60a5fa] font-medium hover:underline"
             >
               Browse Businesses

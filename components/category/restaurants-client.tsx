@@ -131,14 +131,14 @@ function RestaurantsPageContent() {
             <div className="bg-orange-50 border-l-4 border-orange-500 p-6 my-8 rounded">
               <h4 className="font-bold text-orange-800 mb-2">💡 Pro Tip: Get Your Restaurant Listed Now</h4>
               <p className="text-orange-700">
-                Don&apos;t miss out on the restaurant boom! <a href="/add-business" className="underline font-semibold">Add your restaurant to our directory</a> and connect with thousands of hungry customers searching for quality dining options in your area. It&apos;s completely free and takes less than 5 minutes.
+                Don&apos;t miss out on the restaurant boom! <a href="/add-business/" className="underline font-semibold">Add your restaurant to our directory</a> and connect with thousands of hungry customers searching for quality dining options in your area. It&apos;s completely free and takes less than 5 minutes.
               </p>
             </div>
             
             <div className="bg-green-50 border-l-4 border-green-500 p-6 my-8 rounded">
               <h4 className="font-bold text-green-800 mb-2">🚀 Developer&apos;s Note</h4>
               <p className="text-green-700">
-                I built this restaurant directory using Next.js 16 and Firebase to ensure lightning-fast performance for Pakistani users. The entire system processes thousands of restaurant listings without any slowdown, and all data is secured with Firebase&apos;s enterprise-grade security. I specifically designed the <a href="/add-business" className="underline text-green-600 hover:text-green-700">restaurant submission form</a> to be incredibly simple - no registration required, instant approval, and your restaurant goes live immediately. This approach eliminates the biggest friction point that prevents 80% of Pakistani restaurants from getting listed online.
+                I built this restaurant directory using Next.js 16 and Firebase to ensure lightning-fast performance for Pakistani users. The entire system processes thousands of restaurant listings without any slowdown, and all data is secured with Firebase&apos;s enterprise-grade security. I specifically designed the <a href="/add-business/" className="underline text-green-600 hover:text-green-700">restaurant submission form</a> to be incredibly simple - no registration required, instant approval, and your restaurant goes live immediately. This approach eliminates the biggest friction point that prevents 80% of Pakistani restaurants from getting listed online.
               </p>
             </div>
             
@@ -173,7 +173,7 @@ function RestaurantsPageContent() {
               <p className="text-xl font-semibold">No restaurants found</p>
               <p className="mt-2 text-sm">Be the first to list your restaurant in this area!</p>
               <Link
-                href="/add-business"
+                href="/add-business/"
                 className="mt-4 inline-flex items-center gap-2 px-6 py-3 bg-orange-500 text-white rounded-xl font-semibold text-sm hover:bg-orange-600 transition-colors"
               >
                 Add Your Restaurant

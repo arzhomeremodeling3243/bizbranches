@@ -68,6 +68,7 @@ export async function GET() {
     { url: '/privacy/', priority: '0.4', changefreq: 'yearly' },
     { url: '/terms/', priority: '0.4', changefreq: 'yearly' },
     { url: '/pricing/', priority: '0.7', changefreq: 'monthly' },
+    { url: '/why-list-your-business/', priority: '0.8', changefreq: 'monthly' },
   ]
 
   staticPages.forEach(p => {

@@ -131,14 +131,14 @@ function RealEstatePageContent() {
             <div className="bg-green-50 border-l-4 border-green-500 p-6 my-8 rounded">
               <h4 className="font-bold text-green-800 mb-2">💡 Pro Tip: Connect with Property Buyers &amp; Sellers</h4>
               <p className="text-green-700">
-                Don&apos;t get lost in the real estate boom! <a href="/add-business" className="underline font-semibold">List your real estate services on our platform</a> and connect with thousands of property buyers and sellers actively searching for trustworthy professionals in your area. It&apos;s completely free and takes less than 5 minutes.
+                Don&apos;t get lost in the real estate boom! <a href="/add-business/" className="underline font-semibold">List your real estate services on our platform</a> and connect with thousands of property buyers and sellers actively searching for trustworthy professionals in your area. It&apos;s completely free and takes less than 5 minutes.
               </p>
             </div>
             
             <div className="bg-green-50 border-l-4 border-green-500 p-6 my-8 rounded">
               <h4 className="font-bold text-green-800 mb-2">🚀 Developer&apos;s Note</h4>
               <p className="text-green-700">
-                I built this real estate directory using Next.js 16 and Firebase to ensure lightning-fast performance for Pakistani users. The entire system processes thousands of property listings without any slowdown, and all data is secured with Firebase&apos;s enterprise-grade security. I specifically designed the <a href="/add-business" className="underline text-green-600 hover:text-green-700">real estate submission form</a> to be incredibly simple - no registration required, instant approval, and your services go live immediately. This approach eliminates the biggest friction point that prevents 80% of Pakistani real estate professionals from getting listed online.
+                I built this real estate directory using Next.js 16 and Firebase to ensure lightning-fast performance for Pakistani users. The entire system processes thousands of property listings without any slowdown, and all data is secured with Firebase&apos;s enterprise-grade security. I specifically designed the <a href="/add-business/" className="underline text-green-600 hover:text-green-700">real estate submission form</a> to be incredibly simple - no registration required, instant approval, and your services go live immediately. This approach eliminates the biggest friction point that prevents 80% of Pakistani real estate professionals from getting listed online.
               </p>
             </div>
             
@@ -179,7 +179,7 @@ function RealEstatePageContent() {
               <p className="text-xl font-semibold">No real estate services found</p>
               <p className="mt-2 text-sm">Be the first to list your real estate services in this area!</p>
               <Link
-                href="/add-business"
+                href="/add-business/"
                 className="mt-4 inline-flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-xl font-semibold text-sm hover:bg-green-700 transition-colors"
               >
                 Add Your Real Estate Business

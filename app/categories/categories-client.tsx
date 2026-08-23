@@ -209,7 +209,7 @@ function CategoriesContent() {
                   <p className="text-xl font-semibold">No businesses found</p>
                   <p className="mt-2 text-sm">Be the first to list your business in this category!</p>
                   <Link
-                    href="/add-business"
+                    href="/add-business/"
                     className="mt-4 inline-flex items-center gap-2 px-6 py-3 bg-[#60a5fa] text-white rounded-xl font-semibold text-sm hover:bg-blue-400 transition-colors"
                   >
                     Add Your Business
@@ -353,7 +353,7 @@ function CategoriesContent() {
           </h2>
           <p className="mt-2 text-gray-500">List your company for free and reach thousands of customers.</p>
           <Link
-            href="/add-business"
+            href="/add-business/"
             className="mt-6 inline-flex items-center gap-2 px-6 py-3 bg-[#60a5fa] text-white rounded-xl font-semibold text-sm hover:bg-blue-400 transition-colors duration-200"
           >
             Add Your Business Free

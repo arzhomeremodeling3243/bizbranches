@@ -121,7 +121,7 @@ export default function UserProfileClient() {
         {/* Quick Links */}
         <div className="grid sm:grid-cols-3 gap-6">
           <a
-            href="/add-business"
+            href="/add-business/"
             className="p-6 bg-white rounded-xl shadow-sm border border-slate-200 hover:border-blue-300 transition-colors"
           >
             <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
@@ -132,7 +132,7 @@ export default function UserProfileClient() {
           </a>
 
           <a
-            href="/categories"
+            href="/categories/"
             className="p-6 bg-white rounded-xl shadow-sm border border-slate-200 hover:border-blue-300 transition-colors"
           >
             <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
@@ -143,7 +143,7 @@ export default function UserProfileClient() {
           </a>
 
           <a
-            href="/contact"
+            href="/contact/"
             className="p-6 bg-white rounded-xl shadow-sm border border-slate-200 hover:border-blue-300 transition-colors"
           >
             <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">

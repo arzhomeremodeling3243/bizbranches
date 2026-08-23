@@ -311,7 +311,7 @@ export default function BlogPage() {
                 Join thousands of Pakistani businesses already benefiting from increased visibility and customer reach.
               </p>
               <Link
-                href="/add-business"
+                href="/add-business/"
                 className="inline-flex items-center gap-2 bg-[#60a5fa] hover:bg-blue-600 text-white font-semibold px-8 py-4 rounded-xl transition-colors duration-200 text-lg"
               >
                 Add Your Business Now

@@ -209,7 +209,7 @@ export default function CityCategoryClient({
                 Top Rated {category.name}
                 <span className="text-base font-normal text-gray-500 ml-3">({businesses.length} verified listings)</span>
               </h2>
-              <Link href="/add-business" className="inline-flex items-center gap-2 text-[#60a5fa] font-semibold hover:underline">
+              <Link href="/add-business/" className="inline-flex items-center gap-2 text-[#60a5fa] font-semibold hover:underline">
                 Add Your Business
                 <ArrowRight className="w-4 h-4" />
               </Link>
@@ -220,7 +220,7 @@ export default function CityCategoryClient({
                 <Building2 className="w-16 h-16 mx-auto mb-4 text-gray-300" />
                 <h3 className="text-xl font-semibold text-gray-700 mb-2">No Listings Found</h3>
                 <p className="text-gray-500 mb-6">Be the first to list a {category.name.toLowerCase()} business in {cityName}!</p>
-                <Link href="/add-business" className="inline-flex items-center gap-2 px-6 py-3 bg-[#60a5fa] text-white rounded-xl font-semibold hover:bg-blue-400 transition-colors">
+                <Link href="/add-business/" className="inline-flex items-center gap-2 px-6 py-3 bg-[#60a5fa] text-white rounded-xl font-semibold hover:bg-blue-400 transition-colors">
                   List Business Free
                 </Link>
               </div>

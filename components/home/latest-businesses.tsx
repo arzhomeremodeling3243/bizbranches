@@ -55,7 +55,7 @@ export default function LatestBusinesses({ businesses }: LatestBusinessesProps) 
               No businesses available yet. Be the first to list your business!
             </p>
             <Link
-              href="/add-business"
+              href="/add-business/"
               className="inline-flex items-center gap-2 px-8 py-3.5 bg-blue-600 text-white rounded-xl font-semibold text-sm hover:bg-blue-700 transition-colors duration-200 shadow-lg hover:shadow-xl mt-6"
             >
               Add Your Business Now
@@ -185,7 +185,7 @@ export default function LatestBusinesses({ businesses }: LatestBusinessesProps) 
 
         <div className="text-center mt-12">
           <Link
-            href="/categories"
+            href="/categories/"
             className="inline-flex items-center gap-2 px-8 py-3.5 bg-blue-600 text-white rounded-xl font-semibold text-sm hover:bg-blue-700 transition-colors duration-200 shadow-lg hover:shadow-xl"
           >
             View All Businesses
