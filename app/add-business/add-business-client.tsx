@@ -120,7 +120,7 @@ export default function AddBussinessClient() {
   const [submittedBusinessId, setSubmittedBusinessId] = useState<string | null>(null)
   const [submittedDocId, setSubmittedDocId] = useState<string | null>(null)
   const [paymentStep, setPaymentStep] = useState<'details' | 'upload' | 'complete'>('details')
-  const [selectedMethod, setSelectedMethod] = useState<'easypaisa' | 'jazzcash'>('easypaisa')
+  const [selectedMethod, setSelectedMethod] = useState<'easypaisa' | 'jazzcash' | 'mashreq'>('easypaisa')
   const [screenshotFile, setScreenshotFile] = useState<File | null>(null)
   const [screenshotPreview, setScreenshotPreview] = useState<string | null>(null)
   const [screenshotUploading, setScreenshotUploading] = useState(false)
@@ -1379,30 +1379,42 @@ export default function AddBussinessClient() {
                     {/* Payment Mode Selector */}
                     <div className="mb-6">
                       <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3 text-center">Select Payment Method</h4>
-                      <div className="grid grid-cols-2 gap-3 max-w-sm mx-auto">
+                      <div className="grid grid-cols-3 gap-2.5 max-w-md mx-auto">
                         <button
                           type="button"
                           onClick={() => setSelectedMethod('easypaisa')}
-                          className={`p-3.5 rounded-2xl border-2 flex flex-col items-center justify-center transition-all cursor-pointer ${
+                          className={`p-3 rounded-2xl border-2 flex flex-col items-center justify-center transition-all cursor-pointer ${
                             selectedMethod === 'easypaisa'
-                              ? 'border-emerald-500 bg-emerald-50 text-emerald-900 font-black'
-                              : 'border-slate-200 bg-white text-slate-600 font-bold'
+                              ? 'border-emerald-500 bg-emerald-50 text-emerald-900 font-black shadow-sm'
+                              : 'border-slate-200 bg-white text-slate-600 font-bold hover:border-slate-300'
                           }`}
                         >
-                          <Landmark className="w-6 h-6 mb-1 text-emerald-600" />
-                          <span className="text-xs">Easypaisa</span>
+                          <Landmark className="w-5 h-5 mb-1 text-emerald-600" />
+                          <span className="text-[11px]">Easypaisa</span>
                         </button>
                         <button
                           type="button"
                           onClick={() => setSelectedMethod('jazzcash')}
-                          className={`p-3.5 rounded-2xl border-2 flex flex-col items-center justify-center transition-all cursor-pointer ${
+                          className={`p-3 rounded-2xl border-2 flex flex-col items-center justify-center transition-all cursor-pointer ${
                             selectedMethod === 'jazzcash'
-                              ? 'border-red-500 bg-red-50 text-red-900 font-black'
-                              : 'border-slate-200 bg-white text-slate-600 font-bold'
+                              ? 'border-red-500 bg-red-50 text-red-900 font-black shadow-sm'
+                              : 'border-slate-200 bg-white text-slate-600 font-bold hover:border-slate-300'
                           }`}
                         >
-                          <Smartphone className="w-6 h-6 mb-1 text-red-600" />
-                          <span className="text-xs">JazzCash</span>
+                          <Smartphone className="w-5 h-5 mb-1 text-red-600" />
+                          <span className="text-[11px]">JazzCash</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setSelectedMethod('mashreq')}
+                          className={`p-3 rounded-2xl border-2 flex flex-col items-center justify-center transition-all cursor-pointer ${
+                            selectedMethod === 'mashreq'
+                              ? 'border-orange-500 bg-orange-50 text-orange-900 font-black shadow-sm'
+                              : 'border-slate-200 bg-white text-slate-600 font-bold hover:border-slate-300'
+                          }`}
+                        >
+                          <Building2 className="w-5 h-5 mb-1 text-orange-600" />
+                          <span className="text-[11px]">Mashreq Bank</span>
                         </button>
                       </div>
                     </div>
@@ -1411,18 +1423,20 @@ export default function AddBussinessClient() {
                     <div className="bg-slate-50 border border-slate-200 rounded-3xl p-5 mb-8 max-w-md mx-auto text-left space-y-3.5">
                       <div className="flex justify-between items-center border-b border-slate-200 pb-2.5">
                         <span className="text-xs text-slate-500 font-medium">Account Type</span>
-                        <span className="text-xs font-black uppercase text-slate-800">{selectedMethod}</span>
+                        <span className="text-xs font-black uppercase text-slate-800">
+                          {selectedMethod === 'easypaisa' ? 'Easypaisa Mobile Account' : selectedMethod === 'jazzcash' ? 'JazzCash Mobile Account' : 'Mashreq Bank Account'}
+                        </span>
                       </div>
                       <div className="flex justify-between items-center border-b border-slate-200 pb-2.5">
                         <div>
                           <span className="text-[11px] text-slate-400 block font-medium">Account Number</span>
                           <span className="font-mono font-black text-slate-900 text-base">
-                            {selectedMethod === 'easypaisa' ? '03402885226' : '03019316123'}
+                            {selectedMethod === 'easypaisa' ? '03402885226' : selectedMethod === 'jazzcash' ? '03019316123' : '089200179683'}
                           </span>
                         </div>
                         <button
-                          onClick={() => copyToClipboard(selectedMethod === 'easypaisa' ? '03402885226' : '03019316123', 'payNum')}
-                          className="px-2.5 py-1 bg-white text-slate-700 border border-slate-200 rounded-lg text-xs font-bold shadow-sm"
+                          onClick={() => copyToClipboard(selectedMethod === 'easypaisa' ? '03402885226' : selectedMethod === 'jazzcash' ? '03019316123' : '089200179683', 'payNum')}
+                          className="px-2.5 py-1 bg-white text-slate-700 border border-slate-200 rounded-lg text-xs font-bold shadow-sm cursor-pointer hover:bg-slate-100 transition-colors"
                         >
                           {copiedField === 'payNum' ? 'Copied' : 'Copy'}
                         </button>
@@ -1966,7 +1980,7 @@ export default function AddBussinessClient() {
                 <span className="text-slate-500 font-medium">Easypaisa Number</span>
                 <div className="flex items-center gap-1.5">
                   <span className="font-mono font-bold text-slate-900">03402885226</span>
-                  <button onClick={() => copyToClipboard('03402885226', 'mEp')} className="text-blue-600 font-bold">
+                  <button onClick={() => copyToClipboard('03402885226', 'mEp')} className="text-blue-600 font-bold hover:underline cursor-pointer">
                     {copiedField === 'mEp' ? 'Copied' : 'Copy'}
                   </button>
                 </div>
@@ -1975,14 +1989,23 @@ export default function AddBussinessClient() {
                 <span className="text-slate-500 font-medium">JazzCash Number</span>
                 <div className="flex items-center gap-1.5">
                   <span className="font-mono font-bold text-slate-900">03019316123</span>
-                  <button onClick={() => copyToClipboard('03019316123', 'mJz')} className="text-blue-600 font-bold">
+                  <button onClick={() => copyToClipboard('03019316123', 'mJz')} className="text-blue-600 font-bold hover:underline cursor-pointer">
                     {copiedField === 'mJz' ? 'Copied' : 'Copy'}
+                  </button>
+                </div>
+              </div>
+              <div className="flex justify-between items-center border-b border-slate-200 pb-2">
+                <span className="text-slate-500 font-medium">Mashreq Bank Account</span>
+                <div className="flex items-center gap-1.5">
+                  <span className="font-mono font-bold text-slate-900">089200179683</span>
+                  <button onClick={() => copyToClipboard('089200179683', 'mMash')} className="text-blue-600 font-bold hover:underline cursor-pointer">
+                    {copiedField === 'mMash' ? 'Copied' : 'Copy'}
                   </button>
                 </div>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-slate-500 font-medium">Account Title</span>
-                <span className="font-bold text-slate-800">Muhammad Habib Ullah / Muhammad Imran</span>
+                <span className="font-bold text-slate-800 text-right">Muhammad Habib Ullah (Easypaisa) / Muhammad Imran (JazzCash & Mashreq Bank)</span>
               </div>
             </div>
 

@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import Link from 'next/link'
-import { Check, Landmark, Smartphone, HelpCircle } from 'lucide-react'
+import { Check, Landmark, Smartphone, HelpCircle, Building2 } from 'lucide-react'
 import { BannerAdLoader, NativeAdLoader } from '@/components/ads/ads-loader'
 
 export const metadata: Metadata = {
@@ -138,19 +138,19 @@ export default function PricingPage() {
 
         {/* Payment Account Details Section */}
         <section className="bg-white border-t border-b border-slate-200/60 py-16">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl font-black text-[#0f2b3d] text-center mb-4">Payment Verification Guide</h2>
             <p className="text-gray-600 text-center mb-10 max-w-2xl mx-auto text-sm sm:text-base">
-              Send the matching setup fee using Easypaisa or JazzCash to the verified numbers below. After sending, submit your transaction screenshot on the checkout page to initiate setup.
+              Send the matching setup fee using Easypaisa, JazzCash, or Mashreq Bank to the verified accounts below. After sending, submit your transaction screenshot on the checkout page to initiate setup.
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Easypaisa */}
               <div className="bg-emerald-50/40 border border-emerald-100 rounded-3xl p-6 flex flex-col gap-4 text-left">
                 <div className="flex justify-between items-center border-b border-emerald-100/60 pb-3">
                   <div className="flex items-center gap-2">
                     <Landmark className="w-6 h-6 text-emerald-600" />
-                    <span className="font-extrabold text-emerald-800 text-base">Easypaisa Payment</span>
+                    <span className="font-extrabold text-emerald-800 text-base">Easypaisa</span>
                   </div>
                   <span className="px-2.5 py-0.5 rounded-full text-[9px] bg-emerald-100 text-emerald-800 font-bold uppercase tracking-wider">
                     Instant
@@ -173,7 +173,7 @@ export default function PricingPage() {
                 <div className="flex justify-between items-center border-b border-red-100/60 pb-3">
                   <div className="flex items-center gap-2">
                     <Smartphone className="w-6 h-6 text-red-600" />
-                    <span className="font-extrabold text-red-800 text-base">JazzCash Payment</span>
+                    <span className="font-extrabold text-red-800 text-base">JazzCash</span>
                   </div>
                   <span className="px-2.5 py-0.5 rounded-full text-[9px] bg-red-100 text-red-800 font-bold uppercase tracking-wider">
                     Instant
@@ -183,6 +183,29 @@ export default function PricingPage() {
                   <div className="flex justify-between">
                     <span className="text-slate-500 font-medium">Account Number</span>
                     <span className="font-mono font-bold text-slate-800">03019316123</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-500 font-medium">Account Owner</span>
+                    <span className="font-bold text-slate-800">Muhammad Imran</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Mashreq Bank */}
+              <div className="bg-orange-50/40 border border-orange-100 rounded-3xl p-6 flex flex-col gap-4 text-left">
+                <div className="flex justify-between items-center border-b border-orange-100/60 pb-3">
+                  <div className="flex items-center gap-2">
+                    <Building2 className="w-6 h-6 text-orange-600" />
+                    <span className="font-extrabold text-orange-800 text-base">Mashreq Bank</span>
+                  </div>
+                  <span className="px-2.5 py-0.5 rounded-full text-[9px] bg-orange-100 text-orange-800 font-bold uppercase tracking-wider">
+                    Instant
+                  </span>
+                </div>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-slate-500 font-medium">Account Number</span>
+                    <span className="font-mono font-bold text-slate-800">089200179683</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-slate-500 font-medium">Account Owner</span>
