@@ -29,8 +29,7 @@ export default function LoginClient() {
       const userCredential = await signInWithEmailAndPassword(auth, email, password)
       
       if (userCredential.user) {
-        // Redirect to user profile or admin based on role
-        router.push('/user/profile')
+        router.push('/add-business/')
       }
     } catch (err: any) {
       const errorMessage = err.message || 'Login failed'

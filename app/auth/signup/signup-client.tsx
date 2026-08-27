@@ -79,8 +79,8 @@ export default function SignupClient() {
 
         setSuccess(true)
         setTimeout(() => {
-          router.push('/user/profile')
-        }, 1500)
+          router.push('/add-business/')
+        }, 1200)
       }
     } catch (err: any) {
       const errorMessage = err.message || 'Signup failed'
