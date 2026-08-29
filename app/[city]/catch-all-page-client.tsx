@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import {
   ArrowLeft, Phone, Mail, MapPin, MessageCircle, Building2,
-  Globe, Facebook, Youtube, ExternalLink, ChevronRight, ArrowRight, Loader2
+  Globe, Facebook, Youtube, Instagram, ExternalLink, ChevronRight, ArrowRight, Loader2, Share2, Check
 } from 'lucide-react'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
@@ -21,6 +21,14 @@ import { getBusinessLogoUrl } from '@/lib/utils'
 
 const BASE_URL = 'https://www.pakbizbranhces.online'
 
+function TikTokIcon({ className = "w-4 h-4" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+    </svg>
+  )
+}
+
 interface Business {
   id: string
   businessName: string
@@ -35,9 +43,17 @@ interface Business {
   description: string
   logoUrl?: string
   websiteUrl?: string
+  website?: string
   facebookPage?: string
-  googleBusiness?: string
+  facebook?: string
+  instagramProfile?: string
+  instagram?: string
+  tiktokProfile?: string
+  tiktok?: string
   youtubeChannel?: string
+  youtube?: string
+  googleBusiness?: string
+  googleBusinessUrl?: string
   createdAt: any
   status: string
   slug: string
@@ -545,10 +561,30 @@ export default function CatchAllPageClient({
     const categoryUrl = `/${business.category}/`
     const cityUrl = `/${encodeURIComponent(business.city.toLowerCase().replace(/ /g, '-'))}/`
 
+    // Extract & normalize all online & social links
+    const rawWeb = business.websiteUrl || (business as any).website || ''
+    const rawFb = business.facebookPage || (business as any).facebook || ''
+    const rawIg = business.instagramProfile || (business as any).instagram || ''
+    const rawTt = business.tiktokProfile || (business as any).tiktok || ''
+    const rawYt = business.youtubeChannel || (business as any).youtube || ''
+    const rawGb = business.googleBusiness || (business as any).googleBusinessUrl || (business as any).googleMaps || ''
+
+    const websiteUrl = rawWeb ? (rawWeb.startsWith('http') ? rawWeb : `https://${rawWeb}`) : null
+    const facebookUrl = rawFb ? (rawFb.startsWith('http') ? rawFb : `https://facebook.com/${rawFb.replace(/^@/, '')}`) : null
+    const instagramUrl = rawIg ? (rawIg.startsWith('http') ? rawIg : `https://instagram.com/${rawIg.replace(/^@/, '')}`) : null
+    const tiktokUrl = rawTt ? (rawTt.startsWith('http') ? rawTt : `https://tiktok.com/@${rawTt.replace(/^@/, '')}`) : null
+    const youtubeUrl = rawYt ? (rawYt.startsWith('http') ? rawYt : `https://youtube.com/${rawYt.startsWith('@') ? rawYt : `@${rawYt}`}`) : null
+    const googleBusinessUrl = rawGb ? (rawGb.startsWith('http') ? rawGb : `https://${rawGb}`) : null
+
     const sameAs: string[] = []
-    if (business.websiteUrl) sameAs.push(business.websiteUrl)
-    if (business.facebookPage) sameAs.push(business.facebookPage)
-    if (business.youtubeChannel) sameAs.push(business.youtubeChannel)
+    if (websiteUrl) sameAs.push(websiteUrl)
+    if (facebookUrl) sameAs.push(facebookUrl)
+    if (instagramUrl) sameAs.push(instagramUrl)
+    if (tiktokUrl) sameAs.push(tiktokUrl)
+    if (youtubeUrl) sameAs.push(youtubeUrl)
+    if (googleBusinessUrl) sameAs.push(googleBusinessUrl)
+
+    const hasSocials = !!(websiteUrl || facebookUrl || instagramUrl || tiktokUrl || youtubeUrl || googleBusinessUrl)
 
     const cityDetails = CITY_INFO[business.city]
     const province = cityDetails?.province ?? 'Punjab'
@@ -685,11 +721,11 @@ export default function CatchAllPageClient({
                     </Link>
                   </div>
                   <p className="text-gray-600 text-lg leading-relaxed mb-8">{business.description}</p>
-                  <div className="flex flex-wrap gap-4">
+                  <div className="flex flex-wrap gap-3">
                     <a 
                       href={`tel:${business.phone}`} 
                       aria-label={`Call ${business.businessName} at ${business.phone}`}
-                      className="inline-flex items-center gap-2 px-6 py-3 bg-[#0f2b3d] text-white rounded-xl font-semibold hover:bg-[#1a3f57] transition-colors shadow-sm"
+                      className="inline-flex items-center gap-2 px-5 py-3 bg-[#0f2b3d] text-white rounded-xl font-semibold hover:bg-[#1a3f57] transition-all shadow-sm active:scale-98"
                     >
                       <Phone className="w-4 h-4" /> Call Now
                     </a>
@@ -699,9 +735,30 @@ export default function CatchAllPageClient({
                         target="_blank" 
                         rel="noopener noreferrer" 
                         aria-label={`Send WhatsApp message to ${business.businessName}`}
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-xl font-semibold hover:bg-green-700 transition-colors shadow-sm"
+                        className="inline-flex items-center gap-2 px-5 py-3 bg-emerald-600 text-white rounded-xl font-semibold hover:bg-emerald-700 transition-all shadow-sm active:scale-98"
                       >
-                        <MessageCircle className="w-4 h-4" /> WhatsApp
+                        <MessageCircle className="w-4 h-4 fill-current" /> WhatsApp
+                      </a>
+                    )}
+                    {websiteUrl && (
+                      <a 
+                        href={websiteUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        aria-label={`Visit official website of ${business.businessName}`}
+                        className="inline-flex items-center gap-2 px-5 py-3 bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 rounded-xl font-semibold transition-all shadow-sm active:scale-98"
+                      >
+                        <Globe className="w-4 h-4" /> Visit Website
+                        <ExternalLink className="w-3.5 h-3.5 text-blue-500" />
+                      </a>
+                    )}
+                    {business.email && (
+                      <a 
+                        href={`mailto:${business.email}`} 
+                        aria-label={`Email ${business.businessName}`}
+                        className="inline-flex items-center gap-2 px-5 py-3 bg-slate-100 text-slate-800 hover:bg-slate-200 border border-slate-200 rounded-xl font-semibold transition-all shadow-sm active:scale-98"
+                      >
+                        <Mail className="w-4 h-4" /> Email
                       </a>
                     )}
                   </div>
@@ -717,6 +774,147 @@ export default function CatchAllPageClient({
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div className="lg:col-span-2 space-y-6">
+                  
+                  {/* Official Online Profiles & Social Media Card */}
+                  {hasSocials && (
+                    <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-gray-100">
+                      <h2 className="text-xl sm:text-2xl font-bold text-[#0f2b3d] mb-1.5 flex items-center gap-2.5">
+                        <Globe className="w-5 sm:w-6 h-5 sm:h-6 text-[#60a5fa]" /> Official Profiles & Social Media
+                      </h2>
+                      <p className="text-slate-500 text-xs sm:text-sm mb-6">
+                        Verified online handles and direct communication channels for {business.businessName}.
+                      </p>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3.5 not-prose">
+                        {websiteUrl && (
+                          <a
+                            href={websiteUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-3 p-3.5 rounded-xl border border-blue-100 bg-blue-50/50 hover:bg-blue-50 hover:border-blue-300 transition-all group"
+                          >
+                            <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+                              <Globe className="w-5 h-5" />
+                            </div>
+                            <div className="min-w-0 flex-1">
+                              <span className="block text-xs font-bold text-slate-800 uppercase tracking-wider group-hover:text-blue-600 transition-colors">Official Website</span>
+                              <span className="block text-xs text-slate-500 truncate">{websiteUrl.replace(/^https?:\/\//i, '').replace(/\/$/, '')}</span>
+                            </div>
+                            <ExternalLink className="w-4 h-4 text-slate-400 group-hover:text-blue-600 shrink-0" />
+                          </a>
+                        )}
+
+                        {facebookUrl && (
+                          <a
+                            href={facebookUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-3 p-3.5 rounded-xl border border-blue-100 bg-[#1877F2]/5 hover:bg-[#1877F2]/10 hover:border-[#1877F2]/30 transition-all group"
+                          >
+                            <div className="w-10 h-10 rounded-xl bg-[#1877F2] text-white flex items-center justify-center shrink-0 shadow-xs">
+                              <Facebook className="w-5 h-5 fill-current" />
+                            </div>
+                            <div className="min-w-0 flex-1">
+                              <span className="block text-xs font-bold text-slate-800 uppercase tracking-wider group-hover:text-[#1877F2] transition-colors">Facebook Page</span>
+                              <span className="block text-xs text-slate-500 truncate">{rawFb.replace(/^https?:\/\/(www\.)?facebook\.com\/?/i, '') || 'View Facebook'}</span>
+                            </div>
+                            <ExternalLink className="w-4 h-4 text-slate-400 group-hover:text-[#1877F2] shrink-0" />
+                          </a>
+                        )}
+
+                        {instagramUrl && (
+                          <a
+                            href={instagramUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-3 p-3.5 rounded-xl border border-pink-100 bg-gradient-to-br from-pink-50/50 via-purple-50/30 to-amber-50/30 hover:border-pink-300 transition-all group"
+                          >
+                            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] text-white flex items-center justify-center shrink-0 shadow-xs">
+                              <Instagram className="w-5 h-5" />
+                            </div>
+                            <div className="min-w-0 flex-1">
+                              <span className="block text-xs font-bold text-slate-800 uppercase tracking-wider group-hover:text-pink-600 transition-colors">Instagram Profile</span>
+                              <span className="block text-xs text-slate-500 truncate">{rawIg.replace(/^https?:\/\/(www\.)?instagram\.com\/?/i, '') || '@Instagram'}</span>
+                            </div>
+                            <ExternalLink className="w-4 h-4 text-slate-400 group-hover:text-pink-600 shrink-0" />
+                          </a>
+                        )}
+
+                        {tiktokUrl && (
+                          <a
+                            href={tiktokUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-3 p-3.5 rounded-xl border border-slate-800 bg-slate-950 text-white hover:bg-black transition-all group"
+                          >
+                            <div className="w-10 h-10 rounded-xl bg-slate-900 border border-slate-700 text-cyan-400 flex items-center justify-center shrink-0 shadow-xs">
+                              <TikTokIcon className="w-5 h-5 text-white" />
+                            </div>
+                            <div className="min-w-0 flex-1">
+                              <span className="block text-xs font-bold text-white uppercase tracking-wider">TikTok Account</span>
+                              <span className="block text-xs text-slate-300 truncate">{rawTt.replace(/^https?:\/\/(www\.)?tiktok\.com\/?@?/i, '@') || '@TikTok'}</span>
+                            </div>
+                            <ExternalLink className="w-4 h-4 text-slate-400 group-hover:text-white shrink-0" />
+                          </a>
+                        )}
+
+                        {youtubeUrl && (
+                          <a
+                            href={youtubeUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-3 p-3.5 rounded-xl border border-red-100 bg-red-50/50 hover:bg-red-50 hover:border-red-300 transition-all group"
+                          >
+                            <div className="w-10 h-10 rounded-xl bg-[#FF0000] text-white flex items-center justify-center shrink-0 shadow-xs">
+                              <Youtube className="w-5 h-5 fill-current" />
+                            </div>
+                            <div className="min-w-0 flex-1">
+                              <span className="block text-xs font-bold text-slate-800 uppercase tracking-wider group-hover:text-red-600 transition-colors">YouTube Channel</span>
+                              <span className="block text-xs text-slate-500 truncate">{rawYt.replace(/^https?:\/\/(www\.)?youtube\.com\/?(@|channel\/)?/i, '') || 'YouTube Channel'}</span>
+                            </div>
+                            <ExternalLink className="w-4 h-4 text-slate-400 group-hover:text-red-600 shrink-0" />
+                          </a>
+                        )}
+
+                        {whatsappUrl && (
+                          <a
+                            href={whatsappUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-3 p-3.5 rounded-xl border border-emerald-100 bg-emerald-50/50 hover:bg-emerald-50 hover:border-emerald-300 transition-all group"
+                          >
+                            <div className="w-10 h-10 rounded-xl bg-[#25D366] text-white flex items-center justify-center shrink-0 shadow-xs">
+                              <MessageCircle className="w-5 h-5 fill-current" />
+                            </div>
+                            <div className="min-w-0 flex-1">
+                              <span className="block text-xs font-bold text-slate-800 uppercase tracking-wider group-hover:text-emerald-600 transition-colors">WhatsApp Business</span>
+                              <span className="block text-xs text-slate-500 truncate">{primaryWhatsapp || 'Chat on WhatsApp'}</span>
+                            </div>
+                            <ExternalLink className="w-4 h-4 text-slate-400 group-hover:text-emerald-600 shrink-0" />
+                          </a>
+                        )}
+
+                        {googleBusinessUrl && (
+                          <a
+                            href={googleBusinessUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-3 p-3.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 transition-all group"
+                          >
+                            <div className="w-10 h-10 rounded-xl bg-slate-800 text-white flex items-center justify-center shrink-0 shadow-xs">
+                              <MapPin className="w-5 h-5" />
+                            </div>
+                            <div className="min-w-0 flex-1">
+                              <span className="block text-xs font-bold text-slate-800 uppercase tracking-wider group-hover:text-blue-600 transition-colors">Google Business</span>
+                              <span className="block text-xs text-slate-500 truncate">View on Google Maps</span>
+                            </div>
+                            <ExternalLink className="w-4 h-4 text-slate-400 group-hover:text-blue-600 shrink-0" />
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
                   <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 prose prose-blue max-w-none">
                     <h2 className="text-2xl font-bold text-[#0f2b3d] mb-6">About {business.businessName}</h2>
                     {business.description && (
@@ -746,10 +944,10 @@ export default function CatchAllPageClient({
                     <h3 className="text-xl font-bold text-[#0f2b3d] mt-8 mb-4">Contact Information</h3>
                     <ul className="list-disc pl-5 space-y-2 text-gray-600">
                       <li><strong>Address:</strong> {business.address}, {business.city}, Pakistan</li>
-                      <li>
-                        <strong>Phone:</strong>{' '}
-                        {business.phone ? (
-                          business.phone.split(/[,/]/).map((num, idx, arr) => {
+                      {business.phone && (
+                        <li>
+                          <strong>Phone:</strong>{' '}
+                          {business.phone.split(/[,/]/).map((num, idx, arr) => {
                             const trimmed = num.trim()
                             const cleanDigits = trimmed.replace(/[^0-9+]/g, '')
                             return (
@@ -760,11 +958,9 @@ export default function CatchAllPageClient({
                                 {idx < arr.length - 1 ? ', ' : ''}
                               </React.Fragment>
                             )
-                          })
-                        ) : (
-                          'N/A'
-                        )}
-                      </li>
+                          })}
+                        </li>
+                      )}
                       {business.whatsapp && (
                         <li>
                           <strong>WhatsApp:</strong>{' '}
@@ -788,6 +984,11 @@ export default function CatchAllPageClient({
                         </li>
                       )}
                       {business.email && <li><strong>Email:</strong> <a href={`mailto:${business.email}`} className="text-blue-600 hover:underline">{business.email}</a></li>}
+                      {websiteUrl && <li><strong>Website:</strong> <a href={websiteUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{websiteUrl}</a></li>}
+                      {facebookUrl && <li><strong>Facebook:</strong> <a href={facebookUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{rawFb}</a></li>}
+                      {instagramUrl && <li><strong>Instagram:</strong> <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{rawIg}</a></li>}
+                      {tiktokUrl && <li><strong>TikTok:</strong> <a href={tiktokUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{rawTt}</a></li>}
+                      {youtubeUrl && <li><strong>YouTube:</strong> <a href={youtubeUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{rawYt}</a></li>}
                     </ul>
                   </div>
 

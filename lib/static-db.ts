@@ -20,10 +20,13 @@ export interface StaticBusiness {
   reviewCount: number
   websiteUrl: string
   facebookPage: string
+  instagramProfile?: string
+  tiktokProfile?: string
+  youtubeChannel: string
+  googleBusiness?: string
   address: string
   whatsapp: string
   email: string
-  youtubeChannel: string
   subCategory: string
 }
 

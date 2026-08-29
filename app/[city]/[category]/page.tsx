@@ -5,8 +5,7 @@ import CityCategoryClient from './city-category-client'
 import { getStaticCityCategory, STATIC_BUSINESSES } from '@/lib/static-db'
 import React from 'react'
 
-export const dynamic = 'force-static'
-export const dynamicParams = false
+
 
 export async function generateStaticParams() {
   const params: { city: string; category: string }[] = []

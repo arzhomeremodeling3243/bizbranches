@@ -25,8 +25,11 @@ interface Business {
   description: string
   websiteUrl?: string
   facebookPage?: string
+  instagramProfile?: string
+  tiktokProfile?: string
   googleBusiness?: string
   youtubeChannel?: string
+  subCategory?: string
   logoUrl?: string
   slug?: string
   createdAt: any
@@ -1179,11 +1182,87 @@ export default function AdminPage() {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">WhatsApp</label>
+                    <input
+                      type="tel"
+                      value={editForm.whatsapp || ''}
+                      onChange={(e) => setEditForm(prev => ({ ...prev, whatsapp: e.target.value }))}
+                      placeholder="e.g. 03057860084"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
                     <input
                       type="text"
-                      value={editForm.category || ''}
-                      onChange={(e) => setEditForm(prev => ({ ...prev, category: e.target.value }))}
+                      value={editForm.address || ''}
+                      onChange={(e) => setEditForm(prev => ({ ...prev, address: e.target.value }))}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Sub Category</label>
+                    <input
+                      type="text"
+                      value={editForm.subCategory || ''}
+                      onChange={(e) => setEditForm(prev => ({ ...prev, subCategory: e.target.value }))}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Website URL</label>
+                    <input
+                      type="url"
+                      value={editForm.websiteUrl || ''}
+                      onChange={(e) => setEditForm(prev => ({ ...prev, websiteUrl: e.target.value }))}
+                      placeholder="https://www.example.com"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Facebook Page</label>
+                    <input
+                      type="text"
+                      value={editForm.facebookPage || ''}
+                      onChange={(e) => setEditForm(prev => ({ ...prev, facebookPage: e.target.value }))}
+                      placeholder="https://facebook.com/pagename"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Instagram Profile</label>
+                    <input
+                      type="text"
+                      value={editForm.instagramProfile || ''}
+                      onChange={(e) => setEditForm(prev => ({ ...prev, instagramProfile: e.target.value }))}
+                      placeholder="@handle or https://instagram.com/handle"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">TikTok Profile</label>
+                    <input
+                      type="text"
+                      value={editForm.tiktokProfile || ''}
+                      onChange={(e) => setEditForm(prev => ({ ...prev, tiktokProfile: e.target.value }))}
+                      placeholder="@handle or https://tiktok.com/@handle"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">YouTube Channel</label>
+                    <input
+                      type="text"
+                      value={editForm.youtubeChannel || ''}
+                      onChange={(e) => setEditForm(prev => ({ ...prev, youtubeChannel: e.target.value }))}
+                      placeholder="https://youtube.com/@channel"
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none"
                     />
                   </div>

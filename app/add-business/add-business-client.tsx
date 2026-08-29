@@ -106,6 +106,10 @@ export default function AddBussinessClient() {
     whatsapp: '',
     email: '',
     website: '',
+    facebook: '',
+    instagram: '',
+    tiktok: '',
+    youtube: '',
     address: '',
     city: '',
     logoUrl: '',
@@ -626,6 +630,10 @@ export default function AddBussinessClient() {
         whatsapp: formData.whatsapp.trim() || formData.phone.trim(),
         email: formData.email.trim().toLowerCase() || currentUser?.email || '',
         websiteUrl: formData.website.trim(),
+        facebookPage: formData.facebook.trim(),
+        instagramProfile: formData.instagram.trim(),
+        tiktokProfile: formData.tiktok.trim(),
+        youtubeChannel: formData.youtube.trim(),
         address: formData.address.trim(),
         city: formData.city.trim(),
         branchCode: formData.branchCode?.trim() || '',
@@ -1772,6 +1780,62 @@ export default function AddBussinessClient() {
                               value={formData.website}
                               onChange={handleInputChange}
                               placeholder="https://www.yourbusiness.com"
+                              className="w-full px-4 py-3 border border-slate-300 rounded-xl text-sm font-medium text-slate-800"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                              Facebook Page URL (Optional)
+                            </label>
+                            <input
+                              type="text"
+                              name="facebook"
+                              value={formData.facebook}
+                              onChange={handleInputChange}
+                              placeholder="https://facebook.com/yourpage"
+                              className="w-full px-4 py-3 border border-slate-300 rounded-xl text-sm font-medium text-slate-800"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                              Instagram Profile (Optional)
+                            </label>
+                            <input
+                              type="text"
+                              name="instagram"
+                              value={formData.instagram}
+                              onChange={handleInputChange}
+                              placeholder="@yourprofile or https://instagram.com/yourhandle"
+                              className="w-full px-4 py-3 border border-slate-300 rounded-xl text-sm font-medium text-slate-800"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                              TikTok Profile (Optional)
+                            </label>
+                            <input
+                              type="text"
+                              name="tiktok"
+                              value={formData.tiktok}
+                              onChange={handleInputChange}
+                              placeholder="@yourhandle or https://tiktok.com/@yourhandle"
+                              className="w-full px-4 py-3 border border-slate-300 rounded-xl text-sm font-medium text-slate-800"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                              YouTube Channel (Optional)
+                            </label>
+                            <input
+                              type="text"
+                              name="youtube"
+                              value={formData.youtube}
+                              onChange={handleInputChange}
+                              placeholder="https://youtube.com/@yourchannel"
                               className="w-full px-4 py-3 border border-slate-300 rounded-xl text-sm font-medium text-slate-800"
                             />
                           </div>

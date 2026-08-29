@@ -6,8 +6,7 @@ import { findStaticBusinessBySlug, getStaticCity, getStaticCategory, getStaticSi
 import CatchAllPageClient from './catch-all-page-client'
 import React from 'react'
 
-export const dynamic = 'force-static'
-export const dynamicParams = false
+
 
 export async function generateStaticParams() {
   // Pre-render major cities
@@ -284,6 +283,9 @@ export default async function CatchAllPage(props: { params: Promise<{ city: stri
       reviewCount: staticBiz.reviewCount,
       websiteUrl: staticBiz.websiteUrl,
       facebookPage: staticBiz.facebookPage,
+      instagramProfile: staticBiz.instagramProfile || (staticBiz as any).instagram || '',
+      tiktokProfile: staticBiz.tiktokProfile || (staticBiz as any).tiktok || '',
+      googleBusiness: staticBiz.googleBusiness || '',
       address: staticBiz.address,
       whatsapp: staticBiz.whatsapp,
       email: staticBiz.email,
