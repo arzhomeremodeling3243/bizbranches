@@ -1,5 +1,20 @@
 import staticData from './static-businesses.json'
 
+export interface ServiceItem {
+  title: string
+  desc: string
+}
+
+export interface BusinessFAQ {
+  question: string
+  answer: string
+}
+
+export interface BusinessHourItem {
+  days: string
+  hours: string
+}
+
 export interface StaticBusiness {
   id: string
   businessName: string
@@ -9,6 +24,9 @@ export interface StaticBusiness {
   categoryId: string
   categorySlug: string
   description: string
+  shortIntro?: string
+  aboutHeading?: string
+  aboutText?: string
   phone: string
   logoUrl: string
   status: string
@@ -28,6 +46,12 @@ export interface StaticBusiness {
   whatsapp: string
   email: string
   subCategory: string
+  metaTitle?: string
+  metaDescription?: string
+  services?: ServiceItem[]
+  faqs?: BusinessFAQ[]
+  businessHours?: BusinessHourItem[]
+  openingHoursSpecification?: string[]
 }
 
 export const STATIC_BUSINESSES = staticData as StaticBusiness[]
@@ -84,6 +108,7 @@ export function getStaticBranches(businessName: string, excludeSlug: string): St
 }
 
 export const HIGH_PRIORITY_SLUGS = new Set<string>([
+  "shadab-group-real-estate-builders-sargodha",
   // 15 migrated businesses
   "amcorp-engineering-and-construction-pvt-ltd-karachi",
   "meskay-femtee-karachi",

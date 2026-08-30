@@ -29,6 +29,21 @@ function TikTokIcon({ className = "w-4 h-4" }: { className?: string }) {
   )
 }
 
+interface ServiceItem {
+  title: string
+  desc: string
+}
+
+interface BusinessFAQ {
+  question: string
+  answer: string
+}
+
+interface BusinessHourItem {
+  days: string
+  hours: string
+}
+
 interface Business {
   id: string
   businessName: string
@@ -41,6 +56,15 @@ interface Business {
   category: string
   subCategory?: string
   description: string
+  shortIntro?: string
+  aboutHeading?: string
+  aboutText?: string
+  services?: ServiceItem[]
+  faqs?: BusinessFAQ[]
+  businessHours?: BusinessHourItem[]
+  openingHoursSpecification?: string[]
+  metaTitle?: string
+  metaDescription?: string
   logoUrl?: string
   websiteUrl?: string
   website?: string
@@ -59,11 +83,6 @@ interface Business {
   slug: string
   rating?: number
   reviewCount?: number
-}
-
-interface ServiceItem {
-  title: string
-  desc: string
 }
 
 function findCityBySlug(slug: string): string | null {
@@ -91,10 +110,10 @@ function getServicesByCategory(category: string, businessName: string): ServiceI
       { title: 'Strict Food Hygiene & Quality Standards', desc: 'Strict adherence to health regulations using only fresh, premium, and hand-selected ingredients.' }
     ],
     'real-estate': [
-      { title: 'Residential Property Sales & Leasing', desc: 'Browse verified listings for luxury houses, modern apartments, villas, and secure residential plots.' },
-      { title: 'Commercial Real Estate Advisory', desc: 'Find premium office spaces, retail showrooms, warehouses, and get expert investment guidance.' },
-      { title: 'Comprehensive Property Management', desc: 'Rent collection, property maintenance, tenant verification, and standardized portfolio management.' },
-      { title: 'Valuation & Legal Documentation Assistance', desc: 'Accurate real estate market valuation combined with seamless, secure legal ownership transfers.' }
+      { title: 'Residential Property Sales & Leasing', desc: 'Browse verified listings for houses, apartments, and residential plots in the area.' },
+      { title: 'Commercial Real Estate Advisory', desc: 'Assistance with commercial property selection, office spaces, and business real estate needs.' },
+      { title: 'Property Investment Consultancy', desc: 'Strategic property investment guidance tailored to client budgets and objectives.' },
+      { title: 'Real Estate Consultation', desc: 'Professional consultation and documentation guidance for property transactions.' }
     ],
     'technology': [
       { title: 'Custom Software & Web App Development', desc: 'Bespoke corporate websites, web portals, cloud application designs, and custom API integrations.' },
@@ -163,25 +182,20 @@ function getServicesByCategory(category: string, businessName: string): ServiceI
 
 function generateDynamicAboutSection(business: Business, categoryName: string): string {
   const parts = [
-    `Welcome to the professional profile of ${business.businessName}, a highly regarded and verified ${categoryName} company operating in ${business.city}, Pakistan.`,
-    `As an established leader within the local ${categoryName.toLowerCase()} sector, ${business.businessName} has built a solid reputation for delivering exceptional service quality, reliability, and professional solutions to clients across the region.`,
-    `Conveniently located at their physical address: ${business.address}, ${business.city}, they serve as a vital hub for local patrons looking for expert ${categoryName.toLowerCase()} assistance.`,
-    `Whether you are seeking customized options, expert consultation, or everyday support, their team is dedicated to meeting your precise business and personal requirements with professionalism.`
+    `Welcome to the professional profile of ${business.businessName}, operating in ${business.city}, Pakistan.`,
+    `Serving the local ${categoryName.toLowerCase()} sector, ${business.businessName} provides reliable solutions and professional assistance to clients across the region.`,
+    `Located at ${business.address}, ${business.city}, the business assists customers with their specific ${categoryName.toLowerCase()} requirements.`
   ]
 
   if (business.whatsapp || business.email || business.websiteUrl) {
     parts.push(
-      `To ensure seamless accessibility and customer convenience, ${business.businessName} offers multiple communication channels. You can easily reach their official representatives by calling their primary phone number at ${business.phone}${business.whatsapp ? ` or messaging them on WhatsApp` : ''}${business.email ? ` or via email at ${business.email}` : ''}.`
+      `You can reach their representatives by calling ${business.phone}${business.whatsapp ? ` or messaging on WhatsApp at ${business.whatsapp}` : ''}${business.email ? ` or via email at ${business.email}` : ''}.`
     )
   } else {
     parts.push(
-      `To ensure seamless accessibility and customer convenience, ${business.businessName} maintains active communication lines. You can easily reach their official representatives by calling their primary phone number at ${business.phone} for immediate assistance, booking inquiries, or service consultations.`
+      `You can reach their representatives by calling ${business.phone} for inquiries and service consultations.`
     )
   }
-
-  parts.push(
-    `By choosing a verified listing like ${business.businessName} on the PakBizBranches business directory, you are guaranteed authentic contact details, correct address mapping, and direct connection pathways to premium services in ${business.city}.`
-  )
 
   return parts.join(' ')
 }
