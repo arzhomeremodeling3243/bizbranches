@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { Loader2, AlertCircle, Upload, X, CheckCircle2, Eye, MessageCircle, Zap } from 'lucide-react'
+import { Loader2, AlertCircle, Upload, X, CheckCircle2, Eye, MessageCircle, Zap, Globe, ExternalLink } from 'lucide-react'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import CitySearchDropdown from '@/components/ui/city-search-dropdown'
@@ -439,39 +439,42 @@ const businessData = {
             </div>
           )}
 
-          {/* WhatsApp Premium Promotion */}
-          <div className="mb-8 p-6 bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-2xl">
-            <div className="flex items-start gap-4">
-              <div className="flex-shrink-0">
-                <div className="flex items-center justify-center h-12 w-12 rounded-xl bg-gradient-to-br from-green-400 to-emerald-500">
-                  <Zap className="h-6 w-6 text-white" />
+          {/* ─── STICKY FREE WEBSITE NOTIFICATION BANNER (STAYS VISIBLE ON SCROLL) ─── */}
+          <div className="sticky top-20 z-30 mb-6 p-3.5 sm:p-4.5 rounded-2xl bg-gradient-to-r from-[#0a2336]/95 via-[#0f2b3d]/95 to-[#123e59]/95 backdrop-blur-md text-white shadow-xl border border-emerald-500/50 relative overflow-hidden transition-all">
+            <div className="absolute -right-6 -bottom-6 w-32 h-32 bg-emerald-500/20 rounded-full blur-2xl pointer-events-none" />
+            <div className="absolute -left-6 -top-6 w-32 h-32 bg-blue-500/20 rounded-full blur-2xl pointer-events-none" />
+            
+            <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 sm:gap-4">
+              <div className="flex items-start gap-3">
+                <div className="p-2 sm:p-2.5 bg-emerald-500/20 border border-emerald-400/40 rounded-xl text-emerald-400 shrink-0 mt-0.5 shadow-xs">
+                  <Globe className="w-5 h-5 text-emerald-400 animate-pulse" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 flex-wrap mb-0.5 sm:mb-1">
+                    <span className="px-2 py-0.5 bg-emerald-500 text-slate-950 text-[10px] font-black uppercase rounded-full tracking-wider shadow-xs flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-slate-950 animate-ping inline-block" />
+                      Free Offer
+                    </span>
+                    <h4 className="font-extrabold text-white text-xs sm:text-sm md:text-base">
+                      Don&apos;t Have a Website for Your Business?
+                    </h4>
+                  </div>
+                  <p className="text-[11px] sm:text-xs text-slate-200 leading-snug">
+                    Agar aap ke paas website nahi hai ya aap <strong>Free Website</strong> chahte hain, WhatsApp par rabta karein:
+                  </p>
                 </div>
               </div>
-              <div className="flex-1">
-                <h3 className="text-lg font-bold text-slate-900 mb-1">
-                  Want More Visibility?
-                </h3>
-                <p className="text-slate-700 mb-4">
-                  Mark your business as featured to appear at the top of search results and get significantly more visibility from potential customers!
-                </p>
-                <div className="flex flex-wrap gap-3">
-                  <a
-                    href="https://wa.me/923345636230"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg font-semibold text-sm hover:shadow-lg hover:scale-105 transition-all duration-200"
-                  >
-                    <MessageCircle className="w-4 h-4" />
-                    Contact via WhatsApp
-                  </a>
-                  <Link
-                    href="/featured-businesses/"
-                    className="inline-flex items-center gap-2 px-6 py-2.5 bg-white border-2 border-green-500 text-green-700 rounded-lg font-semibold text-sm hover:bg-green-50 transition-colors"
-                  >
-                    See Featured Businesses
-                  </Link>
-                </div>
-              </div>
+
+              <a
+                href="https://wa.me/923345636230?text=Hi%2C%20I%20am%20creating%20my%20business%20profile%20on%20PakBizBranches%20and%20I%20want%20to%20get%20a%20FREE%20website%20for%20my%20business."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="shrink-0 w-full md:w-auto px-4 py-2 sm:px-5 sm:py-2.5 bg-[#25D366] hover:bg-[#20ba59] active:scale-95 text-slate-950 font-black text-xs sm:text-sm rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 group cursor-pointer"
+              >
+                <MessageCircle className="w-4 h-4 fill-slate-950 text-[#25D366]" />
+                <span>Chat on WhatsApp: 0334 5636230</span>
+                <ExternalLink className="w-3.5 h-3.5 opacity-70 group-hover:translate-x-0.5 transition-transform" />
+              </a>
             </div>
           </div>
 

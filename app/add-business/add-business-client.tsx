@@ -1594,6 +1594,45 @@ export default function AddBussinessClient() {
                     </div>
                   </div>
 
+                  {/* ─── STICKY FREE WEBSITE NOTIFICATION BANNER (STAYS VISIBLE ON SCROLL) ─── */}
+                  <div className="sticky top-20 z-30 mb-6 p-3.5 sm:p-4.5 rounded-2xl bg-gradient-to-r from-[#0a2336]/95 via-[#0f2b3d]/95 to-[#123e59]/95 backdrop-blur-md text-white shadow-xl border border-emerald-500/50 relative overflow-hidden transition-all">
+                    <div className="absolute -right-6 -bottom-6 w-32 h-32 bg-emerald-500/20 rounded-full blur-2xl pointer-events-none" />
+                    <div className="absolute -left-6 -top-6 w-32 h-32 bg-blue-500/20 rounded-full blur-2xl pointer-events-none" />
+                    
+                    <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 sm:gap-4">
+                      <div className="flex items-start gap-3">
+                        <div className="p-2 sm:p-2.5 bg-emerald-500/20 border border-emerald-400/40 rounded-xl text-emerald-400 shrink-0 mt-0.5 shadow-xs">
+                          <Globe className="w-5 h-5 text-emerald-400 animate-pulse" />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2 flex-wrap mb-0.5 sm:mb-1">
+                            <span className="px-2 py-0.5 bg-emerald-500 text-slate-950 text-[10px] font-black uppercase rounded-full tracking-wider shadow-xs flex items-center gap-1">
+                              <span className="w-1.5 h-1.5 rounded-full bg-slate-950 animate-ping inline-block" />
+                              Free Offer
+                            </span>
+                            <h4 className="font-extrabold text-white text-xs sm:text-sm md:text-base">
+                              Don&apos;t Have a Website for Your Business?
+                            </h4>
+                          </div>
+                          <p className="text-[11px] sm:text-xs text-slate-200 leading-snug">
+                            Agar aap ke paas website nahi hai ya aap <strong>Free Website</strong> chahte hain, WhatsApp par rabta karein:
+                          </p>
+                        </div>
+                      </div>
+
+                      <a
+                        href="https://wa.me/923345636230?text=Hi%2C%20I%20am%20creating%20my%20business%20profile%20on%20PakBizBranches%20and%20I%20want%20to%20get%20a%20FREE%20website%20for%20my%20business."
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="shrink-0 w-full md:w-auto px-4 py-2 sm:px-5 sm:py-2.5 bg-[#25D366] hover:bg-[#20ba59] active:scale-95 text-slate-950 font-black text-xs sm:text-sm rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 group cursor-pointer"
+                      >
+                        <MessageCircle className="w-4 h-4 fill-slate-950 text-[#25D366]" />
+                        <span>Chat on WhatsApp: 0334 5636230</span>
+                        <ExternalLink className="w-3.5 h-3.5 opacity-70 group-hover:translate-x-0.5 transition-transform" />
+                      </a>
+                    </div>
+                  </div>
+
                   <form onSubmit={handleSubmit}>
                     
                     {/* ─── STEP 1: BASIC INFORMATION ─── */}
@@ -1771,9 +1810,19 @@ export default function AddBussinessClient() {
                           </div>
 
                           <div>
-                            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                              Website URL (Optional)
-                            </label>
+                            <div className="flex items-center justify-between mb-2">
+                              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                                Website URL (Optional)
+                              </label>
+                              <a
+                                href="https://wa.me/923345636230?text=Hi%2C%20I%20am%20creating%20my%20business%20profile%20on%20PakBizBranches%20and%20I%20want%20to%20get%20a%20FREE%20website%20for%20my%20business."
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-[11px] font-bold text-emerald-600 hover:text-emerald-700 flex items-center gap-1 hover:underline cursor-pointer"
+                              >
+                                <MessageCircle className="w-3.5 h-3.5 text-emerald-600" /> Get Free Website
+                              </a>
+                            </div>
                             <input
                               type="url"
                               name="website"
@@ -1782,6 +1831,19 @@ export default function AddBussinessClient() {
                               placeholder="https://www.yourbusiness.com"
                               className="w-full px-4 py-3 border border-slate-300 rounded-xl text-sm font-medium text-slate-800"
                             />
+                            <div className="mt-2 p-2.5 bg-emerald-50 border border-emerald-200 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs text-emerald-950">
+                              <span className="text-[11px] font-medium leading-tight">
+                                🌐 Don&apos;t have a website? We build free websites for listed businesses!
+                              </span>
+                              <a
+                                href="https://wa.me/923345636230?text=Hi%2C%20I%20am%20creating%20my%20business%20profile%20on%20PakBizBranches%20and%20I%20want%20to%20get%20a%20FREE%20website%20for%20my%20business."
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-[10px] shrink-0 transition-colors flex items-center gap-1 cursor-pointer"
+                              >
+                                <MessageCircle className="w-3 h-3" /> WhatsApp 0334 5636230
+                              </a>
+                            </div>
                           </div>
 
                           <div>

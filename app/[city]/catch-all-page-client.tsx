@@ -605,9 +605,32 @@ export default function CatchAllPageClient({
 
     const finalLogoUrl = getBusinessLogoUrl(business.logoUrl, business.businessName, business.slug)
 
+    const services = business.services && business.services.length > 0 
+      ? business.services 
+      : getServicesByCategory(business.category, business.businessName)
+    const serviceListText = services.map(s => s.title).join(', ')
+    const dynamicAbout = generateDynamicAboutSection(business, categoryName)
+
+    const faqs = business.faqs && business.faqs.length > 0
+      ? business.faqs
+      : [
+          {
+            question: `Where is ${business.businessName} located?`,
+            answer: `${business.businessName} is situated at ${business.address}, ${business.city}, Pakistan.`,
+          },
+          {
+            question: `What is the contact phone number for ${business.businessName}?`,
+            answer: `You can contact ${business.businessName} by calling their primary phone number at ${business.phone}.`,
+          },
+          {
+            question: `What services does ${business.businessName} provide?`,
+            answer: `As a verified ${categoryName} business, they specialize in professional ${categoryName.toLowerCase()} solutions. Key services include: ${serviceListText}.`,
+          },
+        ]
+
     const localBusinessSchema = {
       '@context': 'https://schema.org',
-      '@type': 'LocalBusiness',
+      '@type': business.category === 'real-estate' ? 'RealEstateAgent' : 'LocalBusiness',
       '@id': pageUrl,
       name: business.businessName,
       description: business.description || `Verified ${categoryName} company in ${business.city}, Pakistan.`,
@@ -623,6 +646,7 @@ export default function CatchAllPageClient({
         addressCountry: 'PK',
       },
       areaServed: { '@type': 'City', name: business.city },
+      ...(business.openingHoursSpecification && { openingHoursSpecification: business.openingHoursSpecification }),
       ...(businessCategory && { knowsAbout: businessCategory.name }),
       ...(finalLogoUrl && { image: finalLogoUrl, logo: finalLogoUrl }),
       ...(sameAs.length > 0 && { sameAs }),
@@ -647,39 +671,17 @@ export default function CatchAllPageClient({
       ],
     }
 
-    const services = getServicesByCategory(business.category, business.businessName)
-    const serviceListText = services.map(s => s.title).join(', ')
-    const dynamicAbout = generateDynamicAboutSection(business, categoryName)
-
     const faqSchema = {
       '@context': 'https://schema.org',
       '@type': 'FAQPage',
-      mainEntity: [
-        {
-          '@type': 'Question',
-          name: `Where is ${business.businessName} located?`,
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: `${business.businessName} is located at ${business.address}, ${business.city}, Pakistan.`,
-          },
+      mainEntity: faqs.map(f => ({
+        '@type': 'Question',
+        name: f.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: f.answer,
         },
-        {
-          '@type': 'Question',
-          name: `What is the contact number for ${business.businessName}?`,
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: `You can contact ${business.businessName} at ${business.phone}.`,
-          },
-        },
-        {
-          '@type': 'Question',
-          name: `What services does ${business.businessName} offer?`,
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: `${business.businessName} specializes in ${categoryName} solutions. Key services include: ${serviceListText}.`,
-          },
-        },
-      ],
+      })),
     }
 
     return (
@@ -734,7 +736,7 @@ export default function CatchAllPageClient({
                       {business.city}
                     </Link>
                   </div>
-                  <p className="text-gray-600 text-lg leading-relaxed mb-8">{business.description}</p>
+                  <p className="text-gray-600 text-lg leading-relaxed mb-8">{business.shortIntro || business.description}</p>
                   <div className="flex flex-wrap gap-3">
                     <a 
                       href={`tel:${business.phone}`} 
@@ -930,34 +932,41 @@ export default function CatchAllPageClient({
                   )}
 
                   <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 prose prose-blue max-w-none">
-                    <h2 className="text-2xl font-bold text-[#0f2b3d] mb-6">About {business.businessName}</h2>
-                    {business.description && (
-                      <p className="text-gray-600 leading-relaxed text-lg mb-6">{business.description}</p>
+                    <h2 className="text-2xl font-bold text-[#0f2b3d] mb-6">{business.aboutHeading || `About ${business.businessName}`}</h2>
+                    {business.aboutText ? (
+                      <div className="space-y-4 not-prose mb-8">
+                        {business.aboutText.split('\n\n').map((paragraph, pIdx) => (
+                          <p key={pIdx} className="text-gray-600 leading-relaxed text-lg mb-0">{paragraph}</p>
+                        ))}
+                      </div>
+                    ) : (
+                      <>
+                        {business.description && (
+                          <p className="text-gray-600 leading-relaxed text-lg mb-6">{business.description}</p>
+                        )}
+                        <p className="text-gray-600 leading-relaxed text-lg">{dynamicAbout}</p>
+                        
+                        <h3 className="text-xl font-bold text-[#0f2b3d] mt-8 mb-4">Professional Overview</h3>
+                        <p className="text-gray-600 leading-relaxed">
+                          {business.businessName} is a verified <strong>{categoryName}</strong> business serving the <strong>{business.city}</strong> area. 
+                          Located at {business.address}, they are committed to providing quality services to their customers.
+                        </p>
+                      </>
                     )}
-                    <p className="text-gray-600 leading-relaxed text-lg">{dynamicAbout}</p>
-                    
-                    <h3 className="text-xl font-bold text-[#0f2b3d] mt-8 mb-4">Professional Overview</h3>
-                    <p className="text-gray-600 leading-relaxed">
-                      {business.businessName} is a verified <strong>{categoryName}</strong> business serving the <strong>{business.city}</strong> area. 
-                      Located at {business.address}, they are committed to providing quality services to their customers.
-                    </p>
 
-                    <h3 className="text-xl font-bold text-[#0f2b3d] mt-8 mb-4">Services Offered</h3>
+                    <h2 className="text-2xl font-bold text-[#0f2b3d] mt-8 mb-4">Services</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 not-prose">
                       {services.map((service, index) => (
-                        <div key={index} className="flex items-start gap-2.5 p-3 rounded-xl bg-gray-50 border border-gray-100">
-                          <div className="w-1.5 h-1.5 rounded-full bg-[#60a5fa] mt-2 shrink-0" />
-                          <div>
-                            <strong className="block text-gray-900 text-sm font-semibold">{service.title}</strong>
-                            <span className="block text-gray-500 text-xs mt-0.5">{service.desc}</span>
-                          </div>
+                        <div key={index} className="p-4 rounded-xl bg-gray-50 border border-gray-100">
+                          <h3 className="text-base font-bold text-gray-900 mb-1">{service.title}</h3>
+                          <p className="text-gray-600 text-sm leading-relaxed mb-0">{service.desc}</p>
                         </div>
                       ))}
                     </div>
 
-                    <h3 className="text-xl font-bold text-[#0f2b3d] mt-8 mb-4">Contact Information</h3>
+                    <h2 className="text-2xl font-bold text-[#0f2b3d] mt-8 mb-4">Contact Information</h2>
                     <ul className="list-disc pl-5 space-y-2 text-gray-600">
-                      <li><strong>Address:</strong> {business.address}, {business.city}, Pakistan</li>
+                      <li><strong>Address:</strong> {business.address.toLowerCase().includes(business.city.toLowerCase()) ? business.address : `${business.address}, ${business.city}, Pakistan`}</li>
                       {business.phone && (
                         <li>
                           <strong>Phone:</strong>{' '}
@@ -1004,29 +1013,38 @@ export default function CatchAllPageClient({
                       {tiktokUrl && <li><strong>TikTok:</strong> <a href={tiktokUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{rawTt}</a></li>}
                       {youtubeUrl && <li><strong>YouTube:</strong> <a href={youtubeUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{rawYt}</a></li>}
                     </ul>
+
+                    {business.businessHours && business.businessHours.length > 0 && (
+                      <>
+                        <h2 className="text-2xl font-bold text-[#0f2b3d] mt-8 mb-4">Business Hours</h2>
+                        <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 not-prose">
+                          <table className="w-full text-sm text-gray-700">
+                            <tbody>
+                              {business.businessHours.map((item, hIdx) => (
+                                <tr key={hIdx} className={hIdx > 0 ? "border-t border-gray-200" : ""}>
+                                  <td className="py-2 font-medium">{item.days}</td>
+                                  <td className="py-2 text-right font-semibold text-[#0f2b3d]">{item.hours}</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                          <p className="text-xs text-emerald-700 font-medium mt-2 mb-0">✓ Open 7 days a week (No off day)</p>
+                        </div>
+                      </>
+                    )}
                   </div>
 
                   <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 space-y-6">
                     <h2 className="text-2xl font-bold text-[#0f2b3d]">Frequently Asked Questions</h2>
                     <div className="space-y-4">
-                      <div className="p-4 rounded-xl bg-gray-50 border border-gray-100">
-                        <h4 className="font-bold text-gray-900 mb-1.5">Where is {business.businessName} located?</h4>
-                        <p className="text-gray-600 text-sm leading-relaxed">
-                          {business.businessName} is situated at {business.address}, {business.city}, Pakistan.
-                        </p>
-                      </div>
-                      <div className="p-4 rounded-xl bg-gray-50 border border-gray-100">
-                        <h4 className="font-bold text-gray-900 mb-1.5">What is the contact phone number for {business.businessName}?</h4>
-                        <p className="text-gray-600 text-sm leading-relaxed">
-                          You can contact {business.businessName} by calling their primary phone number at <a href={`tel:${business.phone}`} className="text-blue-600 hover:underline">{business.phone}</a>.
-                        </p>
-                      </div>
-                      <div className="p-4 rounded-xl bg-gray-50 border border-gray-100">
-                        <h4 className="font-bold text-gray-900 mb-1.5">What services does {business.businessName} provide?</h4>
-                        <p className="text-gray-600 text-sm leading-relaxed">
-                          As a verified {categoryName} business, they specialize in professional {categoryName.toLowerCase()} solutions. Key services include: {serviceListText}.
-                        </p>
-                      </div>
+                      {faqs.map((faq, fIdx) => (
+                        <div key={fIdx} className="p-4 rounded-xl bg-gray-50 border border-gray-100">
+                          <h3 className="font-bold text-gray-900 mb-1.5 text-base">{faq.question}</h3>
+                          <p className="text-gray-600 text-sm leading-relaxed">
+                            {faq.answer}
+                          </p>
+                        </div>
+                      ))}
                     </div>
                   </div>
 
@@ -1118,7 +1136,7 @@ export default function CatchAllPageClient({
                         </button>
                       )}
                     </div>
-                    <p className="text-sm text-gray-600">{business.address}, {business.city}, Pakistan</p>
+                    <p className="text-sm text-gray-600">{business.address.toLowerCase().includes(business.city.toLowerCase()) ? business.address : `${business.address}, ${business.city}, Pakistan`}</p>
                   </div>
 
                   <NativeAdLoader />
@@ -1127,21 +1145,33 @@ export default function CatchAllPageClient({
                     <h3 className="font-bold text-[#0f2b3d] mb-4 flex items-center gap-2">
                       <span className="w-5 h-5 text-[#60a5fa] flex items-center justify-center">🕒</span> Business Hours
                     </h3>
-                    <div className="space-y-2 text-sm text-gray-600">
-                      <div className="flex justify-between border-b border-gray-50 pb-1">
-                        <span>Monday – Friday:</span>
-                        <span className="font-medium text-gray-900">09:00 AM – 06:00 PM</span>
+                    {business.businessHours && business.businessHours.length > 0 ? (
+                      <div className="space-y-2 text-sm text-gray-600">
+                        {business.businessHours.map((item, hIdx) => (
+                          <div key={hIdx} className="flex justify-between border-b border-gray-50 pb-1">
+                            <span>{item.days}:</span>
+                            <span className="font-semibold text-emerald-700">{item.hours}</span>
+                          </div>
+                        ))}
+                        <p className="text-xs text-emerald-700 font-medium mt-2 pt-1">✓ Open 7 Days (No Off Day)</p>
                       </div>
-                      <div className="flex justify-between border-b border-gray-50 pb-1">
-                        <span>Saturday:</span>
-                        <span className="font-medium text-gray-900">09:00 AM – 02:00 PM</span>
+                    ) : (
+                      <div className="space-y-2 text-sm text-gray-600">
+                        <div className="flex justify-between border-b border-gray-50 pb-1">
+                          <span>Monday – Friday:</span>
+                          <span className="font-medium text-gray-900">09:00 AM – 06:00 PM</span>
+                        </div>
+                        <div className="flex justify-between border-b border-gray-50 pb-1">
+                          <span>Saturday:</span>
+                          <span className="font-medium text-gray-900">09:00 AM – 02:00 PM</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>Sunday:</span>
+                          <span className="font-semibold text-red-600">Closed</span>
+                        </div>
+                        <p className="text-xs text-gray-400 mt-2 italic">* Timing may vary. Please call to confirm.</p>
                       </div>
-                      <div className="flex justify-between">
-                        <span>Sunday:</span>
-                        <span className="font-semibold text-red-600">Closed</span>
-                      </div>
-                      <p className="text-xs text-gray-400 mt-2 italic">* Timing may vary. Please call to confirm.</p>
-                    </div>
+                    )}
                   </div>
 
                   <div className="bg-[#0f2b3d] rounded-2xl p-6 text-white">
