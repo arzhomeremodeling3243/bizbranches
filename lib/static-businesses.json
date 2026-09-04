@@ -18221,5 +18221,38 @@
     "operatingHours": {
       "Monday - Sunday": "10:00 AM - 09:00 PM"
     }
+  },
+  {
+    "id": "biz-shadab-group-sargodha",
+    "businessName": "Shadab Group Real Estate & Builders",
+    "name": "Shadab Group Real Estate & Builders",
+    "slug": "shadab-group-real-estate-builders",
+    "city": "Sargodha",
+    "category": "Real Estate",
+    "categoryId": "real-estate",
+    "categorySlug": "real-estate",
+    "description": "Established in 1990, Shadab Group Real Estate & Builders provides real estate and construction services in Sargodha, Pakistan. The business assists customers with real estate advisory and consultancy, property investment guidance, residential construction, home renovation, general construction, and commercial construction requirements.\n\nShadab Group provides an all-in-one service for customers who need professional assistance with real estate decisions and construction projects. Its real estate services focus on advisory, consultancy, and property investment guidance, while its construction services cover home renovation, general construction, and commercial construction projects.\n\nThe company is located at Shop #10–11, Shadab Real Estate, opposite Community Office, Gulberg City, Sargodha, Pakistan, providing a convenient local point of contact for customers seeking real estate and construction services.\n\nWhether you are looking for real estate consultancy, property investment guidance, home renovation, general construction, or commercial construction, Shadab Group Real Estate & Builders provides these services through one local business in Sargodha.",
+    "phone": "+92 305 7860084",
+    "logoUrl": "/shadab-group-logo.png",
+    "coverImage": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80",
+    "status": "approved",
+    "isFeatured": true,
+    "featured": true,
+    "createdAt": "2026-08-30T10:00:00.000Z",
+    "updatedAt": "2026-08-30T11:28:27.914Z",
+    "rating": 0,
+    "reviewCount": 0,
+    "websiteUrl": "https://www.listpak.com/business/shadab-group-real-estate-builders/",
+    "facebookPage": "",
+    "instagramProfile": "",
+    "tiktokProfile": "",
+    "youtubeChannel": "",
+    "googleBusiness": "",
+    "address": "Shop #10–11, Shadab Real Estate, Opposite Community Office, Gulberg City, Sargodha, Pakistan",
+    "whatsapp": "923057860084",
+    "email": "shadabgrouprealestate@gmail.com",
+    "subCategory": "",
+    "verified": true,
+    "isClaimed": true
   }
 ]
