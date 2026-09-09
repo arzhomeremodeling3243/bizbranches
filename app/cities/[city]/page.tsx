@@ -11,9 +11,7 @@ const BASE_URL = 'https://www.pakbizbranhces.online'
 export const dynamic = 'force-static'
 
 export async function generateStaticParams() {
-  return CITIES.map((c) => ({
-    city: c.toLowerCase().replace(/\s+/g, '-'),
-  }))
+  return []
 }
 
 export const dynamicParams = true

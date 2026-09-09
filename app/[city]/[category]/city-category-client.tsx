@@ -14,6 +14,7 @@ import { BannerAdLoader, NativeAdLoader } from '@/components/ads/ads-loader'
 import CountdownLoader from '@/components/ui/countdown-loader'
 import React from 'react'
 import { getBusinessLogoUrl } from '@/lib/utils'
+import { getLocalityFromAddress } from '@/lib/seo-config'
 
 const BASE_URL = 'https://www.pakbizbranhces.online'
 
@@ -118,7 +119,7 @@ export default function CityCategoryClient({
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
       { '@type': 'ListItem', position: 2, name: cityName, item: `${BASE_URL}/${citySlug}/` },
-      { '@type': 'ListItem', position: 3, name: category.name, item: pageUrl },
+      { '@type': 'ListItem', position: 3, name: `${category.name} in ${cityName}`, item: pageUrl },
     ],
   }
 
@@ -144,7 +145,7 @@ export default function CityCategoryClient({
         name: `What are the best ${category.name.toLowerCase()} in ${cityName}?`,
         acceptedAnswer: {
           '@type': 'Answer',
-          text: `You can find the top ${category.name.toLowerCase()} in ${cityName} on PakBizBranches. Browse verified listings with direct phone numbers, WhatsApp contacts, and addresses.`,
+          text: `You can find verified ${category.name.toLowerCase()} in ${cityName} on PakBizBranches. Browse verified listings with direct phone numbers, WhatsApp contacts, and addresses.`,
         },
       },
       {
@@ -182,31 +183,48 @@ export default function CityCategoryClient({
         {/* Hero */}
         <section className="bg-gradient-to-br from-[#0f2b3d] to-[#1a3f57] py-16">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-white/60 mb-6">
+            <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-white/60 mb-6 flex-wrap">
               <Link href="/" className="hover:text-white transition-colors">Home</Link>
-              <ChevronRight className="w-4 h-4" />
+              <ChevronRight className="w-3.5 h-3.5 text-white/40" />
               <Link href={`/${citySlug}/`} className="hover:text-white transition-colors">{cityName}</Link>
-              <ChevronRight className="w-4 h-4" />
+              <ChevronRight className="w-3.5 h-3.5 text-white/40" />
               <span className="text-white font-medium">{category.name}</span>
             </nav>
             <div className="flex items-center gap-3 mb-4">
               <Building2 className="w-8 h-8 text-[#60a5fa]" />
-              <h1 className="text-4xl md:text-5xl font-bold text-white">
-                {businesses.length > 0 ? `${businesses.length}+ ` : ''}{category.name} in {cityName} – Verified Contacts & Reviews
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white">
+                {category.name} in {cityName}
               </h1>
             </div>
-            <p className="text-xl text-white/80 max-w-2xl">
-              Verified {category.name.toLowerCase()} businesses and services in {cityName}, Pakistan. Find contact details and locations instantly.
+            <p className="text-lg sm:text-xl text-white/80 max-w-2xl leading-relaxed">
+              Find {businesses.length} verified {category.name.toLowerCase()} businesses and local service providers in {cityName}, Pakistan. Compare direct phone numbers, WhatsApp chats, and physical addresses.
             </p>
           </div>
         </section>
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          {/* Quick Contextual Navigation */}
+          <div className="mb-8 flex flex-wrap gap-2.5 items-center">
+            <span className="text-xs font-semibold text-slate-500 mr-1">Related Hubs:</span>
+            <Link 
+              href={`/${citySlug}/`}
+              className="px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-semibold text-slate-700 hover:text-blue-600 hover:border-blue-200 transition-colors shadow-2xs"
+            >
+              All Businesses in {cityName} →
+            </Link>
+            <Link 
+              href={`/${categorySlug}/`}
+              className="px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-semibold text-slate-700 hover:text-blue-600 hover:border-blue-200 transition-colors shadow-2xs"
+            >
+              All {category.name} in Pakistan →
+            </Link>
+          </div>
+
           {/* Business Listings */}
           <section className="mb-12">
             <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
                <h2 className="text-2xl font-bold text-[#0f2b3d]">
-                Top Rated {category.name}
+                Verified {category.name} in {cityName}
                 <span className="text-base font-normal text-gray-500 ml-3">({businesses.length} verified listings)</span>
               </h2>
               <Link href="/add-business/" className="inline-flex items-center gap-2 text-[#60a5fa] font-semibold hover:underline">
@@ -226,30 +244,39 @@ export default function CityCategoryClient({
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-                {businesses.map(biz => (
-                  <Link
-                    key={biz.id}
-                    href={`/${biz.slug}/`}
-                    className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-xl hover:border-[#60a5fa]/30 transition-all group flex gap-5"
-                  >
-                    {getBusinessLogoUrl(biz.logoUrl, biz.businessName, biz.slug) ? (
-                      <img src={getBusinessLogoUrl(biz.logoUrl, biz.businessName, biz.slug)} alt={biz.businessName} className="w-20 h-20 rounded-xl object-cover border border-gray-100 shrink-0" loading="lazy" />
-                    ) : (
-                      <div className="w-20 h-20 rounded-xl bg-gradient-to-br from-[#0f2b3d] to-[#1a3f57] flex items-center justify-center shrink-0">
-                        <Building2 className="w-10 h-10 text-white/60" />
-                      </div>
-                    )}
-                    <div className="flex-1 min-w-0">
-                      <h3 className="text-xl font-bold text-gray-900 group-hover:text-[#60a5fa] transition-colors mb-1 truncate">
-                        {biz.businessName}
-                      </h3>
-                      <p className="text-gray-500 text-sm mb-3 flex items-center gap-1">
-                        <MapPin className="w-3.5 h-3.5" />
-                        {cityName}, Pakistan
-                      </p>
-                      <p className="text-gray-600 text-sm line-clamp-2 mb-4">
-                        {biz.description}
-                      </p>
+                {businesses.map(biz => {
+                  const locality = getLocalityFromAddress(biz.address)
+                  return (
+                    <Link
+                      key={biz.id}
+                      href={`/${biz.slug}/`}
+                      className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-xl hover:border-[#60a5fa]/30 transition-all group flex gap-5"
+                    >
+                      {getBusinessLogoUrl(biz.logoUrl, biz.businessName, biz.slug) ? (
+                        <img src={getBusinessLogoUrl(biz.logoUrl, biz.businessName, biz.slug)} alt={`${biz.businessName} logo`} width={80} height={80} className="w-20 h-20 rounded-xl object-cover border border-gray-100 shrink-0" loading="lazy" />
+                      ) : (
+                        <div className="w-20 h-20 rounded-xl bg-gradient-to-br from-[#0f2b3d] to-[#1a3f57] flex items-center justify-center shrink-0">
+                          <Building2 className="w-10 h-10 text-white/60" />
+                        </div>
+                      )}
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-xl font-bold text-gray-900 group-hover:text-[#60a5fa] transition-colors mb-1 truncate">
+                          {biz.businessName}
+                        </h3>
+                        <p className="text-gray-500 text-sm mb-3 flex items-center gap-1.5 flex-wrap">
+                          <span className="flex items-center gap-1">
+                            <MapPin className="w-3.5 h-3.5 text-[#60a5fa]" />
+                            {cityName}, Pakistan
+                          </span>
+                          {locality && (
+                            <span className="px-2 py-0.5 bg-slate-100 text-slate-700 rounded-md text-xs font-semibold">
+                              📍 {locality}
+                            </span>
+                          )}
+                        </p>
+                        <p className="text-gray-600 text-sm line-clamp-2 mb-4">
+                          {biz.description}
+                        </p>
                       <div className="flex items-center justify-between border-t border-gray-50 pt-3 mt-1">
                         <div className="flex items-center gap-1.5 text-sm font-semibold text-[#0f2b3d]">
                           <Phone className="w-4 h-4 text-[#60a5fa]" />
@@ -272,8 +299,9 @@ export default function CityCategoryClient({
                       </div>
                     </div>
                   </Link>
-                ))}
-              </div>
+                )
+              })}
+            </div>
             )}
             <div className="mt-8">
               <NativeAdLoader />

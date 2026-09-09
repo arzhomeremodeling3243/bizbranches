@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { Search, Edit2, Trash2, Eye, Users, Building2, Mail, Phone, Shield, LogOut, CheckCircle, XCircle, AlertCircle, Star, Settings, DollarSign, Calendar, TrendingUp, Wallet, Coins, ArrowUpRight, MessageSquare, MessageCircle, X, Check } from 'lucide-react'
+import { Search, Edit2, Trash2, Eye, Users, Building2, Mail, Phone, Shield, LogOut, CheckCircle, XCircle, AlertCircle, Star, Settings, DollarSign, Calendar, TrendingUp, Wallet, Coins, ArrowUpRight, MessageSquare, MessageCircle, X, Check, BarChart3, Globe, Layers, AlertTriangle, ExternalLink, ShieldCheck } from 'lucide-react'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import AdminLogin from '@/components/admin-login'
@@ -11,6 +11,9 @@ import { db } from '@/lib/firebase'
 import { collection, query, orderBy, getDocs, doc, deleteDoc, updateDoc, setDoc, onSnapshot } from 'firebase/firestore'
 import { MAIN_PAGES } from '@/lib/pages-config'
 import BusinessMessageModal from '@/components/admin/BusinessMessageModal'
+import { STATIC_BUSINESSES } from '@/lib/static-db'
+import { getQualifiedCityCategories, isBusinessIndexable, isCityIndexable, SEO_CONFIG } from '@/lib/seo-config'
+import { CITIES, CATEGORIES } from '@/lib/data'
 
 interface Business {
   id: string
@@ -99,7 +102,7 @@ export default function AdminPage() {
   const [selectedBusiness, setSelectedBusiness] = useState<Business | null>(null)
   const [isEditing, setIsEditing] = useState(false)
   const [editForm, setEditForm] = useState<Partial<Business>>({})
-  const [activeTab, setActiveTab] = useState<'businesses' | 'contacts' | 'pages' | 'earnings'>('businesses')
+  const [activeTab, setActiveTab] = useState<'businesses' | 'contacts' | 'pages' | 'earnings' | 'seo'>('businesses')
   const [earningsFilter, setEarningsFilter] = useState<'all' | 'lastWeek'>('all')
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -579,6 +582,17 @@ export default function AdminPage() {
                 >
                   <Coins className="w-4 h-4 text-emerald-600" />
                   Earnings
+                </button>
+                <button
+                  onClick={() => setActiveTab('seo')}
+                  className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center gap-2 cursor-pointer ${
+                    activeTab === 'seo'
+                      ? 'border-indigo-500 text-indigo-600 font-bold'
+                      : 'border-transparent text-gray-500 hover:text-gray-700'
+                  }`}
+                >
+                  <BarChart3 className="w-4 h-4 text-indigo-600" />
+                  SEO & Indexation ({STATIC_BUSINESSES.length})
                 </button>
               </nav>
             </div>
@@ -1119,6 +1133,203 @@ export default function AdminPage() {
               </div>
             </div>
           )}
+
+          {/* SEO & Indexation Monitoring Tab */}
+          {activeTab === 'seo' && (() => {
+            const allBizs = STATIC_BUSINESSES
+            const totalCount = allBizs.length
+            const indexableCount = allBizs.filter(b => isBusinessIndexable(b.slug, b.phone)).length
+            const noindexCount = totalCount - indexableCount
+            const incompleteCount = allBizs.filter(b => !b.phone || !b.address || !b.category).length
+            const qualifiedCombinations = getQualifiedCityCategories()
+
+            const cityStats = CITIES.map(cityName => {
+              const count = allBizs.filter(b => b.city.toLowerCase() === cityName.toLowerCase()).length
+              return { name: cityName, count, isIndexable: count >= 1 }
+            }).sort((a, b) => b.count - a.count)
+
+            const phoneCounts = new Map<string, number>()
+            allBizs.forEach(b => {
+              if (b.phone) {
+                const clean = b.phone.replace(/[^0-9]/g, '')
+                if (clean.length >= 8) {
+                  phoneCounts.set(clean, (phoneCounts.get(clean) || 0) + 1)
+                }
+              }
+            })
+            const duplicatePhoneList = allBizs.filter(b => {
+              if (!b.phone) return false
+              const clean = b.phone.replace(/[^0-9]/g, '')
+              return (phoneCounts.get(clean) || 0) > 1
+            })
+
+            return (
+              <div className="space-y-8">
+                {/* KPI Metrics */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                  <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-2xs">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Catalog</span>
+                        <p className="text-2xl font-extrabold text-slate-900 mt-1">{totalCount}</p>
+                        <span className="text-[11px] text-slate-400 mt-0.5 block">Businesses in database</span>
+                      </div>
+                      <div className="w-11 h-11 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center">
+                        <Building2 className="w-5 h-5" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-2xs">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <span className="text-xs font-semibold text-emerald-600 uppercase tracking-wider">Indexable Listings</span>
+                        <p className="text-2xl font-extrabold text-emerald-700 mt-1">{indexableCount}</p>
+                        <span className="text-[11px] text-slate-400 mt-0.5 block">Valid NAP &amp; sitemap included</span>
+                      </div>
+                      <div className="w-11 h-11 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center">
+                        <CheckCircle className="w-5 h-5" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-2xs">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <span className="text-xs font-semibold text-amber-600 uppercase tracking-wider">Noindex / Incomplete</span>
+                        <p className="text-2xl font-extrabold text-amber-700 mt-1">{noindexCount}</p>
+                        <span className="text-[11px] text-slate-400 mt-0.5 block">{incompleteCount} missing NAP details</span>
+                      </div>
+                      <div className="w-11 h-11 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center">
+                        <AlertTriangle className="w-5 h-5" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-2xs">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <span className="text-xs font-semibold text-indigo-600 uppercase tracking-wider">Qualified Hubs</span>
+                        <p className="text-2xl font-extrabold text-indigo-700 mt-1">{qualifiedCombinations.length}</p>
+                        <span className="text-[11px] text-slate-400 mt-0.5 block">City+Category pairs (&ge;2 listings)</span>
+                      </div>
+                      <div className="w-11 h-11 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center">
+                        <Layers className="w-5 h-5" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Sitemaps & Technical Status */}
+                <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-2xs">
+                  <h3 className="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
+                    <Globe className="w-4 h-4 text-blue-600" />
+                    Active Sitemaps &amp; Search Console Endpoints
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    {[
+                      { name: 'Primary Index Sitemap', path: '/sitemap.xml' },
+                      { name: 'Business Profiles Sitemap', path: '/sitemap-businesses.xml' },
+                      { name: 'City + Category Hubs Sitemap', path: '/sitemap-locations.xml' },
+                      { name: 'City Landing Pages Sitemap', path: '/sitemap-cities.xml' },
+                      { name: 'Category Hubs Sitemap', path: '/sitemap-categories.xml' },
+                      { name: 'Core Static Pages Sitemap', path: '/sitemap-pages.xml' },
+                    ].map(sm => (
+                      <a
+                        key={sm.path}
+                        href={sm.path}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-3 bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 rounded-xl transition-all flex items-center justify-between text-xs font-semibold text-slate-700 group"
+                      >
+                        <span>{sm.name}</span>
+                        <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-blue-600" />
+                      </a>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Qualified City + Category Combinations */}
+                <div className="bg-white rounded-2xl border border-gray-200 shadow-2xs overflow-hidden">
+                  <div className="p-6 border-b border-gray-100 flex items-center justify-between">
+                    <div>
+                      <h3 className="text-base font-bold text-slate-900">Indexable City + Category Combinations</h3>
+                      <p className="text-xs text-slate-500 mt-0.5">
+                        Pages meeting the quality indexation threshold (&ge;2 verified businesses). Combinations with &lt;2 businesses are automatically marked noindex.
+                      </p>
+                    </div>
+                    <span className="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-xs font-bold rounded-lg border border-emerald-200">
+                      {qualifiedCombinations.length} Active Hubs
+                    </span>
+                  </div>
+                  <div className="overflow-x-auto max-h-80 overflow-y-auto">
+                    <table className="w-full text-left text-xs">
+                      <thead className="bg-slate-50 text-slate-500 font-semibold border-b border-slate-200 sticky top-0">
+                        <tr>
+                          <th className="p-3.5 pl-6">City</th>
+                          <th className="p-3.5">Category</th>
+                          <th className="p-3.5">Verified Listings</th>
+                          <th className="p-3.5">Index Status</th>
+                          <th className="p-3.5 pr-6 text-right">Preview Page</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-100">
+                        {qualifiedCombinations.map(q => (
+                          <tr key={`${q.citySlug}-${q.categoryId}`} className="hover:bg-slate-50/80">
+                            <td className="p-3.5 pl-6 font-semibold text-slate-900">{q.cityName}</td>
+                            <td className="p-3.5 capitalize text-slate-600">{q.categoryId}</td>
+                            <td className="p-3.5 font-bold text-slate-800">{q.count} listings</td>
+                            <td className="p-3.5">
+                              <span className="px-2 py-0.5 bg-emerald-50 text-emerald-700 rounded-md font-semibold text-[11px]">
+                                In XML Sitemap (Indexable)
+                              </span>
+                            </td>
+                            <td className="p-3.5 pr-6 text-right">
+                              <Link
+                                href={`/${q.citySlug}/${q.categoryId}/`}
+                                target="_blank"
+                                className="inline-flex items-center gap-1 text-blue-600 hover:underline font-semibold"
+                              >
+                                View Hub &rarr;
+                              </Link>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                {/* Cities Coverage Table */}
+                <div className="bg-white rounded-2xl border border-gray-200 shadow-2xs overflow-hidden">
+                  <div className="p-6 border-b border-gray-100">
+                    <h3 className="text-base font-bold text-slate-900">City Directory Coverage</h3>
+                    <p className="text-xs text-slate-500 mt-0.5">
+                      Distribution of real database inventory across Pakistani cities.
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-3 p-6">
+                    {cityStats.map(c => (
+                      <Link
+                        key={c.name}
+                        href={`/${c.name.toLowerCase().replace(/\s+/g, '-')}/`}
+                        target="_blank"
+                        className="p-3 rounded-xl border border-slate-200 hover:border-blue-400 hover:shadow-xs transition-all flex flex-col justify-between"
+                      >
+                        <span className="font-bold text-xs text-slate-900 truncate">{c.name}</span>
+                        <div className="flex items-center justify-between mt-2">
+                          <span className="text-xs font-semibold text-blue-600">{c.count} listings</span>
+                          {c.isIndexable && (
+                            <span className="w-2 h-2 rounded-full bg-emerald-500" title="Indexable" />
+                          )}
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )
+          })()}
         </main>
 
         {/* Edit Modal */}

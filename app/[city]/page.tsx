@@ -2,32 +2,37 @@ import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { CATEGORIES, CITIES } from '@/lib/data'
 import { getCategoryKeywordCluster, getCityKeywordCluster } from '@/lib/organic-keywords'
-import { findStaticBusinessBySlug, getStaticCity, getStaticCategory, getStaticSimilar, getStaticBranches, STATIC_BUSINESSES } from '@/lib/static-db'
+import { findStaticBusinessBySlug, getStaticCity, getStaticCategory, getStaticSimilar, getStaticNearby, getStaticBranches, STATIC_BUSINESSES } from '@/lib/static-db'
+import { fetchBusinessBySlug } from '@/lib/firebase-server'
+import { isCityIndexable, isBusinessIndexable, getBusinessCountForCity, getQualifiedCities, SEO_CONFIG } from '@/lib/seo-config'
 import CatchAllPageClient from './catch-all-page-client'
 import React from 'react'
 
-
+export const dynamic = 'force-static'
+export const dynamicParams = true
 
 export async function generateStaticParams() {
-  // Pre-render major cities
-  const cityParams = CITIES.map(c => ({
-    city: c.toLowerCase().replace(/\s+/g, '-')
+  // Pre-render cities that meet indexation inventory threshold
+  const cityParams = getQualifiedCities().map(c => ({
+    city: c.slug
   }))
 
-  // Pre-render categories
+  // Pre-render all 12 major categories
   const categoryParams = CATEGORIES.map(c => ({
     city: c.id
   }))
 
-  // Pre-render static businesses
-  const businessParams = STATIC_BUSINESSES.map(b => ({
-    city: b.slug
-  }))
+  // Pre-render genuine static businesses
+  const businessParams = STATIC_BUSINESSES
+    .filter(b => isBusinessIndexable(b.slug, b.phone))
+    .map(b => ({
+      city: b.slug
+    }))
 
   return [...cityParams, ...categoryParams, ...businessParams]
 }
 
-const BASE_URL = 'https://www.pakbizbranhces.online'
+const BASE_URL = SEO_CONFIG.BASE_URL
 
 function findCityBySlug(slug: string): string | null {
   const normalized = slug.replace(/-/g, ' ').toLowerCase()
@@ -45,21 +50,17 @@ export async function generateMetadata(props: { params: Promise<{ city: string }
   // 1. City View Meta
   const cityName = findCityBySlug(slug)
   if (cityName) {
-    let title = `${cityName} Business Directory: Find Local Contacts & Services`
+    const isIndexable = isCityIndexable(cityName)
+
+    let title = `${cityName} Business Directory – Local Businesses & Companies`
     if (title.length > 60) {
-      title = `${cityName} Business Directory: Find Local Contacts`
-    }
-    if (title.length < 50) {
-      title = `${cityName} Business Directory: Verified Company Contact Details`
+      title = `${cityName} Business Directory – Local Companies`
     }
     if (title.length > 60) {
-      title = title.substring(0, 60)
+      title = `${cityName} Business Directory`
     }
 
-    let description = `Find verified local businesses, phone numbers, and addresses in ${cityName}, Pakistan. Access contact details and map locations free on PakBizBranches.`
-    if (description.length < 120) {
-      description = `Find verified local businesses, phone numbers, and addresses in ${cityName}, Pakistan. Access contact details and map locations free.`
-    }
+    let description = `Find verified local businesses, phone numbers, WhatsApp contacts, and physical addresses in ${cityName}, Pakistan. Browse top companies on PakBizBranches.`
     if (description.length > 156) {
       description = description.substring(0, 153) + '...'
     }
@@ -71,30 +72,31 @@ export async function generateMetadata(props: { params: Promise<{ city: string }
       title,
       description,
       keywords: [`${cityName} businesses`, `${cityName} companies`, `${cityName} yellow pages`, ...keywordCluster],
-      robots: { index: true, follow: true },
+      robots: {
+        index: isIndexable,
+        follow: true,
+      },
       alternates: { canonical: url },
       openGraph: { title, description, url, siteName: 'PakBizBranches', locale: 'en_PK', type: 'website' },
+      twitter: { card: 'summary_large_image', title, description },
     }
   }
 
   // 2. Category View Meta
   const category = findCategoryBySlug(slug)
   if (category) {
-    let title = `${category.name} in Pakistan: Find Verified Contact Details`
-    if (title.length > 60) {
-      title = `${category.name} in Pakistan: Verified Contacts`
-    }
-    if (title.length < 50) {
-      title = `Best ${category.name} in Pakistan: Find Verified Contacts`
+    let title = `${category.name} in Pakistan – Local Business Directory`
+    if (category.name === 'Restaurants') {
+      title = `Restaurants in Pakistan – Local Restaurant Directory`
     }
     if (title.length > 60) {
-      title = title.substring(0, 60)
+      title = `${category.name} in Pakistan – Business Directory`
+    }
+    if (title.length > 60) {
+      title = `${category.name} in Pakistan Directory`
     }
 
-    let description = `Browse verified ${category.name.toLowerCase()} listings and local services in Pakistan. Find contact phone numbers, WhatsApp links, and physical addresses free.`
-    if (description.length < 120) {
-      description = `Browse verified ${category.name.toLowerCase()} listings and local services across Pakistan. Find contact phone numbers and physical addresses.`
-    }
+    let description = `Browse verified ${category.name.toLowerCase()} companies and local branches across Pakistan. Find direct phone numbers, WhatsApp links, and physical addresses free.`
     if (description.length > 156) {
       description = description.substring(0, 152) + '...'
     }
@@ -104,110 +106,59 @@ export async function generateMetadata(props: { params: Promise<{ city: string }
     return {
       title,
       description,
-      keywords: [`${category.name} in Pakistan`, `best ${category.name.toLowerCase()} Pakistan`, ...keywordCluster],
+      keywords: [`${category.name} in Pakistan`, `${category.name.toLowerCase()} directory Pakistan`, ...keywordCluster],
       robots: { index: true, follow: true },
       alternates: { canonical: url },
       openGraph: { title, description, url, siteName: 'PakBizBranches', locale: 'en_PK', type: 'website' },
+      twitter: { card: 'summary_large_image', title, description },
     }
   }
 
-  // 3. Business Detail View Meta (Static or Dynamic)
-  let businessName = ''
-  let businessCity = 'Pakistan'
-  let businessCategory = 'Business'
-  let businessPhone = 'Contact'
-  let businessDescription = 'Verified local business listing on PakBizBranches.'
-
-  const staticBiz = findStaticBusinessBySlug(slug)
-  if (staticBiz) {
-    businessName = staticBiz.businessName
-    businessCity = staticBiz.city
-    businessCategory = staticBiz.category
-    businessPhone = staticBiz.phone
-    businessDescription = staticBiz.description || `Verified ${staticBiz.category} company in ${staticBiz.city}, Pakistan.`
-  } else {
-    // Dynamic fallback: extract details purely from the slug string for zero-execution compilation
-    businessName = slug
-      .split('-')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ')
+  // 3. Business Detail View Meta
+  let biz = findStaticBusinessBySlug(slug) as any
+  if (!biz) {
+    biz = await fetchBusinessBySlug(slug)
   }
+
+  // If slug matches nothing in static DB or Firestore -> emit 404 metadata
+  if (!biz) {
+    return {
+      title: 'Page Not Found - PakBizBranches',
+      robots: { index: false, follow: false },
+    }
+  }
+
+  const businessName = biz.businessName
+  const businessCity = biz.city
+  const businessCategory = biz.category
+  const businessPhone = biz.phone || ''
+  const isIndexable = isBusinessIndexable(slug, businessPhone)
 
   const bizCategoryObj = CATEGORIES.find(c => c.id === businessCategory)
   const categoryName = bizCategoryObj?.name ?? businessCategory
 
-  let title = staticBiz?.metaTitle || ''
+  let title = biz.metaTitle || ''
   if (!title) {
-    // Dynamically build a title strictly between 52 and 58 characters for SEO
-    const baseTitle = `${businessName} - ${businessCity}`
-    const suffixes = [
-      ' | Phone & Address',
-      ' | Contact Details',
-      ' | Phone Number',
-      ' | Info'
-    ]
-    title = baseTitle
-    for (const suffix of suffixes) {
-      const candidate = baseTitle + suffix
-      if (candidate.length >= 52 && candidate.length <= 58) {
-        title = candidate
-        break
-      }
+    title = `${businessName} – ${categoryName} in ${businessCity} | PakBizBranches`
+    if (title.length > 60) {
+      title = `${businessName} – ${categoryName} in ${businessCity}`
     }
-    if (title.length > 58) {
-      title = title.substring(0, 55) + '...'
+    if (title.length > 60) {
+      title = `${businessName} – ${businessCity} | PakBizBranches`
     }
-    if (title.length < 52) {
-      const padding = ' | Verified Details'
-      const candidate = title + padding
-      if (candidate.length <= 58) {
-        title = candidate
-      } else {
-        title = (title + padding).substring(0, 57)
-      }
+    if (title.length > 60) {
+      title = `${businessName} – ${businessCity}`
     }
-    if (title.length > 58) {
-      title = title.substring(0, 58)
+    if (title.length > 60) {
+      title = businessName.substring(0, 57) + '...'
     }
   }
 
-  let description = staticBiz?.metaDescription || ''
+  let description = biz.metaDescription || ''
   if (!description) {
-    // Dynamically build a description strictly between 125 and 145 characters for SEO
-    const baseDesc = `Verified details for ${businessName} in ${businessCity}, Pakistan. Find phone number ${businessPhone}, location address`
-    const descSuffixes = [
-      ', operating hours, and customer reviews on PakBizBranches.',
-      ', and contact information on PakBizBranches directory.',
-      ', and timing details on PakBizBranches.',
-      ' and official contact details.',
-      ' and contact details.',
-      '.'
-    ]
-    description = baseDesc
-    for (const suffix of descSuffixes) {
-      const candidate = baseDesc + suffix
-      if (candidate.length >= 125 && candidate.length <= 145) {
-        description = candidate
-        break
-      }
-    }
-    if (description.length > 145) {
-      description = description.substring(0, 142) + '...'
-    }
-    if (description.length < 125) {
-      const padding = ' Discover verified listings, ratings, reviews, and maps for local Pakistani businesses.'
-      const candidate = description + padding
-      if (candidate.length >= 125 && candidate.length <= 145) {
-        description = candidate
-      } else {
-        description = (description + padding).substring(0, 142) + '...'
-      }
-    }
-    if (description.length > 145) {
-      description = description.substring(0, 145)
-    }
-    if (description.length < 125) {
-      description = description.padEnd(125, '.')
+    description = `Verified details for ${businessName} in ${businessCity}, Pakistan. Find phone number ${businessPhone}, address, and direct WhatsApp contact on PakBizBranches.`
+    if (description.length > 155) {
+      description = description.substring(0, 152) + '...'
     }
   }
 
@@ -219,9 +170,13 @@ export async function generateMetadata(props: { params: Promise<{ city: string }
     keywords: [
       businessName,
       `${businessName} ${businessCity}`,
-      `${businessCategory} in ${businessCity}`,
+      `${categoryName} in ${businessCity}`,
       `${businessCity} business directory`
     ],
+    robots: {
+      index: isIndexable,
+      follow: true,
+    },
     alternates: { canonical: url },
     openGraph: { 
       title, 
@@ -243,6 +198,7 @@ export default async function CatchAllPage(props: { params: Promise<{ city: stri
   const params = await props.params
   const slug = params.city
 
+  // 1. City Route
   const cityName = findCityBySlug(slug)
   if (cityName) {
     const staticCityList = getStaticCity(cityName) as any[]
@@ -256,6 +212,7 @@ export default async function CatchAllPage(props: { params: Promise<{ city: stri
     )
   }
 
+  // 2. Category Route
   const category = findCategoryBySlug(slug)
   if (category) {
     const staticCategoryList = getStaticCategory(category.id) as any[]
@@ -269,6 +226,7 @@ export default async function CatchAllPage(props: { params: Promise<{ city: stri
     )
   }
 
+  // 3. Business Detail Route
   let foundBiz: any = null
   const staticBiz = findStaticBusinessBySlug(slug)
   if (staticBiz) {
@@ -307,19 +265,28 @@ export default async function CatchAllPage(props: { params: Promise<{ city: stri
       youtubeChannel: staticBiz.youtubeChannel,
       subCategory: staticBiz.subCategory
     }
+  } else {
+    // Check Firestore
+    foundBiz = await fetchBusinessBySlug(slug)
   }
 
-  const staticSimilar = foundBiz ? (getStaticSimilar(foundBiz.city, foundBiz.category, slug) as any[]) : []
-  const staticBranches = foundBiz ? (getStaticBranches(foundBiz.businessName, slug) as any[]) : []
+  // If slug is NOT a city, NOT a category, and NOT a registered business -> Emit genuine HTTP 404!
+  if (!foundBiz) {
+    notFound()
+  }
+
+  const staticSimilar = getStaticSimilar(foundBiz.city, foundBiz.category, slug) as any[]
+  const staticNearby = getStaticNearby(foundBiz.city, slug, 4) as any[]
+  const staticBranches = getStaticBranches(foundBiz.businessName, slug) as any[]
 
   return (
     <CatchAllPageClient
       slug={slug}
-      initialViewType={foundBiz ? "business" : undefined}
+      initialViewType="business"
       initialBusiness={foundBiz}
       initialSimilarBusinesses={staticSimilar.slice(0, 4)}
+      initialNearbyBusinesses={staticNearby}
       initialBranches={staticBranches}
     />
   )
 }
-

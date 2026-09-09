@@ -49,9 +49,9 @@ export const dynamic = 'force-static'
 const BASE_URL = 'https://www.pakbizbranhces.online'
 
 export const metadata: Metadata = {
-  title: 'Pakistan Free Business Directory – Verified Local Companies',
+  title: 'Pakistan Business Directory – Free Local Business Listings',
   description:
-    'Search or list your business on the premier Pakistan free business directory. Find verified business contact details, phone numbers, addresses, and WhatsApp links today.',
+    'Find verified businesses in Pakistan by city, category and area. Browse local companies, phone numbers, addresses, WhatsApp contacts and free business listings.',
   keywords:
     'pakistan free business directory, Pakistan business directory, free business listing Pakistan, Karachi business listings, Lahore business directory, Islamabad business listings, local services Pakistan, business phone numbers Pakistan, verified business contacts Pakistan, find businesses Pakistan 2026',
   authors: [{ name: 'PakBizBranches', url: 'https://www.pakbizbranhces.online/' }],
@@ -59,13 +59,19 @@ export const metadata: Metadata = {
     canonical: 'https://www.pakbizbranhces.online/',
   },
   openGraph: {
-    title: 'Pakistan Free Business Directory – Verified Local Companies',
+    title: 'Pakistan Business Directory – Free Local Business Listings',
     description:
-      'Search or list your business on the premier Pakistan free business directory. Find verified business contact details, phone numbers, addresses, and WhatsApp links today.',
+      'Find verified businesses in Pakistan by city, category and area. Browse local companies, phone numbers, addresses, WhatsApp contacts and free business listings.',
     url: 'https://www.pakbizbranhces.online/',
     siteName: 'PakBizBranches',
     locale: 'en_PK',
     type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Pakistan Business Directory – Free Local Business Listings',
+    description:
+      'Find verified businesses in Pakistan by city, category and area. Browse local companies, phone numbers, addresses, WhatsApp contacts and free business listings.',
   },
 }
 
@@ -625,78 +631,66 @@ export default async function HomePage() {
 
 
 
-        {/* Testimonials Section: Who Lists on PakBizBranches? Real Pakistani Businesses, Real Results */}
-        <section className="py-16 bg-[#f8fafc] border-b border-gray-100" aria-labelledby="testimonials-heading">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 id="testimonials-heading" className="text-3xl font-bold text-[#0f2b3d] mb-6 text-center">
-              Who Lists on PakBizBranches? Real Pakistani Businesses, Real Results
+        {/* Trust & Transparency Section: Why Choose PakBizBranches */}
+        <section className="py-16 bg-[#f8fafc] border-b border-gray-100" aria-labelledby="trust-pillars-heading">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 id="trust-pillars-heading" className="text-3xl font-bold text-[#0f2b3d] mb-4 text-center">
+              Built for Local Discovery: Trust & Transparency
             </h2>
-            <p className="text-lg text-gray-700 leading-relaxed mb-8 text-center max-w-2xl mx-auto">
-              PakBizBranches actively serves local business owners across every single category and every province in Pakistan. Our database hosts all kinds of listings, from small street level shops to large registered manufacturing companies in industrial areas.
+            <p className="text-lg text-gray-700 leading-relaxed mb-10 text-center max-w-2xl mx-auto">
+              PakBizBranches is dedicated to organizing verified Pakistani business citations. We prioritize accurate contact data, physical location details, and direct communication.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              {/* Testimonial 1 */}
-              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 flex flex-col justify-between hover:shadow-md transition-shadow">
+              <div className="bg-white p-6 rounded-2xl shadow-xs border border-gray-200 flex flex-col justify-between hover:shadow-md transition-shadow">
                 <div>
-                  <div className="flex items-center gap-1 mb-3 text-amber-500">
-                    <span className="text-xs font-semibold text-gray-500 mr-1">5 out of 5 stars</span>
-                    <span>★★★★★</span>
+                  <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-lg mb-4">
+                    📞
                   </div>
-                  <p className="text-gray-600 text-sm leading-relaxed mb-4 italic">
-                    &ldquo;I listed my auto spare parts shop here and felt surprised when customers actually called. Within the first month, I got 4 to 6 new customer calls per week. They specifically told me they found my shop on this directory. Yeh service sach mein kaam ayi.&rdquo;
+                  <h3 className="font-bold text-[#0f2b3d] text-base mb-2">Direct Phone & WhatsApp</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">
+                    Connect directly with business owners and service branches without signup walls, mandatory apps, or middleman fees.
                   </p>
                 </div>
-                <div className="border-t border-gray-100 pt-4 mt-2">
-                  <h4 className="font-bold text-[#0f2b3d] text-sm">Muhammad Usman Butt</h4>
-                  <p className="text-xs text-emerald-600 font-semibold mt-0.5">Auto Spare Parts</p>
-                  <p className="text-xs text-gray-400">Raja Bazaar, Rawalpindi</p>
+                <div className="border-t border-gray-100 pt-4 mt-4 text-xs font-semibold text-emerald-600">
+                  Instant One-Click Contact
                 </div>
               </div>
 
-              {/* Testimonial 2 */}
-              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 flex flex-col justify-between hover:shadow-md transition-shadow">
+              <div className="bg-white p-6 rounded-2xl shadow-xs border border-gray-200 flex flex-col justify-between hover:shadow-md transition-shadow">
                 <div>
-                  <div className="flex items-center gap-1 mb-3 text-amber-500">
-                    <span className="text-xs font-semibold text-gray-500 mr-1">5 out of 5 stars</span>
-                    <span>★★★★★</span>
+                  <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-lg mb-4">
+                    📍
                   </div>
-                  <p className="text-gray-600 text-sm leading-relaxed mb-4 italic">
-                    &ldquo;Before listing on this directory, my home catering service had no online presence. I did not expect a free platform to work, but I got my first three orders from outside my friend circle within two weeks. I appreciate how this site helps small home businesses grow.&rdquo;
+                  <h3 className="font-bold text-[#0f2b3d] text-base mb-2">Physical Location Verification</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">
+                    Addresses, localities, and commercial districts across Pakistan are cataloged with Google Maps coordinates for easy navigation.
                   </p>
                 </div>
-                <div className="border-t border-gray-100 pt-4 mt-2">
-                  <h4 className="font-bold text-[#0f2b3d] text-sm">Sana Fatima</h4>
-                  <p className="text-xs text-emerald-600 font-semibold mt-0.5">Home Catering</p>
-                  <p className="text-xs text-gray-400">Gulberg III, Lahore</p>
+                <div className="border-t border-gray-100 pt-4 mt-4 text-xs font-semibold text-emerald-600">
+                  Accurate Street & Area Data
                 </div>
               </div>
 
-              {/* Testimonial 3 */}
-              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 flex flex-col justify-between hover:shadow-md transition-shadow">
+              <div className="bg-white p-6 rounded-2xl shadow-xs border border-gray-200 flex flex-col justify-between hover:shadow-md transition-shadow">
                 <div>
-                  <div className="flex items-center gap-1 mb-3 text-amber-500">
-                    <span className="text-xs font-semibold text-gray-500 mr-1">4 out of 5 stars</span>
-                    <span>★★★★☆</span>
+                  <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center font-bold text-lg mb-4">
+                    🛡️
                   </div>
-                  <p className="text-gray-600 text-sm leading-relaxed mb-4 italic">
-                    &ldquo;The WhatsApp contact button on my listing is now my primary source for new business inquiries. I get 8 to 12 WhatsApp messages every week from potential clients in Karachi. This free listing saved my solar company from paying for expensive online advertisements.&rdquo;
+                  <h3 className="font-bold text-[#0f2b3d] text-base mb-2">Free Local Citations</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">
+                    Legitimate companies can list their profile, official channels, and business details for free to improve local online visibility.
                   </p>
                 </div>
-                <div className="border-t border-gray-100 pt-4 mt-2">
-                  <h4 className="font-bold text-[#0f2b3d] text-sm">Farhan Ahmed Siddiqui</h4>
-                  <p className="text-xs text-emerald-600 font-semibold mt-0.5">Solar Installation</p>
-                  <p className="text-xs text-gray-400">PECHS Block 6, Karachi</p>
+                <div className="border-t border-gray-100 pt-4 mt-4 text-xs font-semibold text-emerald-600">
+                  No Subscription or Hidden Fees
                 </div>
               </div>
             </div>
 
-            <div className="text-center space-y-4">
+            <div className="text-center space-y-2">
               <p className="text-gray-600 font-medium text-sm">
-                Active Pakistani business owners give our portal a high rating of 4.8 out of 5 based on verified listing reviews.
-              </p>
-              <p className="text-[#0f2b3d] font-semibold text-base">
-                Join thousands of active Pakistani business owners who attract new local customers by listing your own company completely free today.
+                Featuring over 690 verified companies across Karachi, Lahore, Islamabad, and other commercial centers.
               </p>
             </div>
           </div>

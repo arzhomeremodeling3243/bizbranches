@@ -138,6 +138,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/business/:slug',
+        destination: 'https://www.pakbizbranhces.online/:slug/',
+        permanent: true,
+      },
+      {
         source: '/categories/:slug',
         destination: 'https://www.pakbizbranhces.online/:slug/',
         permanent: true,
@@ -168,18 +173,18 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/shadab-group-real-estate-builders',
+        destination: 'https://www.pakbizbranhces.online/shadab-group-real-estate-builders-sargodha/',
+        permanent: true,
+      },
+      {
         source: '/sitemap-areas.xml',
-        destination: 'https://www.pakbizbranhces.online/sitemap.xml',
+        destination: 'https://www.pakbizbranhces.online/sitemap-locations.xml',
         permanent: true,
       },
       {
         source: '/sitemap-services.xml',
-        destination: 'https://www.pakbizbranhces.online/sitemap.xml',
-        permanent: true,
-      },
-      {
-        source: '/sitemap-pages.xml',
-        destination: 'https://www.pakbizbranhces.online/sitemap.xml',
+        destination: 'https://www.pakbizbranhces.online/sitemap-categories.xml',
         permanent: true,
       },
     ]

@@ -286,12 +286,15 @@ function CategoriesContent() {
                   const IconComponent = CATEGORY_ICONS[cat.id as keyof typeof CATEGORY_ICONS]
                   const gradient = CATEGORY_GRADIENTS[cat.id as keyof typeof CATEGORY_GRADIENTS]
                   const bgColor = CATEGORY_BG_COLORS[cat.id as keyof typeof CATEGORY_BG_COLORS]
+                  const targetHref = city 
+                    ? `/${city.toLowerCase().trim().replace(/\s+/g, '-')}/${cat.id}/` 
+                    : `/${cat.id}/`
                   
                   return (
-                    <button
+                    <Link
                       key={cat.id}
-                      onClick={() => setSelectedCat(cat.id)}
-                      className={`group relative overflow-hidden rounded-2xl p-6 shadow-lg border border-white/20 hover:shadow-2xl hover:scale-105 transition-all duration-300 ${bgColor}`}
+                      href={targetHref}
+                      className={`group relative overflow-hidden rounded-2xl p-6 shadow-lg border border-white/20 hover:shadow-2xl hover:scale-105 transition-all duration-300 block ${bgColor}`}
                     >
                       {/* Background Pattern */}
                       <div className="absolute inset-0 opacity-5">
@@ -313,25 +316,25 @@ function CategoriesContent() {
                         <div className="flex items-center justify-center gap-3 text-sm text-gray-600 mb-3">
                           <div className="flex items-center gap-1">
                             <Building2 className="w-4 h-4" />
-                            <span>{cat.count.toLocaleString()}</span>
+                            <span>{cat.count.toLocaleString()} verified</span>
                           </div>
                           <span className="text-gray-400">•</span>
                           <div className="flex items-center gap-1 text-amber-500">
                             <TrendingUp className="w-4 h-4" />
-                            <span className="text-xs">Popular</span>
+                            <span className="text-xs">Active</span>
                           </div>
                         </div>
                         
                         {/* Hover Effect */}
                         <div className="flex items-center justify-center gap-2 text-sm font-medium text-gray-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <span>Explore</span>
+                          <span>Browse Directory</span>
                           <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </div>
                       </div>
                       
                       {/* Decorative Elements */}
                       <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-white/60"></div>
-                    </button>
+                    </Link>
                   )
                 })}
               </div>

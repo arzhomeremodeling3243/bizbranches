@@ -19,9 +19,7 @@ export default function HeroSection() {
       <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <p className="inline-flex items-center gap-2 text-[#60a5fa] font-semibold text-sm mb-2 tracking-wide uppercase">
           <span className="w-4 h-px bg-[#60a5fa]" />
-          Pakistan&apos;s #1
-          <span className="w-4 h-px bg-[#60a5fa]" />
-          Business Directory
+          Verified Pakistan Directory
           <span className="w-4 h-px bg-[#60a5fa]" />
         </p>
 
@@ -29,10 +27,10 @@ export default function HeroSection() {
           id="hero-heading"
           className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-4 text-balance"
         >
-          Pakistan Free Business Directory – Find Verified Local Companies
+          Pakistan Business Directory – Free Local Business Listings
         </h1>
-        <p className="text-[#60a5fa] font-semibold text-sm sm:text-base mb-6 tracking-wide uppercase">
-          Pakistan Free Business Directory: Connecting local shops with buyers across the country.
+        <p className="text-blue-200 font-medium text-sm sm:text-base mb-6 tracking-normal">
+          Find verified businesses in Pakistan by city, category and area. Browse local companies, phone numbers, addresses, WhatsApp contacts and free business listings.
         </p>
         <div className="text-base sm:text-lg text-white/90 mb-8 leading-relaxed max-w-2xl sm:max-w-3xl mx-auto space-y-4">
           <p>
@@ -72,9 +70,9 @@ export default function HeroSection() {
             Pakistan business directory with city pages, category pages, and direct contact details to help users quickly compare local services.
           </p>
           <div className="mt-4 flex flex-wrap justify-center gap-2 text-xs sm:text-sm text-slate-100 font-medium">
-            <span className="bg-white/10 px-3 py-1 rounded-full">15,000+ Listings</span>
-            <span className="bg-white/10 px-3 py-1 rounded-full">150+ Cities</span>
-            <span className="bg-white/10 px-3 py-1 rounded-full">Verified Contacts</span>
+            <span className="bg-white/10 px-3 py-1 rounded-full">690+ Verified Listings</span>
+            <span className="bg-white/10 px-3 py-1 rounded-full">Covering Major Pakistan Cities</span>
+            <span className="bg-white/10 px-3 py-1 rounded-full">Verified Direct Contacts</span>
           </div>
         </div>
 

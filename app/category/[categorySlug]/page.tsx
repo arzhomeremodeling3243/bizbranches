@@ -11,9 +11,7 @@ const BASE_URL = 'https://www.pakbizbranhces.online'
 export const dynamic = 'force-static'
 
 export async function generateStaticParams() {
-  return CATEGORIES.map((c) => ({
-    categorySlug: c.id,
-  }))
+  return []
 }
 
 export const dynamicParams = true

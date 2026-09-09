@@ -1,178 +1,33 @@
 import { NextResponse } from 'next/server'
-import { CITIES, CATEGORIES } from '@/lib/data'
-import { BLOG_POSTS } from '@/lib/blog-data'
-import { fetchAllBusinessesForSitemap } from '@/lib/firebase-server'
-import { HIGH_PRIORITY_SLUGS } from '@/lib/static-db'
+import { SEO_CONFIG } from '@/lib/seo-config'
 
-const BASE_URL = 'https://www.pakbizbranhces.online'
+export const revalidate = 86400 // 24 hours cache
 
-export const revalidate = 604800 // 7 days cache for sitemap XML
-
-
-function escapeXml(unsafe: string): string {
-  if (!unsafe) return ''
-  return unsafe
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;')
-}
-
-function getAbsoluteImageUrl(url: string): string {
-  if (!url) return ''
-  if (url.startsWith('http://') || url.startsWith('https://')) {
-    return url
-  }
-  const cleanUrl = url.startsWith('/') ? url : `/${url}`
-  return `${BASE_URL}${cleanUrl}`
-}
-
-
-const TOP_CITIES = [
-  'Karachi', 'Lahore', 'Islamabad', 'Rawalpindi', 'Faisalabad',
-  'Multan', 'Peshawar', 'Quetta', 'Sialkot', 'Gujranwala',
-  'Hyderabad', 'Abbottabad', 'Sargodha', 'Bahawalpur', 'Sahiwal',
-  'Mardan', 'Sukkur', 'Larkana', 'Gwadar', 'Muzaffarabad'
-]
+const BASE_URL = SEO_CONFIG.BASE_URL
 
 export async function GET() {
   const lastmod = new Date().toISOString().split('T')[0]
-  
-  // We will build URL items. Some can have image tags.
-  interface SitemapUrl {
-    loc: string
-    lastmod: string
-    changefreq: string
-    priority: string
-    image?: {
-      loc: string
-      title: string
-    }
-  }
 
-  const urls: SitemapUrl[] = []
-
-  // 1. Static Pages
-  const staticPages = [
-    { url: '/', priority: '1.0', changefreq: 'daily' },
-    { url: '/categories/', priority: '0.9', changefreq: 'weekly' },
-    { url: '/cities/', priority: '0.9', changefreq: 'weekly' },
-    { url: '/add-business/', priority: '0.9', changefreq: 'monthly' },
-    { url: '/blog/', priority: '0.8', changefreq: 'weekly' },
-    { url: '/about/', priority: '0.7', changefreq: 'monthly' },
-    { url: '/contact/', priority: '0.7', changefreq: 'monthly' },
-    { url: '/featured-businesses/', priority: '0.8', changefreq: 'daily' },
-    { url: '/html-sitemap/', priority: '0.5', changefreq: 'monthly' },
-    { url: '/privacy/', priority: '0.4', changefreq: 'yearly' },
-    { url: '/terms/', priority: '0.4', changefreq: 'yearly' },
-    { url: '/pricing/', priority: '0.7', changefreq: 'monthly' },
-    { url: '/why-list-your-business/', priority: '0.8', changefreq: 'monthly' },
+  const sitemaps = [
+    `${BASE_URL}/sitemap-pages.xml`,
+    `${BASE_URL}/sitemap-categories.xml`,
+    `${BASE_URL}/sitemap-cities.xml`,
+    `${BASE_URL}/sitemap-locations.xml`,
+    `${BASE_URL}/sitemap-businesses.xml`,
   ]
 
-  staticPages.forEach(p => {
-    urls.push({
-      loc: `${BASE_URL}${p.url}`,
-      lastmod,
-      changefreq: p.changefreq,
-      priority: p.priority
-    })
-  })
-
-  // 2. Categories
-  CATEGORIES.forEach(cat => {
-    urls.push({
-      loc: `${BASE_URL}/${cat.id}/`,
-      lastmod,
-      changefreq: 'weekly',
-      priority: '0.9'
-    })
-  })
-
-  // 3. Cities
-  CITIES.forEach(city => {
-    const citySlug = city.toLowerCase().replace(/ /g, '-')
-    urls.push({
-      loc: `${BASE_URL}/${citySlug}/`,
-      lastmod,
-      changefreq: 'weekly',
-      priority: '0.8'
-    })
-  })
-
-  // 4. All Cities + Category combinations
-  CITIES.forEach(city => {
-    const citySlug = city.toLowerCase().replace(/ /g, '-')
-    CATEGORIES.forEach(cat => {
-      urls.push({
-        loc: `${BASE_URL}/${citySlug}/${cat.id}/`,
-        lastmod,
-        changefreq: 'weekly',
-        priority: '0.7'
-      })
-    })
-  })
-
-  // 5. Blog posts (including images)
-  const activePosts = BLOG_POSTS.filter(post => !post.hidden)
-  activePosts.forEach(post => {
-    const urlItem: SitemapUrl = {
-      loc: `${BASE_URL}/blog/${post.slug}/`,
-      lastmod,
-      changefreq: 'monthly',
-      priority: '0.7'
-    }
-    if ((post as any).image) {
-      urlItem.image = {
-        loc: getAbsoluteImageUrl((post as any).image),
-        title: post.title
-      }
-    }
-    urls.push(urlItem)
-  })
-
-  // 6. Business Listings
-  try {
-    const businesses = await fetchAllBusinessesForSitemap()
-    businesses.forEach(biz => {
-      const isHighPriority = HIGH_PRIORITY_SLUGS.has(biz.slug)
-      urls.push({
-        loc: `${BASE_URL}/${biz.slug}/`,
-        lastmod,
-        changefreq: 'weekly',
-        priority: isHighPriority ? '0.90' : '0.75',
-        ...(biz.logoUrl ? {
-          image: {
-            loc: getAbsoluteImageUrl(biz.logoUrl),
-            title: biz.slug.replace(/-/g, ' ')
-          }
-        } : {})
-      })
-    })
-  } catch (error) {
-    console.error('Error fetching businesses for sitemap.xml:', error)
-  }
-
-
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-${urls.map(u => `  <url>
-    <loc>${escapeXml(u.loc)}</loc>
-    <lastmod>${escapeXml(u.lastmod)}</lastmod>
-    <changefreq>${escapeXml(u.changefreq)}</changefreq>
-    <priority>${escapeXml(u.priority)}</priority>${u.image ? `
-    <image:image>
-      <image:loc>${escapeXml(u.image.loc)}</image:loc>
-      <image:title>${escapeXml(u.image.title)}</image:title>
-    </image:image>` : ''}
-  </url>`).join('\n')}
-</urlset>`
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${sitemaps.map(loc => `  <sitemap>
+    <loc>${loc}</loc>
+    <lastmod>${lastmod}</lastmod>
+  </sitemap>`).join('\n')}
+</sitemapindex>`
 
   return new NextResponse(xml, {
     headers: {
       'Content-Type': 'application/xml; charset=utf-8',
-      'Cache-Control': 'public, max-age=604800, s-maxage=604800, stale-while-revalidate=86400',
+      'Cache-Control': 'public, max-age=86400, s-maxage=86400, stale-while-revalidate=86400',
     },
   })
 }

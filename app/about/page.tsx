@@ -79,7 +79,7 @@ export default function AboutPage() {
                 We also connect directory profiles to official verification sources. Business owners can add their FBR NTN or reference their Securities and Exchange Commission of Pakistan filings. Highlighting membership with the Lahore Chamber of Commerce and Industry or the Karachi Chamber of Commerce and Industry further builds trust with prospective customers.
               </p>
               <p>
-                Today, with thousands of verified business listings across Pakistan and thousands of daily visitors, we are proud to be one of Pakistan&apos;s most trusted free business directories. And we are just getting started.
+                Today, with over 690 verified business listings across Pakistan, we are proud to provide a transparent, free business directory. And we are just getting started.
               </p>
             </div>
           </div>
@@ -153,16 +153,16 @@ export default function AboutPage() {
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
               <div className="bg-[#f8fafc] rounded-2xl p-6 border border-gray-100">
-                <div className="text-3xl font-bold text-[#0f2b3d]">15,000+</div>
+                <div className="text-3xl font-bold text-[#0f2b3d]">690+</div>
                 <div className="text-sm text-gray-500 mt-1">Verified Business Listings</div>
               </div>
               <div className="bg-[#f8fafc] rounded-2xl p-6 border border-gray-100">
-                <div className="text-3xl font-bold text-[#0f2b3d]">150+</div>
-                <div className="text-sm text-gray-500 mt-1">Cities Covered</div>
+                <div className="text-3xl font-bold text-[#0f2b3d]">18+</div>
+                <div className="text-sm text-gray-500 mt-1">Key Commercial Cities</div>
               </div>
               <div className="bg-[#f8fafc] rounded-2xl p-6 border border-gray-100">
                 <div className="text-3xl font-bold text-[#0f2b3d]">100%</div>
-                <div className="text-sm text-gray-500 mt-1">Free to List</div>
+                <div className="text-sm text-gray-500 mt-1">Free Direct Citations</div>
               </div>
             </div>
           </div>
@@ -176,7 +176,7 @@ export default function AboutPage() {
         <section className="py-14 bg-[#0f2b3d] text-center">
           <div className="max-w-xl mx-auto px-4">
             <h2 className="text-2xl font-bold text-white">Ready to list your business?</h2>
-            <p className="mt-3 text-white/60">Join thousands of businesses already growing on PakBizBranches. It&apos;s completely free.</p>
+            <p className="mt-3 text-white/60">Join hundreds of verified local businesses listed on PakBizBranches. It&apos;s completely free.</p>
             <Link
               href="/add-business/"
               className="mt-6 inline-block px-8 py-3 bg-[#60a5fa] hover:bg-blue-400 text-white font-bold rounded-xl transition-colors text-sm"

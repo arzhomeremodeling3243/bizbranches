@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "test:seo": "node scripts/seo-health-check.mjs",
     "setup-admin": "npx ts-node scripts/create-admin-user.ts"
   },
   "dependencies": {

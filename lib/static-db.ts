@@ -87,15 +87,24 @@ export function getStaticCityCategory(city: string, categoryId: string): StaticB
   )
 }
 
-// Find static similar businesses
+// Find static similar businesses (same category, same city)
 export function getStaticSimilar(city: string, category: string, excludeSlug: string): StaticBusiness[] {
   const normCity = city.toLowerCase().trim()
   const normCat = category.toLowerCase().trim()
   return STATIC_BUSINESSES.filter(b => 
     b.city.toLowerCase() === normCity && 
-    (b.categoryId.toLowerCase() === normCat || b.category.toLowerCase() === normCat) &&
+    (b.categoryId?.toLowerCase() === normCat || b.category?.toLowerCase() === normCat) &&
     b.slug !== excludeSlug
   )
+}
+
+// Find static nearby businesses in the same city across all categories
+export function getStaticNearby(city: string, excludeSlug: string, limitCount: number = 4): StaticBusiness[] {
+  const normCity = city.toLowerCase().trim()
+  return STATIC_BUSINESSES.filter(b => 
+    b.city.toLowerCase() === normCity && 
+    b.slug !== excludeSlug
+  ).slice(0, limitCount)
 }
 
 // Find static branches

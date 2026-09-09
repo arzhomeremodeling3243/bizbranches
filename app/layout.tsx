@@ -16,9 +16,9 @@ const outfit = Outfit({
 })
 
 export const metadata: Metadata = {
-  title: 'Pakistan Free Business Directory: Find Local Businesses',
+  title: 'Pakistan Business Directory – Free Local Business Listings',
   description:
-    'Search or list your business on the premier Pakistan free business directory. Find verified local businesses, phone numbers, and addresses by city and category. 15,000 plus listings across 150 plus cities on PakBizBranches.',
+    'Find verified businesses in Pakistan by city, category and area. Browse local companies, phone numbers, addresses, WhatsApp contacts and free business listings.',
   keywords:
     'pakistan free business directory, Pakistan business directory, free business listing Pakistan, Karachi business listings, Lahore business directory, Islamabad business listings, local services Pakistan, business phone numbers Pakistan, companies in Pakistan by city, verified business contacts Pakistan, WhatsApp business directory Pakistan',
   authors: [{ name: 'PakBizBranches', url: 'https://www.pakbizbranhces.online/' }],
@@ -32,9 +32,9 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: 'Pakistan Free Business Directory: Find Local Businesses',
+    title: 'Pakistan Business Directory – Free Local Business Listings',
     description:
-      'Search or list your business on the premier Pakistan free business directory. Find verified local businesses, phone numbers, and addresses by city and category.',
+      'Find verified businesses in Pakistan by city, category and area. Browse local companies, phone numbers, addresses, WhatsApp contacts and free business listings.',
     url: 'https://www.pakbizbranhces.online/',
     siteName: 'PakBizBranches',
     locale: 'en_PK',
@@ -42,9 +42,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Pakistan Free Business Directory: Find Local Businesses',
+    title: 'Pakistan Business Directory – Free Local Business Listings',
     description:
-      'Search or list your business on the premier Pakistan free business directory. Find verified local businesses, phone numbers, and addresses by city and category.',
+      'Find verified businesses in Pakistan by city, category and area. Browse local companies, phone numbers, addresses, WhatsApp contacts and free business listings.',
   },
   robots: {
     index: true,
@@ -116,7 +116,7 @@ export default function RootLayout({
               name: 'PakBizBranches',
               url: 'https://www.pakbizbranhces.online/',
               logo: 'https://www.pakbizbranhces.online/logo-img.png',
-              description: 'Pakistan\'s trusted free business directory with 15,000+ verified listings. No registration required. Helps users find local businesses by city and category and allows business owners to add their local citations for free.',
+              description: 'Pakistan\'s trusted business directory with verified local company listings. No registration required. Helps users find local businesses by city and category with direct WhatsApp and phone contacts.',
               sameAs: [
                 'https://facebook.com/pakbizbranches',
                 'https://twitter.com/pakbizbranches',
@@ -155,7 +155,7 @@ export default function RootLayout({
               '@id': 'https://www.pakbizbranhces.online/#website',
               name: 'PakBizBranches',
               url: 'https://www.pakbizbranhces.online/',
-              description: 'Pakistan\'s trusted free business directory with 15,000+ verified listings. No registration required. Find local businesses by city and category with WhatsApp details. Add your business free.',
+              description: 'Pakistan\'s trusted business directory with verified listings across major cities and categories. Direct WhatsApp and phone contact details. Free listing submission.',
               publisher: {
                 '@id': 'https://www.pakbizbranhces.online/#organization'
               },

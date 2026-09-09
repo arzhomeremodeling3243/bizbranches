@@ -465,3 +465,76 @@ export async function fetchAllBusinessesForSitemap(): Promise<{ slug: string, lo
     return STATIC_BUSINESSES.map(b => ({ slug: b.slug, logoUrl: b.logoUrl }))
   }
 }
+
+// Helper: Fetch a single business by slug (checking static first, then Firestore)
+export async function fetchBusinessBySlug(slug: string): Promise<Business | null> {
+  const normSlug = slug.toLowerCase().trim()
+  const staticMatch = STATIC_BUSINESSES.find(b => b.slug.toLowerCase() === normSlug)
+  if (staticMatch) {
+    return {
+      id: staticMatch.id,
+      businessName: staticMatch.businessName,
+      slug: staticMatch.slug,
+      city: staticMatch.city,
+      category: staticMatch.category,
+      categoryId: staticMatch.categoryId || staticMatch.category,
+      description: staticMatch.description,
+      phone: staticMatch.phone,
+      logoUrl: staticMatch.logoUrl,
+      status: staticMatch.status,
+      isFeatured: staticMatch.isFeatured,
+      createdAt: staticMatch.createdAt,
+      rating: staticMatch.rating,
+      reviewCount: staticMatch.reviewCount,
+      websiteUrl: staticMatch.websiteUrl,
+      facebookPage: staticMatch.facebookPage,
+      address: staticMatch.address,
+      whatsapp: staticMatch.whatsapp,
+      email: staticMatch.email,
+      youtubeChannel: staticMatch.youtubeChannel,
+      subCategory: staticMatch.subCategory,
+    }
+  }
+
+  try {
+    const q = query(
+      collection(db, 'businesses'),
+      where('slug', '==', normSlug),
+      limit(1)
+    )
+    const snapshot = await fetchWithTimeout(getDocs(q), 1500)
+    if (!snapshot.empty) {
+      const doc = snapshot.docs[0]
+      const data = doc.data() as any
+      const status = String(data.status ?? '').toLowerCase()
+      if (!status || LIVE_STATUSES.has(status)) {
+        return {
+          id: doc.id,
+          businessName: data.businessName || data.name || '',
+          slug: data.slug || normSlug,
+          city: data.city || '',
+          category: data.category || '',
+          categoryId: data.categoryId || data.category || '',
+          description: data.description || '',
+          phone: data.phone || '',
+          logoUrl: data.logoUrl || '',
+          status: data.status || 'approved',
+          isFeatured: data.isFeatured || false,
+          createdAt: serializeTimestamp(data.createdAt),
+          rating: data.rating,
+          reviewCount: data.reviewCount,
+          websiteUrl: data.websiteUrl || '',
+          facebookPage: data.facebookPage || '',
+          address: data.address || '',
+          whatsapp: data.whatsapp || '',
+          email: data.email || '',
+          youtubeChannel: data.youtubeChannel || '',
+          subCategory: data.subCategory || '',
+        }
+      }
+    }
+  } catch (err) {
+    // Return null on failure
+  }
+  return null
+}

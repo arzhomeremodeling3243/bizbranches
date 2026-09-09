@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Mail, MapPin, MessageCircle, Send, Building2 } from 'lucide-react'
+import { Mail, MapPin, MessageCircle, Send, Building2, ShieldCheck, CheckCircle2, FileEdit } from 'lucide-react'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import { sendContactEmail } from '@/lib/email-service'
@@ -334,6 +334,48 @@ export default function ContactClient() {
             </div>
           </div>
           
+          {/* E-E-A-T & Directory Trust Section */}
+          <div className="mt-16 pt-12 border-t border-gray-200">
+            <div className="text-center max-w-2xl mx-auto mb-10">
+              <h2 className="text-2xl font-bold text-gray-900">Directory Verification & Listing Policies</h2>
+              <p className="text-sm text-gray-500 mt-2">
+                PakBizBranches maintains strict data verification standards to provide reliable business contacts across Pakistan.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-2xs">
+                <div className="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center mb-4">
+                  <ShieldCheck className="w-5 h-5" />
+                </div>
+                <h3 className="text-base font-bold text-gray-900 mb-2">Verification Methodology</h3>
+                <p className="text-xs text-gray-600 leading-relaxed">
+                  Every business profile is verified via direct phone check, physical address cross-referencing, and operational branch validation before receiving the verified badge.
+                </p>
+              </div>
+
+              <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-2xs">
+                <div className="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-4">
+                  <CheckCircle2 className="w-5 h-5" />
+                </div>
+                <h3 className="text-base font-bold text-gray-900 mb-2">Claim Listing Ownership</h3>
+                <p className="text-xs text-gray-600 leading-relaxed">
+                  Business owners can claim their listing using the "Claim Profile" button on their page or by emailing admin@pakbizbranhces.online from their official business domain.
+                </p>
+              </div>
+
+              <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-2xs">
+                <div className="w-10 h-10 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center mb-4">
+                  <FileEdit className="w-5 h-5" />
+                </div>
+                <h3 className="text-base font-bold text-gray-900 mb-2">Corrections & Updates</h3>
+                <p className="text-xs text-gray-600 leading-relaxed">
+                  Notice an outdated phone number, relocated office, or changed business timings? Submit an update request via email or WhatsApp and our editorial desk reviews it within 24-48 hours.
+                </p>
+              </div>
+            </div>
+          </div>
+
           <div className="mt-8">
             <NativeAdLoader />
           </div>

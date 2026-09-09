@@ -9,19 +9,7 @@ import React from 'react'
 export const dynamic = 'force-static'
 
 export async function generateStaticParams() {
-  const params: { city: string; categorySlug: string }[] = []
-
-  TOP_CITIES.forEach(city => {
-    const citySlug = city.toLowerCase().replace(/\s+/g, '-')
-    CATEGORIES.forEach(cat => {
-      params.push({
-        city: citySlug,
-        categorySlug: cat.id
-      })
-    })
-  })
-
-  return params
+  return []
 }
 
 export const dynamicParams = true

@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server'
 import { fetchAllBusinessesForSitemap } from '@/lib/firebase-server'
 import { HIGH_PRIORITY_SLUGS } from '@/lib/static-db'
+import { isBusinessIndexable, SEO_CONFIG } from '@/lib/seo-config'
 
-const BASE_URL = 'https://www.pakbizbranhces.online'
+const BASE_URL = SEO_CONFIG.BASE_URL
 
-export const revalidate = 604800 // 7 days cache for business sitemap XML
-
+export const revalidate = 86400
 
 function escapeXml(unsafe: string): string {
   if (!unsafe) return ''
@@ -26,15 +26,17 @@ function getAbsoluteImageUrl(url: string): string {
   return `${BASE_URL}${cleanUrl}`
 }
 
-
 export async function GET() {
   const lastmod = new Date().toISOString().split('T')[0]
-  const businesses = await fetchAllBusinessesForSitemap()
+  const allBusinesses = await fetchAllBusinessesForSitemap()
+
+  // Filter out non-business informational pages and entries marked noindex
+  const validBusinesses = allBusinesses.filter(biz => isBusinessIndexable(biz.slug))
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-${businesses.map(biz => {
+${validBusinesses.map(biz => {
   const isHighPriority = HIGH_PRIORITY_SLUGS.has(biz.slug)
   const imageXml = biz.logoUrl ? `\n    <image:image>
       <image:loc>${escapeXml(getAbsoluteImageUrl(biz.logoUrl))}</image:loc>
@@ -52,8 +54,7 @@ ${businesses.map(biz => {
   return new NextResponse(xml, {
     headers: {
       'Content-Type': 'application/xml; charset=utf-8',
-      'Cache-Control': 'public, max-age=604800, s-maxage=604800, stale-while-revalidate=86400',
+      'Cache-Control': 'public, max-age=86400, s-maxage=86400, stale-while-revalidate=86400',
     },
   })
 }
-
