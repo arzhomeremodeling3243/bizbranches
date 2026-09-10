@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { CATEGORIES } from '@/lib/data'
 import { findStaticBusinessBySlug, getStaticSimilar, STATIC_BUSINESSES } from '@/lib/static-db'
+import { fetchBusinessBySlug } from '@/lib/firebase-server'
 import BusinessDetailClient from './business-detail-client'
 import React from 'react'
 
@@ -18,7 +19,10 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
   const params = await props.params;
   const slug = params.slug
 
-  const staticBiz = findStaticBusinessBySlug(slug)
+  let staticBiz = findStaticBusinessBySlug(slug) as any
+  if (!staticBiz) {
+    staticBiz = await fetchBusinessBySlug(slug)
+  }
   if (!staticBiz) {
     return { title: 'Business Not Found - PakBizBranches' }
   }
@@ -140,7 +144,10 @@ export default async function BusinessPage(props: { params: Promise<{ slug: stri
   const params = await props.params;
   const slug = params.slug
 
-  const staticBiz = findStaticBusinessBySlug(slug)
+  let staticBiz = findStaticBusinessBySlug(slug) as any
+  if (!staticBiz) {
+    staticBiz = await fetchBusinessBySlug(slug)
+  }
   if (!staticBiz) {
     notFound()
   }

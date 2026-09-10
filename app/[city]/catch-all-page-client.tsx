@@ -309,6 +309,66 @@ export default function CatchAllPageClient({
         return
       }
 
+      // Fallback: Check Firestore client-side for dynamic / recently approved businesses
+      try {
+        const normSlug = slug.toLowerCase().trim()
+        const q = query(
+          collection(db, 'businesses'),
+          where('slug', '==', normSlug),
+          limit(1)
+        )
+        const snap = await getDocs(q)
+        if (!snap.empty) {
+          const docData = snap.docs[0].data() as any
+          const status = String(docData.status ?? '').toLowerCase()
+          if (!status || LIVE_STATUSES.has(status)) {
+            const fetchedBiz = {
+              id: snap.docs[0].id,
+              businessName: docData.businessName || docData.name || '',
+              slug: docData.slug || normSlug,
+              city: docData.city || '',
+              category: docData.category || '',
+              categoryId: docData.categoryId || docData.category || '',
+              description: docData.description || '',
+              phone: docData.phone || '',
+              logoUrl: docData.logoUrl || docData.logo || '',
+              status: docData.status || 'approved',
+              isFeatured: docData.isFeatured || docData.featured || false,
+              createdAt: docData.createdAt,
+              rating: typeof docData.rating === 'number' ? docData.rating : 5,
+              reviewCount: typeof docData.reviewCount === 'number' ? docData.reviewCount : 1,
+              websiteUrl: docData.websiteUrl || docData.website || '',
+              facebookPage: docData.facebookPage || docData.facebook || '',
+              instagramProfile: docData.instagramProfile || docData.instagram || '',
+              tiktokProfile: docData.tiktokProfile || docData.tiktok || '',
+              youtubeChannel: docData.youtubeChannel || docData.youtube || '',
+              googleBusiness: docData.googleBusiness || docData.googleBusinessUrl || docData.googleMaps || '',
+              address: docData.address || '',
+              whatsapp: docData.whatsapp || docData.phone || '',
+              email: docData.email || docData.userEmail || '',
+              subCategory: docData.subCategory || docData.subcategory || '',
+              shortIntro: docData.shortIntro || '',
+              aboutHeading: docData.aboutHeading || '',
+              aboutText: docData.aboutText || '',
+              services: docData.services || [],
+              faqs: docData.faqs || [],
+              businessHours: docData.businessHours || [],
+              openingHoursSpecification: docData.openingHoursSpecification || [],
+              metaTitle: docData.metaTitle || '',
+              metaDescription: docData.metaDescription || '',
+            } as Business
+
+            setBusiness(fetchedBiz)
+            setViewType('business')
+            setLoading(false)
+            setCountdownDone(true)
+            return
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching business by slug client-side:', err)
+      }
+
       // If nothing matches, trigger 404
       setViewType('404')
       setLoading(false)

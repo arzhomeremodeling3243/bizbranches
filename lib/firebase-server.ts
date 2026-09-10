@@ -31,11 +31,24 @@ export interface Business {
   reviewCount?: number
   websiteUrl?: string
   facebookPage?: string
+  instagramProfile?: string
+  tiktokProfile?: string
+  googleBusiness?: string
   address?: string
   whatsapp?: string
   email?: string
   youtubeChannel?: string
   subCategory?: string
+  coverImage?: string
+  shortIntro?: string
+  aboutHeading?: string
+  aboutText?: string
+  services?: any[]
+  faqs?: any[]
+  businessHours?: any[]
+  openingHoursSpecification?: any[]
+  metaTitle?: string
+  metaDescription?: string
 }
 
 // Helper: Convert Firestore Timestamp to ISO string
@@ -502,7 +515,7 @@ export async function fetchBusinessBySlug(slug: string): Promise<Business | null
       where('slug', '==', normSlug),
       limit(1)
     )
-    const snapshot = await fetchWithTimeout(getDocs(q), 1500)
+    const snapshot = await fetchWithTimeout(getDocs(q), 7000)
     if (!snapshot.empty) {
       const doc = snapshot.docs[0]
       const data = doc.data() as any
@@ -517,19 +530,31 @@ export async function fetchBusinessBySlug(slug: string): Promise<Business | null
           categoryId: data.categoryId || data.category || '',
           description: data.description || '',
           phone: data.phone || '',
-          logoUrl: data.logoUrl || '',
+          logoUrl: data.logoUrl || data.logo || '',
           status: data.status || 'approved',
-          isFeatured: data.isFeatured || false,
+          isFeatured: data.isFeatured || data.featured || false,
           createdAt: serializeTimestamp(data.createdAt),
-          rating: data.rating,
-          reviewCount: data.reviewCount,
-          websiteUrl: data.websiteUrl || '',
-          facebookPage: data.facebookPage || '',
+          rating: typeof data.rating === 'number' ? data.rating : 5,
+          reviewCount: typeof data.reviewCount === 'number' ? data.reviewCount : 1,
+          websiteUrl: data.websiteUrl || data.website || '',
+          facebookPage: data.facebookPage || data.facebook || '',
+          instagramProfile: data.instagramProfile || data.instagram || '',
+          tiktokProfile: data.tiktokProfile || data.tiktok || '',
+          youtubeChannel: data.youtubeChannel || data.youtube || '',
+          googleBusiness: data.googleBusiness || data.googleBusinessUrl || data.googleMaps || '',
           address: data.address || '',
-          whatsapp: data.whatsapp || '',
-          email: data.email || '',
-          youtubeChannel: data.youtubeChannel || '',
-          subCategory: data.subCategory || '',
+          whatsapp: data.whatsapp || data.phone || '',
+          email: data.email || data.userEmail || '',
+          subCategory: data.subCategory || data.subcategory || '',
+          shortIntro: data.shortIntro || '',
+          aboutHeading: data.aboutHeading || '',
+          aboutText: data.aboutText || '',
+          services: data.services || [],
+          faqs: data.faqs || [],
+          businessHours: data.businessHours || [],
+          openingHoursSpecification: data.openingHoursSpecification || [],
+          metaTitle: data.metaTitle || '',
+          metaDescription: data.metaDescription || '',
         }
       }
     }
